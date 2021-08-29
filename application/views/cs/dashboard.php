@@ -2,13 +2,13 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                    <div class="alert alert-danger" role="alert">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
                     </div>
 
                     <div class="alert alert-danger" role="alert">
                         <h4 class="alert-heading">Welcome</h4>
-                            <p>Hello <strong><?php echo $username; ?></strong>.<br>You are login as <strong>Customer Service</strong>.</p>
+                            <p>Hello <strong><?php echo $empName; ?></strong>.<br>You are logged in as <strong><?php echo $role; ?></strong>.</p>
                             <hr>
                     </div>
 

@@ -2,9 +2,10 @@
 
     class User_model extends CI_Model
     {
-	    public function getDataUser($id)
+	    public function getDataUser($empId)
 	    {
-		    $this->db->where('username', $id);
+		    $this->db->where('empId', $empId);
 		    return $this->db->get('employee')->row();
 	    }
+
     }
