@@ -1,20 +1,40 @@
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid" style="height:250px; background-color: rgba(195,0,0,1.48);">
 
                     <!-- Page Heading -->
-                    <div class="alert alert-danger" role="alert">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    <div>
+                        <br></br>
+                        <h2 class="m-0 font-weight text-light"><b>Dashboard</h2>
+                        <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
                     </div>
 
-                    <div class="alert alert-danger" role="alert">
-                        <h4 class="alert-heading">Welcome</h4>
-                            <p>Hello <strong><?php echo $empName; ?></strong>.<br>You are logged in as <strong><?php echo $role; ?></strong>.</p>
-                            <hr>
+                    <br>
+
+                    <div class="card mb-4 px-5">
+
+                        <div class="card-body">
+
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold mb-1" style="color: rgba(195,0,0,1.48);"><h4><b>Selamat Datang!</b><h4></div>
+                                    <div class="text-xs font-weight text-gray-800" style="color: rgba(195,0,0,1.48);"><h6>Hello, 
+                                        <span class="badge badge-danger"><?php echo $empName; ?>.</span>
+                                         Anda login sebagai <span class="badge badge-danger"><?php echo $role; ?>.</span><h6></div>
+                                </div>
+
+                                <div class="col-auto">
+                                    <img class="img-fluid px-5 px-sm-4 mt-3 mb-4" src="<?php echo base_url() ?>assets/img/cs.jpg" width=270px height=280px>
+                                </div>
+                            </div>
+                            
+                        </div>
                     </div>
 
                     <!-- Content Row -->
                     <div class="row">
-
+                    <?php 
+                        
+                    ?>
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
@@ -22,9 +42,10 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Visitors</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                                        </div>
+                                                Pelanggan</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php ?></div>
+                                            </div>
                                         <div class="col-auto">
                                             <i class="fas fa-users fa-2x text-gray-300"></i>
                                         </div>
@@ -40,7 +61,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Samples</div>
+                                                Total Sampel</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
                                         </div>
                                         <div class="col-auto">
@@ -57,7 +78,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Unverified Test Results
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Lembar Hasil Uji Sementara (LHUS)
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -87,7 +108,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Verified Test Results</div>
+                                                Lembar Hasil Uji (LHU)</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                                         </div>
                                         <div class="col-auto">
@@ -98,7 +119,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <?php ?>
                     <!-- Content Row -->
 
                     <div class="row">
@@ -182,7 +203,7 @@
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
+            <!-- Footer 
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">

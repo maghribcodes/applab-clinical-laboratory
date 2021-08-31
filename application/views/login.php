@@ -35,11 +35,11 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6" style="background:url('<?php echo base_url() ?>assets/img/2.jpg'); background-position: center; background-size: cover;"></div>
+                            <div class="col-lg-6" style="background:url('<?php echo base_url() ?>assets/img/login.jpg'); background-position: center; background-size: cover;"></div>
                             <div class="col-lg-6 bg-info">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <img src="<?php echo base_url() ?>assets/img/avatar1.png" width=70px height=80px>
+                                        <img src="<?php echo base_url() ?>assets/img/sumbar.png" width=70px height=80px>
                                         <br><br>
                                         <h1 class="h5 text-white mb-4 font-weight-light">Laboratorium Klinik</h1>
                                         <hr style="height:2px;width:180px;border-width:0;color:white;background-color:white">

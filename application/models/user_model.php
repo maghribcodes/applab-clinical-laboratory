@@ -8,4 +8,8 @@
 		    return $this->db->get('employee')->row();
 	    }
 
+		public function countData()
+		{
+			return $this->db->count_all('customer');
+		}
     }

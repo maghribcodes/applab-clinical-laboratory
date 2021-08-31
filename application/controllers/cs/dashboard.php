@@ -23,7 +23,7 @@ class Dashboard extends CI_Controller
 					'empName'=>$data->empName,
 					'role'=>$data->role,
 				);
-                
+
         $this->load->view('templates/header');
         $this->load->view('cs/sidebar');
         $this->load->view('cs/dashboard', $data);

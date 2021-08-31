@@ -1,4 +1,13 @@
-<div class="container-fluid">
+<div class="container-fluid" style="height:250px; background-color: rgba(195,0,0,1.48);">
+
+<!-- Page Heading -->
+    <div>
+        <br></br>
+        <h2 class="m-0 font-weight text-light"><b>Tambah Order</b></h2>
+        <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
+    </div>
+
+    <br>
 
 <form method="post" action="<?php echo base_url('cs/order/inputOrder') ?>">
 
@@ -13,23 +22,24 @@
             <!--<form>-->
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">No. Sampel</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4 mb-3 mb-sm-0">
                             <input type="text" name="noSample" class="form-control" value="<?php echo set_value('noSample'); ?>">
                             <?php echo form_error('noSample', '<div class="text-danger small">','</div>') ?>
+                        </div>
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Pengirim</label>
+                        <div class="col-sm-4">
+                            <input type="name" name="sender" class="form-control" id="inputEmail3">
                         </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Pasien</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="text" name="custName" class="form-control" value="<?php echo set_value('custName'); ?>">
                             <?php echo form_error('custName', '<div class="text-danger small">','</div>') ?>
                         </div>
-                </div>
-
-                <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal Lahir</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="date" name="birthDate" class="form-control" id="inputEmail3" value="<?php echo set_value('birthDate'); ?>">
                             <?php echo form_error('birthDate', '<div class="text-danger small">','</div>') ?>
                         </div>
@@ -37,9 +47,14 @@
 
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Kontak</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-4">
                             <input type="name" name="contact" class="form-control" id="inputEmail3" value="<?php echo set_value('contact'); ?>">
                             <?php echo form_error('contact', '<div class="text-danger small">','</div>') ?>
+                        </div>
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Alamat</label>
+                        <div class="col-sm-4">
+                            <input type="name" name="address" class="form-control" id="inputEmail3" value="<?php echo set_value('address'); ?>">
+                            <?php echo form_error('address', '<div class="text-danger small">','</div>') ?>
                         </div>
                 </div>
 
@@ -63,22 +78,6 @@
                             </div>
                     </div>
                 </fieldset>
-
-                <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Alamat</label>
-                        <div class="col-sm-10">
-                            <input type="name" name="address" class="form-control" id="inputEmail3" value="<?php echo set_value('address'); ?>">
-                            <?php echo form_error('address', '<div class="text-danger small">','</div>') ?>
-                        </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Pengirim</label>
-                        <div class="col-sm-10">
-                            <input type="name" name="sender" class="form-control" id="inputEmail3">
-                        </div>
-                </div>
-
             <!--</form>-->
 
         </div>
