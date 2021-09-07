@@ -2,9 +2,22 @@
 
     class Order extends CI_Controller
     {
+        function __construct()
+        {
+            parent:: __construct();
+
+            if(!isset($this->session->userdata['username']))
+            {
+                $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Anda belum login<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                
+                redirect('auth');
+            }
+        }
+
         public function index()
         {
             $data['viewOrder'] = $this->order_model->getDataOrder()->result();
+            //$data['viewNota'] = $this->order_model->getDataNota()->result();
 
             $this->load->view('templates/header');
             $this->load->view('cs/sidebar');
@@ -14,9 +27,16 @@
 
         public function input()
         {
+            $data['viewParameterA'] = $this->order_model->getParameterA()->result();
+            $data['viewParameterB'] = $this->order_model->getParameterB()->result();
+            $data['viewParameterC'] = $this->order_model->getParameterC()->result();
+            $data['viewParameterD'] = $this->order_model->getParameterD()->result();
+
+            $data['totalCost'] = $this->order_model->getTotalCost()->result();
+
             $this->load->view('templates/header');
             $this->load->view('cs/sidebar');
-            $this->load->view('cs/input');
+            $this->load->view('cs/input', $data);
             $this->load->view('templates/footer');
         }
 
@@ -30,9 +50,14 @@
             }
             else
             {
-                $emp1=$this->session->userdata('empId');
-                $checkbox = $this->input->post('parameter');
-                $sum = $this->order_model->getTotalCost();
+                $employess = $this->session->userdata('empId');
+
+                $samples = $this->input->post('noSample');
+                $sample = explode(',', $samples);
+
+                $parameters = $this->input->post('parameterId');
+
+                //$data['totalCost'] = $this->order_model->getTotalCost()->result();
 
                 $tableCust = array(
                     'custName'=>$this->input->post('custName'),
@@ -43,45 +68,36 @@
                 );
                 $input1=$this->order_model->inputDataOrder('customer',$tableCust);
                 
-                /*$tableNota = array(
-                    'totalCost'=>$this->input->post('totalCost'),
-                    'empId'=>$emp1,
+                $tableNota = array(
+                    'totalCost'=>$sum,
+                    'empId'=>$employess,
                 );
-                $input2=$this->order_model->inputDataOrder('nota',$tableNota);*/
+                $input2=$this->order_model->inputDataOrder('nota',$tableNota);
 
                 $tableOrder = array(
                     'custId'=>$input1,
                     'notaId'=>$input2,
                     'sender'=>$this->input->post('sender'),
-                    'clinicalNotes'=>$this->input->post('clinicalNotes'),
+                    //'clinicalNotes'=>$this->input->post('clinicalNotes'),
                 );
                 $input3=$this->order_model->inputDataOrder('order',$tableOrder);
 
-                $tableTestResult = array(
-                    'noSample'=>$this->input->post('noSample'),
-                    'empId'=>$emp1,
-                );
-                $input4=$this->order_model->inputDataOrder('testresult',$tableTestResult);
-                
-                foreach($checkbox as $check)
+                foreach($sample as $samp)
                 {
-                    $this->order_model->inputDataOrder('orderdetail', array
+                    $input4=$this->order_model->inputDataOrder('testresult', array
                     (
-                        'orderId'=>$input3,
-                        'noSample'=>$this->input->post('noSample'),
-                        'parameterId'=>$check
+                        'noSample'=>$samp,
+                        'empId'=>$employess
                     ));
 
-                    if($sum->num_rows()>0)
+                    foreach($parameters as $param)
                     {
-                        $this->order_model->inputDataOrder('nota', array
+                        $this->order_model->inputDataOrder('orderdetail', array
                         (
-                            'totalCost'=>$sum,
-                            'empId'=>$emp1,
+                            'orderId'=>$input3,
+                            'noSample'=>$samp,
+                            'parameterId'=>$param
                         ));
-                    }
-                    else{
-
                     }
                 }
 
@@ -98,5 +114,30 @@
             $this->form_validation->set_rules('contact','contact','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('gender','gender','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('address','address','required',['required'=>'Data harus diisi']);
+        }
+
+        public function update($id)
+        {
+            $where = array('orderId' => $id);
+
+            $data['order'] = $this->order_model->editDataOrder($where, 'order')->result();
+
+            $this->load->view('templates/header');
+            $this->load->view('cs/sidebar');
+            $this->load->view('cs/update', $data);
+            $this->load->view('templates/footer');
+        }
+
+        public function updateOrder()
+        {
+            $id = $this->input->post('orderId');
+            $samples = $this->input->post('noSample');
+            $custName = $this->input->post('custName');
+            $contact = $this->input->post('contact');
+            $gender = $this->input->post('gender');
+            $sender = $this->input->post('sender');
+            $birthDate = $this->input->post('birthDate');
+            $address = $this->input->post('address');
+            $parameters = $this->input->post('parameterId');
         }
     }

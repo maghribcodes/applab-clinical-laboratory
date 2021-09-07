@@ -78,7 +78,7 @@
 									<td><?php echo $vo->contact ?></td>
 									<td><?php echo $vo->address ?></td>
 									<td><?php echo $vo->sender ?></td>
-									<td width="20px"><?php echo anchor('cs/order/print/'.$vo->orderId,'<div class="btn btn-sm btn-success"><i class="fa fa-print"></i></div>') ?></td>
+									<td width="20px"><div class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-print"></i></div></td>
 									<td width="20px"><?php echo anchor('cs/order/update/'.$vo->orderId,'<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
 									<td width="20px"><?php echo anchor('cs/order/delete/'.$vo->orderId,'<div class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></div>') ?></td>
 								</tr>
@@ -92,4 +92,65 @@
 		
 		</div>
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+
+			<div class="modal-body">
+
+				<div class="table-responsive">
+					<table class="table table-bordered" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th style="text-align: center; vertical-align: middle;">PEMERINTAH PROVINSI SUMATERA BARAT<br>UPTD LAB. KES PADANG</th>
+								<th style="text-align: center; vertical-align: middle;">SURAT KETETAPAN RETRIBUSI DAERAH (SKRD)<br>PELAYANAN KESEHATAN (YANKES)</th>
+								<th style="text-align: center; vertical-align: middle;">NO.</th>
+							</tr>
+						</thead>
+					</table>
+					
+					<table class="table table-bordered" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th style="text-align: left;">A. IDENTITAS WAJIB RETRIBUSI / PASIEN</th>
+								<th style="text-align: right">PENGIRIM:</th>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+							</tr>
+						</thead>
+					</table>
+
+					<table class="table table-bordered" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th style="text-align: center; vertical-align: middle;">No.</th>
+								<th style="text-align: center; vertical-align: middle;">Jenis Pemeriksaan</th>
+								<th style="text-align: center; vertical-align: middle;">Tarif (Rp.)</th>
+							</tr>
+							<?php $no=1; foreach($viewOrder as $vn) : ?>
+							<tr>
+								<td width="20px"><?php echo $no++; ?></td>
+								<td><?php echo $vn->parameterName ?></td>
+								<td></td>
+							</tr>
+							<?php endforeach; ?>
+						</thead>
+					</table>
+
+				</div>
+
+			</div>
+													
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+
+		</div>
+	</div>
 </div>

@@ -8,7 +8,7 @@
 		    return $this->db->get('employee')->row();
 	    }
 
-		public function countData()
+		public function getCountVisitors()
 		{
 			return $this->db->count_all('customer');
 		}

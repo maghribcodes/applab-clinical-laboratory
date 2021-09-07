@@ -24,6 +24,8 @@ class Dashboard extends CI_Controller
 					'role'=>$data->role,
 				);
 
+		$data['viewCountVisitors'] = $this->user_model->getCountVisitors();
+		
         $this->load->view('templates/header');
         $this->load->view('cs/sidebar');
         $this->load->view('cs/dashboard', $data);

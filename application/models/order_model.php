@@ -18,14 +18,58 @@
 		    return $this->db->get();
 	    }
 
+		public function getDataNota()
+		{
+			$this->db->select('*');
+			$this->db->from('customer, nota, order, parameter');
+			$this->db->join('orderdetail', 'orderdetail.parameterId=parameter.parameterId', 'orderdetail.orderId=order.orderId');
+
+			return $this->db->get();
+		}
+
+		public function getParameterA()
+		{
+			$this->db->select('*');
+			$this->db->from('parameter');
+			$this->db->where('packageId', 'A');
+			$this->db->order_by('parameterId', 'asc');
+
+			return $this->db->get();
+		}
+
+		public function getParameterB()
+		{
+			$this->db->select('*');
+			$this->db->from('parameter');
+			$this->db->where('packageId', 'B');
+			$this->db->order_by('parameterId', 'asc');
+
+			return $this->db->get();
+		}
+
+		public function getParameterC()
+		{
+			$this->db->select('*');
+			$this->db->from('parameter');
+			$this->db->where('packageId', 'C');
+			$this->db->order_by('parameterId', 'asc');
+
+			return $this->db->get();
+		}
+
+		public function getParameterD()
+		{
+			$this->db->select('*');
+			$this->db->from('parameter');
+			$this->db->where('packageId', 'D');
+			$this->db->order_by('parameterId', 'asc');
+
+			return $this->db->get();
+		}
+
 		public function getTotalCost()
 		{
-			//$this->db->select('SELECT SUM(parameterCost) AS Total Cost', FALSE);
-			//$this->db->from('parameter');
-
-		    //return $this->db->get();
-			$this->db->where('parameterId', $parameterId);
-		    return $this->db->get('parameter')->row();
+			return $this->db->query("SELECT SUM(parameterCost) as total FROM parameter");
 		}
 
 		public function inputDataOrder($table, $data)
