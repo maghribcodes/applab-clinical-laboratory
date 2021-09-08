@@ -37,6 +37,7 @@
 						<thead>
 							<tr>
 								<th style="text-align: center; vertical-align: middle;">No.</th>
+								<th style="text-align: center; vertical-align: middle;">No. Sampel</th>
 								<th style="text-align: center; vertical-align: middle;">Tanggal Order</th>
 								<th style="text-align: center; vertical-align: middle;">Jam Order</th>
 								<th style="text-align: center; vertical-align: middle;">Nama</th>
@@ -54,6 +55,7 @@
 
 								<tr>
 									<td width="20px"><?php echo $no++ ?></td>
+									<td><?php ?></td>
 									<td><?php 
 											$date = new DateTime($vo->orderTime);
 											$date = $date->format('d F Y');

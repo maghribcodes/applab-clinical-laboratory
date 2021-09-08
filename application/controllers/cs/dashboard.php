@@ -25,6 +25,7 @@ class Dashboard extends CI_Controller
 				);
 
 		$data['viewCountVisitors'] = $this->user_model->getCountVisitors();
+		$data['viewCountSamples'] = $this->user_model->getCountSamples();
 		
         $this->load->view('templates/header');
         $this->load->view('cs/sidebar');

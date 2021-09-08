@@ -12,4 +12,9 @@
 		{
 			return $this->db->count_all('customer');
 		}
+
+		public function getCountSamples()
+		{
+			return $this->db->count_all('testresult');
+		}
     }

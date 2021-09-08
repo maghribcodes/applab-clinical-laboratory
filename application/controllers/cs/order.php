@@ -16,7 +16,7 @@
 
         public function index()
         {
-            $data['viewOrder'] = $this->order_model->getDataOrder()->result();
+            $data['viewOrder'] = $this->order_model->getDataCustomer()->result();
             //$data['viewNota'] = $this->order_model->getDataNota()->result();
 
             $this->load->view('templates/header');
@@ -78,7 +78,6 @@
                     'custId'=>$input1,
                     'notaId'=>$input2,
                     'sender'=>$this->input->post('sender'),
-                    //'clinicalNotes'=>$this->input->post('clinicalNotes'),
                 );
                 $input3=$this->order_model->inputDataOrder('order',$tableOrder);
 
@@ -116,11 +115,13 @@
             $this->form_validation->set_rules('address','address','required',['required'=>'Data harus diisi']);
         }
 
-        public function update($id)
+        /*public function update($id)
         {
-            $where = array('orderId' => $id);
+            $where = array(
+                'orderId' => $id
+            );
 
-            $data['order'] = $this->order_model->editDataOrder($where, 'order')->result();
+            $data['updateOrder'] = $this->order_model->editDataOrder($where, 'orderdetail', 'order')->result();
 
             $this->load->view('templates/header');
             $this->load->view('cs/sidebar');
@@ -131,13 +132,64 @@
         public function updateOrder()
         {
             $id = $this->input->post('orderId');
+
             $samples = $this->input->post('noSample');
+            $sample = implode(',', $samples);
+
             $custName = $this->input->post('custName');
             $contact = $this->input->post('contact');
             $gender = $this->input->post('gender');
-            $sender = $this->input->post('sender');
             $birthDate = $this->input->post('birthDate');
             $address = $this->input->post('address');
+
+            $sender = $this->input->post('sender');
+
             $parameters = $this->input->post('parameterId');
+
+            $tableCust = array(
+                'custName' => $custName,
+                'birthDate' => $birthDate,
+                'contact' => $contact,
+                'gender' => $gender,
+                'address' => $address,
+            );
+            $this->order_model->updateDataOrder('customer', $tableCust);
+
+            $tableOrder = array(
+                'sender' => $sender
+            );
+            $this->order_model->updateDataOrder('order', $tableOrder, $where);
+
+            foreach($sample as $samp)
+            {
+                $this->order_model->updateDataOrder('testresult', array
+                (
+                    'noSample'=>$samp
+                ));
+
+                foreach($parameters as $param)
+                {
+                    $this->order_model->updateDataOrder('orderdetail', $where, array
+                    (
+                        'noSample'=>$samp,
+                        'parameterId'=>$param
+                    ));
+                }
+            }
+
+            $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            redirect('cs/order');
+        }*/
+
+        public function update()
+        {
+            $id = $this->input->get('orderId');
+            $data['updateOrder'] = $this->order_model->getDataOrder($id);
+
+            $this->load->view('templates/header');
+            $this->load->view('cs/sidebar');
+            $this->load->view('cs/update', $data);
+            $this->load->view('templates/footer');
+
         }
     }

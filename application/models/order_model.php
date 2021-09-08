@@ -2,14 +2,8 @@
 
     class Order_model extends CI_Model
     {
-	    public function getDataOrder()
+	    public function getDataCustomer()
 	    {
-		    /*$this->db->select('testresult.*, customer.*, order.*, orderdetail.*');
-            $this->db->from('testresult, customer, order, orderdetail');
-			$this->db->where('testresult.noSample=orderdetail.noSample');
-            $this->db->where('order.orderId=orderdetail.orderId');
-		    $this->db->where('order.custId=customer.custId');*/
-
 			$this->db->select('*');
 			$this->db->from('customer');
 			$this->db->join('order', 'order.custId=customer.custId');
@@ -17,6 +11,24 @@
 
 		    return $this->db->get();
 	    }
+
+		public function getDataOrder($id)
+		{
+			$this->db->select('*');
+            //$this->db->from('testresult, customer, order, orderdetail');
+			//$this->db->where('testresult.noSample=orderdetail.noSample');
+			//$this->db->where('order.custId=customer.custId');
+            //$this->db->where('order.orderId=orderdetail.orderId');
+			$this->db->from('customer');
+			$this->db->join('order', 'order.custId=customer.custId');
+			$this->db->join('orderdetail', 'orderdetail.orderId=order.orderId');
+			$this->db->join('testresult', 'testresult.noSample=orderdetail.noSample');
+			$this->db->join('parameter', 'parameter.parameterId=orderdetail.parameterId');
+			$this->db->join('nota', 'nota.notaId=order.notaId');
+			//$this->db->where('orderId', $id);
+			
+			return $this->db->get();
+		}
 
 		public function getDataNota()
 		{
@@ -76,5 +88,16 @@
 		{
 			$query=$this->db->insert($table, $data);
 			return $this->db->insert_id();// return last insert id
+		}
+
+		/*public function editDataOrder($where, $table)
+		{
+			return $this->db->get_where($table, $where);
+		}*/
+
+		public function updateDataOrder($where, $data, $table)
+		{
+			$this->db->where($where);
+			$this->db->update($table, $data);
 		}
     }
