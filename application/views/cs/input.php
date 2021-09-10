@@ -92,8 +92,8 @@
             <!-- Content Row -->
                 <div class="row">
                 
-                <?php foreach($totalCost as $tc) : ?>
-                    <?php $sum = $tc->total ?>
+                <?php //foreach($totalCost as $tc) : ?>
+                    <?php //$sum = $tc->total ?>
                     <!-- First Column -->
                     <div class="col-lg-4">
 
@@ -193,7 +193,7 @@
                         </div>
                     </div>
                 
-                <?php endforeach; ?>
+                <?php //endforeach; ?>
 
                 </div>
             </div>

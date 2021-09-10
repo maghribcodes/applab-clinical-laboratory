@@ -17,4 +17,18 @@
 		{
 			return $this->db->count_all('testresult');
 		}
+
+		public function getCountLhus()
+		{
+			$this->db->like('statusId', '0');
+			$this->db->from('testresult');
+			return $this->db->count_all_results();
+		}
+
+		public function getCountLhu()
+		{
+			$this->db->like('statusId', '1');
+			$this->db->from('testresult');
+			return $this->db->count_all_results();
+		}
     }

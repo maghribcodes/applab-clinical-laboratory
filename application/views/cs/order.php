@@ -43,8 +43,8 @@
 								<th style="text-align: center; vertical-align: middle;">Nama</th>
 								<th style="text-align: center; vertical-align: middle;">Usia</th>
 								<th style="text-align: center; vertical-align: middle;">Jenis Kelamin</th>
-								<th style="text-align: center; vertical-align: middle;">Kontak</th>
-								<th style="text-align: center; vertical-align: middle;">Alamat</th>
+								<!--<th style="text-align: center; vertical-align: middle;">Kontak</th>
+								<th style="text-align: center; vertical-align: middle;">Alamat</th>-->
 								<th style="text-align: center; vertical-align: middle;">Kiriman</th>
 								<th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
 							</tr>
@@ -77,8 +77,8 @@
 										?>
 										</td>
 									<td><?php echo $vo->gender ?></td>
-									<td><?php echo $vo->contact ?></td>
-									<td><?php echo $vo->address ?></td>
+									<!--<td><?php //echo $vo->contact ?></td>
+									<td><?php //echo $vo->address ?></td>-->
 									<td><?php echo $vo->sender ?></td>
 									<td width="20px"><div class="btn btn-sm btn-success" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-print"></i></div></td>
 									<td width="20px"><?php echo anchor('cs/order/update/'.$vo->orderId,'<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
@@ -107,7 +107,7 @@
 					<table class="table table-bordered" width="100%" cellspacing="0">
 						<thead>
 							<tr>
-								<th style="text-align: center; vertical-align: middle;">PEMERINTAH PROVINSI SUMATERA BARAT<br>UPTD LAB. KES PADANG</th>
+								<th style="text-align: center; vertical-align: middle;">PEMERINTAH PROVINSI<br>SUMATERA BARAT<br>UPTD LAB. KES PADANG</th>
 								<th style="text-align: center; vertical-align: middle;">SURAT KETETAPAN RETRIBUSI DAERAH (SKRD)<br>PELAYANAN KESEHATAN (YANKES)</th>
 								<th style="text-align: center; vertical-align: middle;">NO.</th>
 							</tr>

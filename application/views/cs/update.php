@@ -23,14 +23,19 @@
                 <form>
                     <div class="form-group row">
                         <input type="hidden" name="orderId" value="<?php echo $uo->orderId ?>">
+                        <?php ?>
                         <label for="inputEmail3" class="col-sm-2 col-form-label">No. Sampel</label>
                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                <input type="text" name="noSample" class="form-control" value="<?php echo $uo->noSample ?>">
+                                <input type="text" name="noSample" class="form-control"
+                                        value="<?php 
+                                                    echo $uo->noSample;
+                                                ?>">
                                 <?php echo form_error('noSample', '<div class="text-danger small">','</div>') ?>
                             </div>
+                        <?php ?>
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Pengirim</label>
                             <div class="col-sm-4">
-                                <input type="name" name="sender" value="<?php ?>" class="form-control" id="inputEmail3">
+                                <input type="name" name="sender" value="<?php echo $uo->sender ?>" class="form-control" id="inputEmail3">
                             </div>
                     </div>
 
@@ -42,7 +47,7 @@
                             </div>
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal Lahir</label>
                             <div class="col-sm-4">
-                                <input type="date" name="birthDate" class="form-control" id="inputEmail3" value="<?php echo set_value('birthDate'); ?>">
+                                <input type="date" name="birthDate" class="form-control" id="inputEmail3" value="<?php echo $uo->birthDate ?>">
                                 <?php echo form_error('birthDate', '<div class="text-danger small">','</div>') ?>
                             </div>
                     </div>
@@ -50,12 +55,12 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Kontak</label>
                             <div class="col-sm-4">
-                                <input type="name" name="contact" class="form-control" id="inputEmail3" value="<?php echo set_value('contact'); ?>">
+                                <input type="name" name="contact" class="form-control" id="inputEmail3" value="<?php echo $uo->contact ?>">
                                 <?php echo form_error('contact', '<div class="text-danger small">','</div>') ?>
                             </div>
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Alamat</label>
                             <div class="col-sm-4">
-                                <input type="name" name="address" class="form-control" id="inputEmail3" value="<?php echo set_value('address'); ?>">
+                                <input type="name" name="address" class="form-control" id="inputEmail3" value="<?php echo $uo->address ?>">
                                 <?php echo form_error('address', '<div class="text-danger small">','</div>') ?>
                             </div>
                     </div>
@@ -65,13 +70,13 @@
                             <legend class="col-form-label col-sm-2 pt-0">Jenis Kelamin</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="Laki-laki" <?php echo set_radio('gender','Laki-laki'); ?>>
+                                        <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="<?php echo $uo->gender ?>" <?php if($uo->gender=='Laki-laki') echo 'checked="checked"' ?>>
                                             <label class="form-check-label" for="gridRadios1">
                                                 Laki-laki
                                             </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="Perempuan" <?php echo set_radio('gender','Perempuan'); ?>>
+                                        <input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="<?php echo $uo->gender ?>" <?php if($uo->gender=='Perempuan') echo 'checked="checked"' ?>>
                                             <label class="form-check-label" for="gridRadios2">
                                                 Perempuan
                                             </label>
@@ -93,9 +98,8 @@
                 <div class="container-fluid">
                 <!-- Content Row -->
                     <div class="row">
-                    
-                    <?php foreach($totalCost as $tc) : ?>
-                        <?php $sum = $tc->total ?>
+                    <?php $check = $uo->parameterId ?>
+                    <?php //foreach($checks as $check) : ?>
                         <!-- First Column -->
                         <div class="col-lg-4">
 
@@ -109,7 +113,8 @@
                                     <?php $no=1; foreach($viewParameterA as $hematologi) : ?>
                                     
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $hematologi->parameterId; ?>" id="defaultCheck1">
+                                        <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $hematologi->parameterId; ?>" 
+                                            <?php if($check == $hematologi->parameterId){echo 'checked="checked"'; } ?> id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $hematologi->parameterName ?>
                                             </label>
@@ -131,7 +136,8 @@
                                     <?php $no=1; foreach($viewParameterD as $mikrobiologi) : ?>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $mikrobiologi->parameterId; ?>" id="defaultCheck1">
+                                        <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $mikrobiologi->parameterId; ?>" 
+                                        <?php if($check == $mikrobiologi->parameterId){echo 'checked="checked"'; } ?> id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $mikrobiologi->parameterName ?>
                                             </label>
@@ -157,7 +163,8 @@
                                     <?php $no=1; foreach($viewParameterB as $kimiaklinik) : ?>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $kimiaklinik->parameterId; ?>" id="defaultCheck1">
+                                        <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $kimiaklinik->parameterId; ?>" 
+                                        <?php if($check == $kimiaklinik->parameterId){echo 'checked="checked"'; } ?> id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $kimiaklinik->parameterName ?>
                                             </label>
@@ -183,7 +190,8 @@
                                     <?php $no=1; foreach($viewParameterC as $serologi) : ?>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $serologi->parameterId; ?>" id="defaultCheck1">
+                                        <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $serologi->parameterId; ?>" 
+                                        <?php if($check == $serologi->parameterId){echo 'checked="checked"'; } ?> id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $serologi->parameterName ?>
                                             </label>
@@ -194,9 +202,7 @@
                                 </div>
                             </div>
                         </div>
-                    
-                    <?php endforeach; ?>
-
+                    <?php //endforeach; ?>
                     </div>
                 </div>
 

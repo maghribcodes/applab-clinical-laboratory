@@ -12,20 +12,16 @@
 		    return $this->db->get();
 	    }
 
-		public function getDataOrder($id)
+		public function getDataOrder($orderId)
 		{
 			$this->db->select('*');
-            //$this->db->from('testresult, customer, order, orderdetail');
-			//$this->db->where('testresult.noSample=orderdetail.noSample');
-			//$this->db->where('order.custId=customer.custId');
-            //$this->db->where('order.orderId=orderdetail.orderId');
-			$this->db->from('customer');
-			$this->db->join('order', 'order.custId=customer.custId');
-			$this->db->join('orderdetail', 'orderdetail.orderId=order.orderId');
+			$this->db->from('orderdetail');
+			$this->db->join('order', 'order.orderId=orderdetail.orderId');
+			$this->db->join('customer', 'order.custId=customer.custId');
 			$this->db->join('testresult', 'testresult.noSample=orderdetail.noSample');
-			$this->db->join('parameter', 'parameter.parameterId=orderdetail.parameterId');
-			$this->db->join('nota', 'nota.notaId=order.notaId');
-			//$this->db->where('orderId', $id);
+			//$this->db->join('parameter', 'parameter.parameterId=orderdetail.parameterId');
+			//$this->db->join('nota', 'nota.notaId=order.notaId');
+			$this->db->where('order.orderId', $orderId);
 			
 			return $this->db->get();
 		}
@@ -79,10 +75,10 @@
 			return $this->db->get();
 		}
 
-		public function getTotalCost()
+		/*public function getTotalCost()
 		{
 			return $this->db->query("SELECT SUM(parameterCost) as total FROM parameter");
-		}
+		}*/
 
 		public function inputDataOrder($table, $data)
 		{
@@ -90,10 +86,14 @@
 			return $this->db->insert_id();// return last insert id
 		}
 
-		/*public function editDataOrder($where, $table)
+		public function editDataOrder($where, $table)
 		{
+			//$this->db->select('*');
+			//$this->db->from('order');
+			//$this->db->join('orderdetail', 'orderdetail.orderId=order.orderId');
+
 			return $this->db->get_where($table, $where);
-		}*/
+		}
 
 		public function updateDataOrder($where, $data, $table)
 		{

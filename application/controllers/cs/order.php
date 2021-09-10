@@ -32,7 +32,7 @@
             $data['viewParameterC'] = $this->order_model->getParameterC()->result();
             $data['viewParameterD'] = $this->order_model->getParameterD()->result();
 
-            $data['totalCost'] = $this->order_model->getTotalCost()->result();
+            //$data['totalCost'] = $this->order_model->getTotalCost()->result();
 
             $this->load->view('templates/header');
             $this->load->view('cs/sidebar');
@@ -115,13 +115,14 @@
             $this->form_validation->set_rules('address','address','required',['required'=>'Data harus diisi']);
         }
 
-        /*public function update($id)
+        public function update($orderId)
         {
-            $where = array(
-                'orderId' => $id
-            );
+            $data['updateOrder'] = $this->order_model->getDataOrder($orderId)->result();
 
-            $data['updateOrder'] = $this->order_model->editDataOrder($where, 'orderdetail', 'order')->result();
+            $data['viewParameterA'] = $this->order_model->getParameterA()->result();
+            $data['viewParameterB'] = $this->order_model->getParameterB()->result();
+            $data['viewParameterC'] = $this->order_model->getParameterC()->result();
+            $data['viewParameterD'] = $this->order_model->getParameterD()->result();
 
             $this->load->view('templates/header');
             $this->load->view('cs/sidebar');
@@ -134,7 +135,7 @@
             $id = $this->input->post('orderId');
 
             $samples = $this->input->post('noSample');
-            $sample = implode(',', $samples);
+            $sample = explode(',', $samples);
 
             $custName = $this->input->post('custName');
             $contact = $this->input->post('contact');
@@ -179,17 +180,5 @@
 
             $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             redirect('cs/order');
-        }*/
-
-        public function update()
-        {
-            $id = $this->input->get('orderId');
-            $data['updateOrder'] = $this->order_model->getDataOrder($id);
-
-            $this->load->view('templates/header');
-            $this->load->view('cs/sidebar');
-            $this->load->view('cs/update', $data);
-            $this->load->view('templates/footer');
-
         }
     }
