@@ -1,3 +1,4 @@
+<?php //echo json_encode($updateOrder); ?>
 <div class="container-fluid" style="height:250px; background-color: rgba(195,0,0,1.48);">
 
 <!-- Page Heading -->
@@ -9,7 +10,9 @@
 
     <br>
 
-<?php foreach($updateOrder as $uo) : ?>
+<?php $parameters=array();
+
+    foreach($updateOrder as $uo) : ?>
 
     <form method="post" action="<?php echo base_url('cs/order/updateOrder') ?>">
         <div class="card shadow mb-4">
@@ -28,7 +31,7 @@
                             <div class="col-sm-4 mb-3 mb-sm-0">
                                 <input type="text" name="noSample" class="form-control"
                                         value="<?php 
-                                                    echo $uo->noSample;
+                                                    echo $uo->Samples;
                                                 ?>">
                                 <?php echo form_error('noSample', '<div class="text-danger small">','</div>') ?>
                             </div>
@@ -98,8 +101,13 @@
                 <div class="container-fluid">
                 <!-- Content Row -->
                     <div class="row">
-                    <?php $check = $uo->parameterId ?>
-                    <?php //foreach($checks as $check) : ?>
+                    <?php //$check = $uo->parameterId ?>
+
+                    <?php $parameters[] = $uo->parameterId; ?>
+    
+    <?php endforeach; ?>
+
+                    <?php foreach($updateOrder as $check) : ?>
                         <!-- First Column -->
                         <div class="col-lg-4">
 
@@ -109,12 +117,17 @@
                                 </div>
                                 
                                 <div class="card-body">
-
+                                <?php
+                                    if(in_array($check->parameterId, $parameters))
+                                    { ?>
+                                    
                                     <?php $no=1; foreach($viewParameterA as $hematologi) : ?>
                                     
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $hematologi->parameterId; ?>" 
-                                            <?php if($check == $hematologi->parameterId){echo 'checked="checked"'; } ?> id="defaultCheck1">
+                                        <input class="form-check-input" type="checkbox" name="parameterId[]" 
+                                            value="<?php echo $hematologi->parameterId; ?>" 
+                                            <?php if($parameters == $hematologi->parameterId){echo 'checked="checked"'; } ?>
+                                                id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $hematologi->parameterName ?>
                                             </label>
@@ -136,7 +149,8 @@
                                     <?php $no=1; foreach($viewParameterD as $mikrobiologi) : ?>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $mikrobiologi->parameterId; ?>" 
+                                        <input class="form-check-input" type="checkbox" name="parameterId[]" 
+                                        value="<?php echo $mikrobiologi->parameterId; ?>" 
                                         <?php if($check == $mikrobiologi->parameterId){echo 'checked="checked"'; } ?> id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $mikrobiologi->parameterName ?>
@@ -197,24 +211,24 @@
                                             </label>
                                     </div>
 
-                                    <?php endforeach; ?>
+                                    <?php endforeach; ?> <?php } ?>
 
                                 </div>
                             </div>
                         </div>
-                    <?php //endforeach; ?>
+                    <?php endforeach; ?>
                     </div>
                 </div>
 
             </div>
 
             <div class="card-body">
-                <button type="submit" class="btn btn-danger btn-lg btn-block">SIMPAN</button>
+                <button type="submit" class="btn btn-danger btn-lg btn-block">UPDATE</button>
                 <!--<button type="submit" class="btn btn-secondary btn-lg btn-block">BATAL</button>-->
             </div>
 
         </div>
 
     </form>
-<?php endforeach; ?>
+<?php //endforeach; ?>
 </div>

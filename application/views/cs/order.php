@@ -55,7 +55,9 @@
 
 								<tr>
 									<td width="20px"><?php echo $no++ ?></td>
-									<td><?php ?></td>
+									<td><?php
+										echo $vo->Samples
+									?></td>
 									<td><?php 
 											$date = new DateTime($vo->orderTime);
 											$date = $date->format('d F Y');

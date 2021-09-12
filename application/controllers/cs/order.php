@@ -17,6 +17,7 @@
         public function index()
         {
             $data['viewOrder'] = $this->order_model->getDataCustomer()->result();
+
             //$data['viewNota'] = $this->order_model->getDataNota()->result();
 
             $this->load->view('templates/header');

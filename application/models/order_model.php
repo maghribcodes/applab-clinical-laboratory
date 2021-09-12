@@ -4,22 +4,24 @@
     {
 	    public function getDataCustomer()
 	    {
-			$this->db->select('*');
-			$this->db->from('customer');
-			$this->db->join('order', 'order.custId=customer.custId');
-			$this->db->order_by('order.orderId','desc');
+			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR ", ") as Samples');
+			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
+			$this->db->join('customer', 'order.custId=customer.custId', 'left');
+			$this->db->group_by('orderdetail.orderId');
+			$this->db->order_by('orderdetail.orderId', 'desc');
 
-		    return $this->db->get();
+			return $this->db->get();
 	    }
 
 		public function getDataOrder($orderId)
 		{
-			$this->db->select('*');
+			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR ",") as Samples');
 			$this->db->from('orderdetail');
-			$this->db->join('order', 'order.orderId=orderdetail.orderId');
-			$this->db->join('customer', 'order.custId=customer.custId');
-			$this->db->join('testresult', 'testresult.noSample=orderdetail.noSample');
-			//$this->db->join('parameter', 'parameter.parameterId=orderdetail.parameterId');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
+			$this->db->join('customer', 'order.custId=customer.custId', 'left');
+			//$this->db->join('testresult', 'testresult.noSample=orderdetail.noSample');
+			$this->db->join('parameter', 'parameter.parameterId=orderdetail.parameterId');
 			//$this->db->join('nota', 'nota.notaId=order.notaId');
 			$this->db->where('order.orderId', $orderId);
 			
