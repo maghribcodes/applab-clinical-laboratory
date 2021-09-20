@@ -19,7 +19,7 @@
 
         <div class="card-body">
 
-            <form action="<?php //echo base_url('cs/order') ?>">
+            <form>
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">No. Sampel</label>
                         <div class="col-sm-4 mb-3 mb-sm-0">
@@ -202,7 +202,6 @@
 
         <div class="card-body">
             <button type="submit" class="btn btn-danger btn-lg btn-block">SIMPAN</button>
-            <!--<button type="submit" class="btn btn-secondary btn-lg btn-block">BATAL</button>-->
         </div>
 
     </div>

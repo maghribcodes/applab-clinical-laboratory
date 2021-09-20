@@ -12,13 +12,13 @@
                 
                 redirect('auth');
             }
+
+            $this->load->library('Pdf');
         }
 
         public function index()
         {
             $data['viewOrder'] = $this->order_model->getDataCustomer()->result();
-
-            //$data['viewNota'] = $this->order_model->getDataNota()->result();
 
             $this->load->view('templates/header');
             $this->load->view('cs/sidebar');
@@ -32,8 +32,6 @@
             $data['viewParameterB'] = $this->order_model->getParameterB()->result();
             $data['viewParameterC'] = $this->order_model->getParameterC()->result();
             $data['viewParameterD'] = $this->order_model->getParameterD()->result();
-
-            //$data['totalCost'] = $this->order_model->getTotalCost()->result();
 
             $this->load->view('templates/header');
             $this->load->view('cs/sidebar');
@@ -57,8 +55,6 @@
                 $sample = explode(',', $samples);
 
                 $parameters = $this->input->post('parameterId');
-
-                //$data['totalCost'] = $this->order_model->getTotalCost()->result();
 
                 $tableCust = array(
                     'custName'=>$this->input->post('custName'),
@@ -114,6 +110,32 @@
             $this->form_validation->set_rules('contact','contact','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('gender','gender','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('address','address','required',['required'=>'Data harus diisi']);
+        }
+
+        public function nota($orderId)
+        {
+            $data['viewNota'] = $this->order_model->getDataNota($orderId)->result();
+            $data['viewCost'] = $this->order_model->getAllParameters()->result();
+
+            /*$sum = $this->input->post('total');
+
+            $tableNota = array(
+                'totalCost'=>$sum,
+            );
+            $input2=$this->order_model->updateDataOrder($orderId, 'nota', $tableNota);*/
+
+            $this->load->view('templates/header');
+            $this->load->view('cs/sidebar');
+            $this->load->view('cs/nota', $data);
+            $this->load->view('templates/footer');
+        }
+
+        public function printNota($orderId)
+        {
+            $data['printNota'] = $this->order_model->getDataNota($orderId)->result();
+            $data['printCost'] = $this->order_model->getAllParameters()->result();
+
+            $this->load->view('cs/print', $data);
         }
 
         public function update($orderId)
@@ -182,4 +204,10 @@
             $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             redirect('cs/order');
         }
+
+        public function contoh()
+        {
+            $this->load->view('contoh', $data);
+        }
+
     }

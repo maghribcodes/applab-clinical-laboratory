@@ -16,23 +16,33 @@
 
 		public function getDataOrder($orderId)
 		{
-			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR ",") as Samples');
+			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR ",") as Samples,
+									GROUP_CONCAT(DISTINCT parameterId SEPARATOR " ") as Parameters');
 			$this->db->from('orderdetail');
 			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
-			//$this->db->join('testresult', 'testresult.noSample=orderdetail.noSample');
-			$this->db->join('parameter', 'parameter.parameterId=orderdetail.parameterId');
-			//$this->db->join('nota', 'nota.notaId=order.notaId');
 			$this->db->where('order.orderId', $orderId);
 			
 			return $this->db->get();
 		}
 
-		public function getDataNota()
+		public function getDataNota($orderId)
 		{
 			$this->db->select('*');
-			$this->db->from('customer, nota, order, parameter');
-			$this->db->join('orderdetail', 'orderdetail.parameterId=parameter.parameterId', 'orderdetail.orderId=order.orderId');
+			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
+			$this->db->join('customer', 'order.custId=customer.custId', 'left');
+			$this->db->join('nota', 'order.notaId=nota.notaId', 'left');
+			$this->db->join('employee', 'nota.empId=employee.empId', 'left');
+			$this->db->where('orderdetail.orderId', $orderId);
+
+			return $this->db->get();
+		}
+
+		public function getAllParameters()
+		{
+			$this->db->select('*');
+			$this->db->from('parameter');
 
 			return $this->db->get();
 		}
@@ -77,24 +87,10 @@
 			return $this->db->get();
 		}
 
-		/*public function getTotalCost()
-		{
-			return $this->db->query("SELECT SUM(parameterCost) as total FROM parameter");
-		}*/
-
 		public function inputDataOrder($table, $data)
 		{
 			$query=$this->db->insert($table, $data);
 			return $this->db->insert_id();// return last insert id
-		}
-
-		public function editDataOrder($where, $table)
-		{
-			//$this->db->select('*');
-			//$this->db->from('order');
-			//$this->db->join('orderdetail', 'orderdetail.orderId=order.orderId');
-
-			return $this->db->get_where($table, $where);
 		}
 
 		public function updateDataOrder($where, $data, $table)
