@@ -13,7 +13,7 @@
                 redirect('auth');
             }
 
-            $this->load->library('Pdf');
+            $this->load->library('pdf');
         }
 
         public function index()

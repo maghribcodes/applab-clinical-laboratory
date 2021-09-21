@@ -54,7 +54,7 @@
 								foreach ($viewOrder as $vo): ?>
 
 								<tr>
-									<td width="20px"><?php echo $no++ ?></td>
+									<td width="20px" style="text-align: center; vertical-align: middle;"><?php echo $no++ ?></td>
 									<td><?php
 										echo $vo->Samples
 									?></td>
@@ -82,7 +82,7 @@
 									<!--<td><?php //echo $vo->contact ?></td>
 									<td><?php //echo $vo->address ?></td>-->
 									<td><?php echo $vo->sender ?></td>
-									<td width="20px"><?php echo anchor('cs/order/nota/'.$vo->orderId, '<div class="btn btn-sm btn-success"><i class="fa fa-print"></i></div>') ?></td>
+									<td width="20px"><?php echo anchor('cs/order/nota/'.$vo->orderId, '<div class="btn btn-sm btn-success"><i class="far fa-eye"></i></div>') ?></td>
 									<td width="20px"><?php echo anchor('cs/order/update/'.$vo->orderId,'<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
 									<td width="20px"><?php echo anchor('cs/order/delete/'.$vo->orderId,'<div class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></div>') ?></td>
 								</tr>
