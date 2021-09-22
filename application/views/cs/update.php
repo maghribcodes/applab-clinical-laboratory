@@ -36,6 +36,7 @@
                         <input type="hidden" name="orderId" value="<?php echo $uo->orderId ?>">
                         <input type="hidden" name="custId" value="<?php echo $uo->custId ?>">
                         <input type="hidden" name="notaId" value="<?php echo $uo->notaId ?>">
+                        <input type="hidden" name="samples" value="<?php echo implode(', ', $samp); ?>">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">No. Sampel</label>
                             <div class="col-sm-4 mb-3 mb-sm-0">
                                 <input type="text" name="noSample" class="form-control" value="<?php echo implode(', ', $samp); ?>">

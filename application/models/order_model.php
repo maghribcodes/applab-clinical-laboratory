@@ -89,6 +89,14 @@
 			return $this->db->get();
 		}
 
+		public function getAllSamples()
+		{
+			$this->db->select('*');
+			$this->db->from('testresult');
+			
+			return $this->db->get();
+		}
+
 		public function inputDataOrder($table, $data)
 		{
 			$query=$this->db->insert($table, $data);
@@ -99,5 +107,11 @@
 		{
 			$this->db->where($where);
 			$this->db->update($table, $data);
+		}
+
+		public function deleteDataOrder($where, $table)
+		{
+			$this->db->where($where);
+			$this->db->update($table);
 		}
     }
