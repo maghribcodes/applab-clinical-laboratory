@@ -52,31 +52,49 @@
                 $employess = $this->session->userdata('empId');
 
                 $samples = $this->input->post('noSample');
-                $sample = explode(',', $samples);
+                $sample = explode(', ', $samples);
 
                 $parameters = $this->input->post('parameterId');
 
                 $tableCust = array(
                     'custName'=>$this->input->post('custName'),
                     'birthDate'=>$this->input->post('birthDate'),
-                    'contact'=>$this->input->post('contact'),
                     'gender'=>$this->input->post('gender'),
+                    'contact'=>$this->input->post('contact'),
                     'address'=>$this->input->post('address'),
                 );
-                $input1=$this->order_model->inputDataOrder('customer',$tableCust);
+                $input1=$this->order_model->inputDataOrder('customer', $tableCust);
+
+                $getAllCost = $this->order_model->getAllParameters()->result();
+                $cost = array();
+                foreach($getAllCost as $gac)
+                {
+                    if($parameters != NULL)
+                    {
+                        if(in_array($gac->parameterId, $parameters))
+                        {
+                            $cost[] = $gac->parameterCost;
+                            $total = array_sum($cost);
+                        }
+                    }
+                    else
+                    {
+                        $total = 0;
+                    }
+                }
                 
                 $tableNota = array(
-                    'totalCost'=>$sum,
+                    'totalCost'=>$total,
                     'empId'=>$employess,
                 );
-                $input2=$this->order_model->inputDataOrder('nota',$tableNota);
+                $input2=$this->order_model->inputDataOrder('nota', $tableNota);
 
                 $tableOrder = array(
                     'custId'=>$input1,
                     'notaId'=>$input2,
                     'sender'=>$this->input->post('sender'),
                 );
-                $input3=$this->order_model->inputDataOrder('order',$tableOrder);
+                $input3=$this->order_model->inputDataOrder('order', $tableOrder);
 
                 foreach($sample as $samp)
                 {
@@ -117,13 +135,6 @@
             $data['viewNota'] = $this->order_model->getDataNota($orderId)->result();
             $data['viewCost'] = $this->order_model->getAllParameters()->result();
 
-            /*$sum = $this->input->post('total');
-
-            $tableNota = array(
-                'totalCost'=>$sum,
-            );
-            $input2=$this->order_model->updateDataOrder($orderId, 'nota', $tableNota);*/
-
             $this->load->view('templates/header');
             $this->load->view('cs/sidebar');
             $this->load->view('cs/nota', $data);
@@ -155,48 +166,67 @@
 
         public function updateOrder()
         {
-            $id = $this->input->post('orderId');
+            $custId = $this->input->post('custId');
+            $where = array('custId' => $custId);
+            $tableCust = array(
+                'custName' => $this->input->post('custName'),
+                'birthDate' => $this->input->post('birthDate'),
+                'gender' => $this->input->post('gender'),
+                'contact' => $this->input->post('contact'),
+                'address' => $this->input->post('address'),
+            );
+            $this->order_model->updateDataOrder($where, 'customer', $tableCust);
+
+            $orderId = $this->input->post('orderId');
+            $where = array('orderId' => $orderId);
+            $tableOrder = array(
+                'sender' => $this->input->post('sender')
+            );
+            $this->order_model->updateDataOrder($where, 'order', $tableOrder);
+
+            $notaId = $this->input->post('notaId');
+            $parameters = $this->input->post('parameterId');
+            $where = array('notaId' => $notaId);
+            $getAllCost = $this->order_model->getAllParameters()->result();
+                $cost = array();
+                foreach($getAllCost as $gac)
+                {
+                    if($parameters != NULL)
+                    {
+                        if(in_array($gac->parameterId, $parameters))
+                        {
+                            $cost[] = $gac->parameterCost;
+                            $total = array_sum($cost);
+                        }
+                    }
+                    else
+                    {
+                        $total = 0;
+                    }
+                }
+            $tableNota = array(
+                'totalCost'=>$total
+            );
+            $this->order_model->updateDataOrder($where, 'nota', $tableNota);
 
             $samples = $this->input->post('noSample');
-            $sample = explode(',', $samples);
-
-            $custName = $this->input->post('custName');
-            $contact = $this->input->post('contact');
-            $gender = $this->input->post('gender');
-            $birthDate = $this->input->post('birthDate');
-            $address = $this->input->post('address');
-
-            $sender = $this->input->post('sender');
-
-            $parameters = $this->input->post('parameterId');
-
-            $tableCust = array(
-                'custName' => $custName,
-                'birthDate' => $birthDate,
-                'contact' => $contact,
-                'gender' => $gender,
-                'address' => $address,
-            );
-            $this->order_model->updateDataOrder('customer', $tableCust);
-
-            $tableOrder = array(
-                'sender' => $sender
-            );
-            $this->order_model->updateDataOrder('order', $tableOrder, $where);
-
+            $sample = explode(', ', $samples);
+            //$where = array('noSample' => $sample);
             foreach($sample as $samp)
             {
-                $this->order_model->updateDataOrder('testresult', array
+                $where = array('noSample' => $samp);
+                $this->order_model->updateDataOrder($where, 'testresult', array
                 (
                     'noSample'=>$samp
                 ));
 
                 foreach($parameters as $param)
                 {
-                    $this->order_model->updateDataOrder('orderdetail', $where, array
+                    $where = array('orderId' => $orderId);
+                    $this->order_model->updateDataOrder($where, 'orderdetail', array
                     (
-                        'noSample'=>$samp,
-                        'parameterId'=>$param
+                        'noSample' => $samp,
+                        'parameterId' => $param
                     ));
                 }
             }
@@ -204,10 +234,4 @@
             $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             redirect('cs/order');
         }
-
-        public function contoh()
-        {
-            $this->load->view('contoh', $data);
-        }
-
     }

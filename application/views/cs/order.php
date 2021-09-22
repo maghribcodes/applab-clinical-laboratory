@@ -43,9 +43,8 @@
 								<th style="text-align: center; vertical-align: middle;">Nama</th>
 								<th style="text-align: center; vertical-align: middle;">Usia</th>
 								<th style="text-align: center; vertical-align: middle;">Jenis Kelamin</th>
-								<!--<th style="text-align: center; vertical-align: middle;">Kontak</th>
-								<th style="text-align: center; vertical-align: middle;">Alamat</th>-->
 								<th style="text-align: center; vertical-align: middle;">Kiriman</th>
+								<th style="text-align: center; vertical-align: middle;">Status</th>
 								<th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
 							</tr>
 
@@ -55,33 +54,36 @@
 
 								<tr>
 									<td width="20px" style="text-align: center; vertical-align: middle;"><?php echo $no++ ?></td>
-									<td><?php
+									<td style="vertical-align: middle;"><?php
 										echo $vo->Samples
 									?></td>
-									<td><?php 
+									<td style="vertical-align: middle;"><?php 
 											$date = new DateTime($vo->orderTime);
 											$date = $date->format('d F Y');
 											echo $date;
 										?>
 										</td>
-									<td><?php 
+									<td style="vertical-align: middle;"><?php 
 											$time = new DateTime($vo->orderTime);
 											$time = $time->format('H:i:s A');
 											echo $time;
 										?>
 										</td>
-									<td><?php echo $vo->custName ?></td>
-									<td><?php 
+									<td style="vertical-align: middle;"><?php echo $vo->custName ?></td>
+									<td style="text-align: center; vertical-align: middle;"><?php 
 											$birth = new DateTime($vo->birthDate);
 											$now = new DateTime();
 											$age = $now->diff($birth);
 											echo $age->y;
 										?>
 										</td>
-									<td><?php echo $vo->gender ?></td>
-									<!--<td><?php //echo $vo->contact ?></td>
-									<td><?php //echo $vo->address ?></td>-->
-									<td><?php echo $vo->sender ?></td>
+									<td style="text-align: center; vertical-align: middle;"><?php echo $vo->gender ?></td>
+									<td style="text-align: center; vertical-align: middle;"><?php echo $vo->sender ?></td>
+									<td style="vertical-align: middle;">
+										<?php
+
+										?>
+									</td>
 									<td width="20px"><?php echo anchor('cs/order/nota/'.$vo->orderId, '<div class="btn btn-sm btn-success"><i class="far fa-eye"></i></div>') ?></td>
 									<td width="20px"><?php echo anchor('cs/order/update/'.$vo->orderId,'<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
 									<td width="20px"><?php echo anchor('cs/order/delete/'.$vo->orderId,'<div class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></div>') ?></td>

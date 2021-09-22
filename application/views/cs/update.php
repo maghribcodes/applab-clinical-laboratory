@@ -10,7 +10,17 @@
 
     <br>
 
-    <?php foreach($updateOrder as $uo) : ?>
+    <?php
+        $samples=array();
+        $parameters=array();
+
+        foreach($updateOrder as $uo)
+        {
+            $samples[] = $uo->noSample;
+            $parameters[] = $uo->parameterId;
+            $samp = array_unique($samples);
+            $param = array_unique($parameters);
+        }?>
 
     <form method="post" action="<?php echo base_url('cs/order/updateOrder') ?>">
         <div class="card shadow mb-4">
@@ -24,9 +34,11 @@
                 <form>
                     <div class="form-group row">
                         <input type="hidden" name="orderId" value="<?php echo $uo->orderId ?>">
+                        <input type="hidden" name="custId" value="<?php echo $uo->custId ?>">
+                        <input type="hidden" name="notaId" value="<?php echo $uo->notaId ?>">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">No. Sampel</label>
                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                <input type="text" name="noSample" class="form-control" value="<?php echo $uo->Samples; ?>">
+                                <input type="text" name="noSample" class="form-control" value="<?php echo implode(', ', $samp); ?>">
                                 <?php echo form_error('noSample', '<div class="text-danger small">','</div>') ?>
                             </div>
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Pengirim</label>
@@ -85,7 +97,7 @@
 
             </div>
 
-    <?php endforeach; ?>
+    <?php //endforeach; ?>
 
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-danger">LAB UJI TERKAIT</h6>
@@ -97,7 +109,7 @@
                 <!-- Content Row -->
                     <div class="row">
 
-                    <?php $parameters = explode(' ', $uo->Parameters); ?>
+                    <?php //$parameters = explode(' ', $uo->Parameters); ?>
 
                         <!-- First Column -->
                         
@@ -112,7 +124,7 @@
                                 
                                     <?php $no=1; foreach($viewParameterA as $hematologi) : ?>
 
-                                        <?php if(in_array($hematologi->parameterId, $parameters)){
+                                        <?php if(in_array($hematologi->parameterId, $param)){
                                                     $s= 'checked="checked"'; 
                                                 }
                                                 else{
@@ -143,7 +155,7 @@
 
                                     <?php $no=1; foreach($viewParameterD as $mikrobiologi) : ?>
 
-                                        <?php if(in_array($mikrobiologi->parameterId, $parameters)){
+                                        <?php if(in_array($mikrobiologi->parameterId, $param)){
                                                     $s= 'checked="checked"'; 
                                                 }
                                                 else{
@@ -177,7 +189,7 @@
                                     
                                     <?php $no=1; foreach($viewParameterB as $kimiaklinik) : ?>
 
-                                        <?php if(in_array($kimiaklinik->parameterId, $parameters)){
+                                        <?php if(in_array($kimiaklinik->parameterId, $param)){
                                                     $s= 'checked="checked"'; 
                                                 }
                                                 else{
@@ -211,7 +223,7 @@
 
                                     <?php $no=1; foreach($viewParameterC as $serologi) : ?>
 
-                                        <?php if(in_array($serologi->parameterId, $parameters)){
+                                        <?php if(in_array($serologi->parameterId, $param)){
                                                     $s= 'checked="checked"'; 
                                                 }
                                                 else{

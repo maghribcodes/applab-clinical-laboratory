@@ -6,21 +6,23 @@
 	    {
 			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR ", ") as Samples');
 			$this->db->from('orderdetail');
-			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId','left');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
-			$this->db->group_by('orderdetail.orderId');
-			$this->db->order_by('orderdetail.orderId', 'desc');
+			$this->db->group_by('order.orderId');
+			$this->db->order_by('order.orderId', 'desc');
 
 			return $this->db->get();
 	    }
 
 		public function getDataOrder($orderId)
 		{
-			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR ",") as Samples,
-									GROUP_CONCAT(DISTINCT parameterId SEPARATOR " ") as Parameters');
+			$this->db->select('*');
 			$this->db->from('orderdetail');
 			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
+			$this->db->join('nota', 'order.notaId=nota.notaId', 'left');
+			$this->db->join('employee', 'nota.empId=employee.empId', 'left');
+			$this->db->join('testresult', 'testresult.noSample=orderdetail.noSample', 'left');
 			$this->db->where('order.orderId', $orderId);
 			
 			return $this->db->get();
@@ -93,7 +95,7 @@
 			return $this->db->insert_id();// return last insert id
 		}
 
-		public function updateDataOrder($where, $data, $table)
+		public function updateDataOrder($where, $table, $data)
 		{
 			$this->db->where($where);
 			$this->db->update($table, $data);
