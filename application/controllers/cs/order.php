@@ -132,7 +132,7 @@
 
         public function nota($orderId)
         {
-            $data['viewNota'] = $this->order_model->getDataNota($orderId)->result();
+            $data['viewNota'] = $this->order_model->getDataOrder($orderId)->result();
             $data['viewCost'] = $this->order_model->getAllParameters()->result();
 
             $this->load->view('templates/header');
@@ -143,7 +143,7 @@
 
         public function printNota($orderId)
         {
-            $data['printNota'] = $this->order_model->getDataNota($orderId)->result();
+            $data['printNota'] = $this->order_model->getDataOrder($orderId)->result();
             $data['printCost'] = $this->order_model->getAllParameters()->result();
 
             $this->load->view('cs/print', $data);
@@ -217,47 +217,30 @@
             $updatedSamples = $this->input->post('noSample');
             $updatedSamplesExplode = explode(', ', $updatedSamples);
 
-            $checkSamples = $this->order_model->getAllSamples()->result();
-            
-            foreach($samplesExplode as $x)
-            {
-                foreach($updatedSamplesExplode as $y)
-                {
-                    if(in_array($y, $checkSamples))
-                    {
-                        $this->db->delete('orderdetail', array
-                        (
-                            'orderId' => $orderId,
-                            'noSample' => $x
-                        ));
-                    }
-                    else
-                    {
-                        if($y == NULL)
-                        {
-                            $this->db->delete('orderdetail', array
-                            (
-                                'orderId' => $orderId,
-                                'noSample' => $x
-                            ));
+            $this->db->delete('orderdetail', array('orderId' => $orderId));
 
-                            $this->db->delete('testresult', array
-                            (
-                                'noSample' => $x
-                            ));
-                        
-                            $where = array('noSample' => $x);
-                            $this->order_model->updateDataOrder($where, 'testresult', array
-                            (
-                                'noSample' => $y
-                            ));
-                        }
-                        $this->order_model->inputDataOrder('testresult', array
-                        (
-                            'noSample' => $y,
-                            'empId'=>$employess
-                        ));
-                    }
+            foreach($updatedSamplesExplode as $y)
+            {
+                $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$y}'");
+                $result = $query->result_array();
+                $count = count($result);
+
+                if (empty($count))
+                {
+                    $this->order_model->inputDataOrder('testresult', array
+                    (
+                        'noSample' => $y,
+                        'empId' => $employess
+                    ));
+                }
+                else if($count == 1)
+                {
+                    $where = array('noSample' => $y);
+                    $this->order_model->updateDataOrder($where, 'testresult', array
+                    (
+                        'noSample' => $y,
+                        'empId' => $employess
+                    ));
                 }
 
                 foreach($updatedParameters as $param)
@@ -271,7 +254,34 @@
                 }
             }
 
+            $diff = array_diff($samplesExplode, $updatedSamplesExplode);
+            foreach($diff as $d)
+            {
+                $this->db->delete('testresult', array('noSample' => $d));
+            }
+
             $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            redirect('cs/order');
+        }
+
+        public function delete($orderId)
+        {
+            //$custId = $this->input->post('custId');
+            //$notaId = $this->input->post('notaId');
+
+            $where = array('orderId' => $orderId);
+            $this->order_model->deleteDataOrder($where, 'orderdetail');
+
+            $where = array('orderId' => $orderId);
+            $this->order_model->deleteDataOrder($where, 'order');
+            
+            $where = array('notaId' => $notaId);
+            $this->order_model->deleteDataOrder($where, 'nota');
+
+            $where = array('custId' => $custId);
+            $this->order_model->deleteDataOrder($where, 'customer');
+
+            $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Dihapus!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             redirect('cs/order');
         }
     }
