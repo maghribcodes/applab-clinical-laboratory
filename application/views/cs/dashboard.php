@@ -3,7 +3,7 @@
 
                     <!-- Page Heading -->
                     <div>
-                        <br></br>
+                        <br>
                         <h2 class="m-0 font-weight text-light"><b>Dashboard</h2>
                         <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
                     </div>
@@ -19,7 +19,7 @@
                                     <div class="text-xs font-weight-bold mb-1" style="color: rgba(195,0,0,1.48);"><h4><b>Selamat Datang!</b><h4></div>
                                     <div class="text-xs font-weight text-gray-800" style="color: rgba(195,0,0,1.48);"><h6>Hello, 
                                         <span class="badge badge-danger"><?php echo $empName; ?>.</span>
-                                         Anda login sebagai <span class="badge badge-danger"><?php echo $role; ?>.</span><h6></div>
+                                         Anda login sebagai <span class="badge badge-danger"><?php echo $roleName; ?>.</span><h6></div>
                                 </div>
 
                                 <div class="col-auto">

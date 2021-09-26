@@ -106,7 +106,7 @@ $tbl = <<<EOD
     <tr>
         <td align="center">PEMERINTAH PROVINSI<br />SUMATERA BARAT<br />UPTD LAB. KES PADANG</td>
         <td align="center">SURAT KETETAPAN RETRIBUSI DAERAH (SKRD)<br />PELAYANAN KESEHATAN (YANKES)</td>
-        <td align="center" vertical-align="middle"><br /><br />NT{$pn->notaId}</td>
+        <td align="center" vertical-align="middle"><br /><br />NT{$pn->orderId}</td>
     </tr>
 </table>
 <table cellspacing="0" cellpadding="1" border="1">

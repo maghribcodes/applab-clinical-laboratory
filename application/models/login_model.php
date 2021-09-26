@@ -2,7 +2,7 @@
 
     class Login_model extends CI_Model
     {
-	    public function verifyLogin($username, $password)
+	    function verifyLogin($username, $password)
 	    {
 		    $this->db->where('username', $username);
 		    $this->db->where('password', $password);
@@ -10,7 +10,7 @@
 		    return $this->db->get('employee');
 	    }
 
-	    public function getLoginData($user, $pass)
+	    function getLoginData($user, $pass)
 	    {
 		    $u = $user;
 		    $p = $pass;
@@ -28,12 +28,12 @@
 						$session_data['empId'] = $ver->empId;
 					    $session_data['username'] = $ver->username;
 					    $session_data['password'] = $ver->password;
-					    $session_data['role'] = $ver->role;
+					    $session_data['roleId'] = $ver->roleId;
 
 					    $this->session->set_userdata($session_data); //call session
 				    }
 				    redirect('cs/dashboard');
-			    }	
+			    }
 		    }
 		    else
 		    {

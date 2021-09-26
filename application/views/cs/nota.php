@@ -31,7 +31,7 @@
                             <tr>
                                 <th style="text-align: center; vertical-align: middle;">PEMERINTAH PROVINSI<br>SUMATERA BARAT<br>UPTD LAB. KES PADANG</th>
                                 <th style="text-align: center; vertical-align: middle;">SURAT KETETAPAN RETRIBUSI DAERAH (SKRD)<br>PELAYANAN KESEHATAN (YANKES)</th>
-                                <th style="text-align: center; vertical-align: middle;">NT<?php echo $vn->notaId ?></th>
+                                <th style="text-align: center; vertical-align: middle;">NT<?php echo $vn->orderId ?></th>
                             </tr>
                         </thead>
                     </table>

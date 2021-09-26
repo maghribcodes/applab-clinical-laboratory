@@ -2,12 +2,12 @@
 
     class Auth extends CI_Controller
     {
-        public function index()
+        function index()
         {
             $this->load->view('login');
         }
 
-        public function login()
+        function login()
         {
             $this->form_validation->set_rules('username', 'username', 'required',['required'=>'Masukkan username Anda']);
             $this->form_validation->set_rules('password', 'password', 'required',['required'=>'Masukkan password Anda']);
@@ -18,11 +18,11 @@
             }
             else
             {
-                $username = $this->input->post('username');
-                $password = $this->input->post('password');
+                //$username = $this->input->post('username');
+                //$password = $this->input->post('password');
 
-				$user = $username;
-                $pass = $password;
+				$user = $this->input->post('username');
+                $pass = $this->input->post('password');
                 
                 $verify = $this->login_model->verifyLogin($user, $pass);
 
@@ -33,31 +33,31 @@
                     {
 						$session_data['empId'] = $ver->empId;
 					    $session_data['username'] = $ver->username;
-					    $session_data['role'] = $ver->role;
+					    $session_data['roleId'] = $ver->roleId;
 
 					    $this->session->set_userdata($session_data); //call session
 				    }
-				    if($session_data['role']=='Admin')
+				    if($session_data['roleId']=='1')
 				    {
 					    redirect('admin/dashboard');
 				    }
-				    else if($session_data['role']=='Customer Service')
+				    else if($session_data['roleId']=='2')
 				    {
 					    redirect('cs/dashboard');
 				    }
-				    else if($session_data['role']=='Doctor Consulent')
+				    else if($session_data['roleId']=='3')
 				    {
 					    redirect('doctor/dashboard');
 				    }
-				    else if($session_data['role']=='Sampling Staff')
+				    else if($session_data['roleId']=='4')
 				    {
 					    redirect('sampling/dashboard');
 				    }
-				    else if($session_data['role']=='Lab Staff')
+				    else if($session_data['roleId']=='5')
 				    {
 					    redirect('lab/dashboard');
 				    }
-				    else if($session_data['role']=='Reporting Staff')
+				    else if($session_data['roleId']=='6')
 				    {
 					    redirect('reporting/dashboard');
 				    }
@@ -75,7 +75,7 @@
             }
         }
 
-        public function logout()
+        function logout()
 	    {
 		    $this->session->sess_destroy();
 		    redirect('auth');

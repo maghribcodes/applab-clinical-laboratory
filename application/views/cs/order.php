@@ -3,7 +3,7 @@
 	<!-- Page Heading -->
 	<div>
         <br></br>
-        <h2 class="m-0 font-weight text-light"><b>Data Order</b></h2>
+        <h2 class="m-0 font-weight text-light"><b>Data Klinisi</b></h2>
         <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
     </div>
 
@@ -15,7 +15,7 @@
 	<div class="card shadow mb-4">
 
         <div class="card-header py-3">
-			<?php echo anchor('cs/order/input', '<button class="btn btn-outline-danger m-0"><i class="fas fa-plus fa-sm"></i> Tambah Order</button>') ?>
+			<?php echo anchor('cs/order/input', '<button class="btn btn-outline-danger m-0"><i class="fas fa-plus fa-sm"></i> New Order</button>') ?>
 		</div>
 
             <div class="card-body">
@@ -33,7 +33,7 @@
 
 					<div class="row">-->
 
-						<table class="table table-bordered" width="100%" cellspacing="0">
+					<table class="table table-bordered" width="100%" cellspacing="0">
 						<thead>
 							<tr>
 								<th style="text-align: center; vertical-align: middle;">No.</th>
@@ -44,18 +44,16 @@
 								<th style="text-align: center; vertical-align: middle;">Usia</th>
 								<th style="text-align: center; vertical-align: middle;">Jenis Kelamin</th>
 								<th style="text-align: center; vertical-align: middle;">Kiriman</th>
-								<th style="text-align: center; vertical-align: middle;">Status</th>
 								<th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
 							</tr>
 
 							<?php 
 								$no=1;
 								foreach ($viewOrder as $vo): ?>
-
 								<tr>
 									<td width="20px" style="text-align: center; vertical-align: middle;"><?php echo $no++ ?></td>
 									<td style="vertical-align: middle;"><?php
-										echo $vo->Samples
+										echo $vo->Samples;
 									?></td>
 									<td style="vertical-align: middle;"><?php 
 											$date = new DateTime($vo->orderTime);
@@ -79,19 +77,13 @@
 										</td>
 									<td style="text-align: center; vertical-align: middle;"><?php echo $vo->gender ?></td>
 									<td style="text-align: center; vertical-align: middle;"><?php echo $vo->sender ?></td>
-									<td style="vertical-align: middle;">
-										<?php
-
-										?>
-									</td>
 									<td width="20px"><?php echo anchor('cs/order/nota/'.$vo->orderId, '<div class="btn btn-sm btn-success"><i class="far fa-eye"></i></div>') ?></td>
-									<td width="20px"><?php echo anchor('cs/order/update/'.$vo->orderId,'<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
-									<td width="20px"><?php echo anchor('cs/order/delete/'.$vo->orderId,'<div class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></div>') ?></td>
+									<td width="20px"><?php echo anchor('cs/order/update/'.$vo->orderId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
+									<td width="20px"><?php echo anchor('cs/order/delete/'.$vo->orderId.'/'.$vo->custId.'/'.$vo->Samples,'<div class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></div>') ?></td>
 								</tr>
-							<?php endforeach; ?>
-
+								<?php endforeach; ?>
 						</thead>
-						</table>
+					</table>
 					<!--<div>-->
 				</div>
 			</div>

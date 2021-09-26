@@ -8,7 +8,7 @@
 
             if(!isset($this->session->userdata['username']))
             {
-                $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Anda belum login<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Anda belum login!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 
                 redirect('auth');
             }
@@ -16,7 +16,7 @@
             $this->load->library('pdf');
         }
 
-        public function index()
+        function index()
         {
             $data['viewOrder'] = $this->order_model->getDataCustomer()->result();
 
@@ -26,7 +26,7 @@
             $this->load->view('templates/footer');
         }
 
-        public function input()
+        function input()
         {
             $data['viewParameterA'] = $this->order_model->getParameterA()->result();
             $data['viewParameterB'] = $this->order_model->getParameterB()->result();
@@ -39,7 +39,7 @@
             $this->load->view('templates/footer');
         }
 
-        public function inputOrder()
+        function inputOrder()
         {
             $this->_rules();
 
@@ -82,23 +82,18 @@
                         $total = 0;
                     }
                 }
-                
-                $tableNota = array(
-                    'totalCost' => $total,
-                    'empId' => $employess,
-                );
-                $input2 = $this->order_model->inputDataOrder('nota', $tableNota);
 
                 $tableOrder = array(
                     'custId' => $input1,
-                    'notaId' => $input2,
                     'sender' => $this->input->post('sender'),
+                    'totalCost' => $total,
+                    'empId' => $employess
                 );
-                $input3 = $this->order_model->inputDataOrder('order', $tableOrder);
+                $input2 = $this->order_model->inputDataOrder('order', $tableOrder);
 
                 foreach($sample as $samp)
                 {
-                    $input4 = $this->order_model->inputDataOrder('testresult', array
+                    $this->order_model->inputDataOrder('testresult', array
                     (
                         'noSample' => $samp,
                         'empId' => $employess
@@ -108,7 +103,7 @@
                     {
                         $this->order_model->inputDataOrder('orderdetail', array
                         (
-                            'orderId' => $input3,
+                            'orderId' => $input2,
                             'noSample'=> $samp,
                             'parameterId'=> $param
                         ));
@@ -120,7 +115,7 @@
             }
         }
 
-        public function _rules()
+        function _rules()
         {
             $this->form_validation->set_rules('noSample','noSample','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('custName','custName','required',['required'=>'Data harus diisi']);
@@ -130,7 +125,7 @@
             $this->form_validation->set_rules('address','address','required',['required'=>'Data harus diisi']);
         }
 
-        public function nota($orderId)
+        function nota($orderId)
         {
             $data['viewNota'] = $this->order_model->getDataOrder($orderId)->result();
             $data['viewCost'] = $this->order_model->getAllParameters()->result();
@@ -141,7 +136,7 @@
             $this->load->view('templates/footer');
         }
 
-        public function printNota($orderId)
+        function printNota($orderId)
         {
             $data['printNota'] = $this->order_model->getDataOrder($orderId)->result();
             $data['printCost'] = $this->order_model->getAllParameters()->result();
@@ -149,7 +144,7 @@
             $this->load->view('cs/print', $data);
         }
 
-        public function update($orderId)
+        function update($orderId)
         {
             $data['updateOrder'] = $this->order_model->getDataOrder($orderId)->result();
 
@@ -164,7 +159,7 @@
             $this->load->view('templates/footer');
         }
 
-        public function updateOrder()
+        function updateOrder()
         {
             $employess = $this->session->userdata('empId');
 
@@ -181,14 +176,9 @@
 
             $orderId = $this->input->post('orderId');
             $where = array('orderId' => $orderId);
-            $tableOrder = array(
-                'sender' => $this->input->post('sender')
-            );
-            $this->order_model->updateDataOrder($where, 'order', $tableOrder);
 
-            $notaId = $this->input->post('notaId');
             $updatedParameters = $this->input->post('parameterId');
-            $where = array('notaId' => $notaId);
+
             $getAllCost = $this->order_model->getAllParameters()->result();
                 $cost = array();
                 foreach($getAllCost as $gac)
@@ -206,10 +196,11 @@
                         $total = 0;
                     }
                 }
-            $tableNota = array(
-                'totalCost'=>$total
+            $tableOrder = array(
+                'sender' => $this->input->post('sender'),
+                'totalCost' => $total
             );
-            $this->order_model->updateDataOrder($where, 'nota', $tableNota);
+            $this->order_model->updateDataOrder($where, 'order', $tableOrder);
 
             $samples = $this->input->post('samples');
             $samplesExplode = explode(', ', $samples);
@@ -264,22 +255,24 @@
             redirect('cs/order');
         }
 
-        public function delete($orderId)
+        function delete($orderId, $custId, $Samples)
         {
-            //$custId = $this->input->post('custId');
-            //$notaId = $this->input->post('notaId');
-
             $where = array('orderId' => $orderId);
             $this->order_model->deleteDataOrder($where, 'orderdetail');
 
             $where = array('orderId' => $orderId);
             $this->order_model->deleteDataOrder($where, 'order');
-            
-            $where = array('notaId' => $notaId);
-            $this->order_model->deleteDataOrder($where, 'nota');
 
             $where = array('custId' => $custId);
             $this->order_model->deleteDataOrder($where, 'customer');
+
+            $samplesExplode = explode('-', $Samples);
+
+            foreach($samplesExplode as $se)
+            {
+                $where = array('noSample' => $se);
+                $this->order_model->deleteDataOrder($where, 'testresult');
+            }
 
             $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Dihapus!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             redirect('cs/order');

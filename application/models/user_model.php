@@ -4,8 +4,12 @@
     {
 	    public function getDataUser($empId)
 	    {
+			$this->db->select('*');
+			$this->db->from('role');
+			$this->db->join('employee', 'role.roleId=employee.roleId');
 		    $this->db->where('empId', $empId);
-		    return $this->db->get('employee')->row();
+
+		    return $this->db->get()->row();
 	    }
 
 		public function getCountVisitors()

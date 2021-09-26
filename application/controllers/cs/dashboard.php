@@ -14,14 +14,13 @@ class Dashboard extends CI_Controller
 		}
 	}
 
-    public function index()
+    function index()
     {
         $data = $this->user_model->getDataUser($this->session->userdata['empId']);
 		$data = array
 				(
-					'username'=>$data->username,
 					'empName'=>$data->empName,
-					'role'=>$data->role,
+					'roleName'=>$data->roleName
 				);
 
 		$data['viewCountVisitors'] = $this->user_model->getCountVisitors();
