@@ -14,6 +14,7 @@
             }
 
             $this->load->library('pdf');
+            $this->load->library('pagination');
         }
 
         function index()

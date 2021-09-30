@@ -1,9 +1,9 @@
-<div class="container-fluid" style="height:250px; background-color: rgba(195,0,0,1.48);">
+<div class="container-fluid" style="height:250px; background-color: rgba(255,74,59,1);">
 
 	<!-- Page Heading -->
 	<div>
         <br></br>
-        <h2 class="m-0 font-weight text-light"><b>Data Klinisi</b></h2>
+        <h2 class="m-0 font-weight text-light"><b>Data Order</b></h2>
         <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
     </div>
 
@@ -13,25 +13,40 @@
  	<?php echo $this->session->flashdata('message') ?>
 
 	<div class="card shadow mb-4">
-
         <div class="card-header py-3">
-			<?php echo anchor('cs/order/input', '<button class="btn btn-outline-danger m-0"><i class="fas fa-plus fa-sm"></i> New Order</button>') ?>
+			<div class="row">
+				<div class="col-sm-12 col-md-9">
+					<?php echo anchor('cs/order/input', '<button class="btn btn-outline-danger m-0"><i class="fas fa-plus fa-sm"></i> New Order</button>') ?>
+				</div>
+
+				<div class="col-sm-12 col-md-3">
+					<form>
+						<div class="input-group">
+							<input type="text" class="form-control bg-light small" placeholder=""
+								aria-label="Search" aria-describedby="basic-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-danger" type="button">
+									<i class="fas fa-search fa-sm"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
+			</div>
 		</div>
 
             <div class="card-body">
-              	<div class="table-responsive">
-					<!--<div class="row">
-						<div class="col-sm-12 col-md-6">
-							<div>
-								<label>
-									Cari:
-									<input class="form-control form-control-sm" type="search" placeholder=""></input>
-								</label>
-							</div>
+				<!--<div class="row">
+					<div class="col-sm-12 col-md-6">
+						<div>
+							<label>
+								Cari: 
+								<input class="form-control form-control-sm" type="search" placeholder=""></input>
+							</label>
 						</div>
 					</div>
-
-					<div class="row">-->
+				</div>-->
 
 					<table class="table table-bordered" width="100%" cellspacing="0">
 						<thead>

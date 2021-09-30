@@ -1,9 +1,9 @@
-<div class="container-fluid" style="height:250px; background-color: rgba(195,0,0,1.48);">
+<div class="container-fluid" style="height:250px; background-color: rgba(255,74,59,1);">
 
 	<!-- Page Heading -->
 	<div>
         <br></br>
-        <h2 class="m-0 font-weight text-light"><b>Data Order</b></h2>
+        <h2 class="m-0 font-weight text-light"><b>Data Klinisi</b></h2>
         <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
     </div>
 

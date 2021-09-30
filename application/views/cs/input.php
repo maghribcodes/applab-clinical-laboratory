@@ -1,4 +1,4 @@
-<div class="container-fluid" style="height:250px; background-color: rgba(195,0,0,1.48);">
+<div class="container-fluid" style="height:250px; background-color: rgba(255,74,59,1);">
 
 <!-- Page Heading -->
     <div>
