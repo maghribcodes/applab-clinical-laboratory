@@ -119,6 +119,7 @@
         function _rules()
         {
             $this->form_validation->set_rules('noSample','noSample','required',['required'=>'Data harus diisi']);
+            $this->form_validation->set_rules('sender','custName','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('custName','custName','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('birthDate','birthDate','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('contact','contact','required',['required'=>'Data harus diisi']);
