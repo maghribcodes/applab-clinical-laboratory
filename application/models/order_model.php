@@ -2,16 +2,6 @@
 
     class Order_model extends CI_Model
     {
-	    function getDataClinical()
-		{
-			$this->db->select('*');
-			$this->db->from('order');
-			$this->db->join('customer', 'order.custId=customer.custId', 'left');
-			$this->db->order_by('order.orderId', 'desc');
-
-			return $this->db->get();
-		}
-		
 		function getDataCustomer()
 	    {
 			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR "-") as Samples');

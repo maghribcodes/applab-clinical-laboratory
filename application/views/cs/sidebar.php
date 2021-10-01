@@ -29,24 +29,23 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Heading -->
-            <!--<div class="sidebar-heading">
-                Data Order
-            </div>-->
-
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Pages -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
+                <a class="nav-link" href="<?php echo base_url('cs/clinical') ?>">
+                    <i class="fas fa-folder fa-cog"></i>
+                    <span>Data Klinisi</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Pages -->
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url('cs/order') ?>">
+                    <i class="fas fa-folder fa-cog"></i>
                     <span>Data Order</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="<?php echo base_url('cs/clinical') ?>">Daftar Klinisi</a>
-                        <a class="collapse-item" href="<?php echo base_url('cs/order') ?>">Tambah Order</a>
-                    </div>
-                </div>
             </li>
             
             <!-- Divider -->

@@ -12,17 +12,23 @@
                 
                 redirect('auth');
             }
-
-            $this->load->library('pdf');
         }
 
         function index()
         {
-            $data['viewClinical'] = $this->order_model->getDataClinical()->result();
+            $data['viewClinical'] = $this->clinical_model->getDataClinical()->result();
 
             $this->load->view('templates/header');
             $this->load->view('cs/sidebar');
             $this->load->view('cs/clinical', $data);
+            $this->load->view('templates/footer');
+        }
+
+        function input()
+        {
+            $this->load->view('templates/header');
+            $this->load->view('cs/sidebar');
+            $this->load->view('cs/inputClinical');
             $this->load->view('templates/footer');
         }
 
@@ -45,67 +51,31 @@
                     'contact' => $this->input->post('contact'),
                     'address' => $this->input->post('address'),
                 );
-                $input1=$this->order_model->inputDataOrder('customer', $tableCust);
-
-                $getAllCost = $this->order_model->getAllParameters()->result();
-                $cost = array();
-                foreach($getAllCost as $gac)
-                {
-                    if($parameters != NULL)
-                    {
-                        if(in_array($gac->parameterId, $parameters))
-                        {
-                            $cost[] = $gac->parameterCost;
-                            $total = array_sum($cost);
-                        }
-                    }
-                    else
-                    {
-                        $total = 0;
-                    }
-                }
+                $input1=$this->order_model->inputDataClinical('customer', $tableCust);
 
                 $tableOrder = array(
                     'custId' => $input1,
-                    'sender' => $this->input->post('sender'),
-                    'totalCost' => $total,
                     'empId' => $employess
                 );
-                $input2 = $this->order_model->inputDataOrder('order', $tableOrder);
-
-                foreach($sample as $samp)
-                {
-                    $this->order_model->inputDataOrder('testresult', array
-                    (
-                        'noSample' => $samp,
-                        'empId' => $employess
-                    ));
-
-                    foreach($parameters as $param)
-                    {
-                        $this->order_model->inputDataOrder('orderdetail', array
-                        (
-                            'orderId' => $input2,
-                            'noSample'=> $samp,
-                            'parameterId'=> $param
-                        ));
-                    }
-                }
+                $input2 = $this->order_model->inputDataClinical('order', $tableOrder);
 
                 $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Ditambahkan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-                redirect('cs/order');
+                redirect('cs/clinical');
             }
         }
 
         function _rules()
         {
-            $this->form_validation->set_rules('noSample','noSample','required',['required'=>'Data harus diisi']);
-            $this->form_validation->set_rules('sender','custName','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('custName','custName','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('birthDate','birthDate','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('contact','contact','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('gender','gender','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('address','address','required',['required'=>'Data harus diisi']);
+        }
+
+        function search()
+        {
+            $match = $this->input->post('custName');
         }
     }
 

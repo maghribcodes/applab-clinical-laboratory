@@ -16,8 +16,8 @@
 
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold mb-1" style="color: rgba(255,74,59,1);"><h4><b>Selamat Datang!</b><h4></div>
-                                    <div class="text-xs font-weight text-gray-800" style="color: rgba(255,74,59,1);"><h6>Hello, 
+                                    <div class="text-xs font-weight-bold mb-1 text-danger"><h4><b>Selamat Datang!</b><h4></div>
+                                    <div class="text-xs font-weight text-gray-800"><h6>Hello, 
                                         <span class="badge badge-danger"><?php echo $empName; ?>.</span>
                                          Anda login sebagai <span class="badge badge-danger"><?php echo $roleName; ?>.</span><h6></div>
                                 </div>

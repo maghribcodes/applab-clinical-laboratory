@@ -37,17 +37,6 @@
 		</div>
 
             <div class="card-body">
-				<!--<div class="row">
-					<div class="col-sm-12 col-md-6">
-						<div>
-							<label>
-								Cari: 
-								<input class="form-control form-control-sm" type="search" placeholder=""></input>
-							</label>
-						</div>
-					</div>
-				</div>-->
-
 					<table class="table table-bordered" width="100%" cellspacing="0">
 						<thead>
 							<tr>

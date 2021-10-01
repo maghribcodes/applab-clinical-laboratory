@@ -36,7 +36,7 @@
 
             $this->load->view('templates/header');
             $this->load->view('cs/sidebar');
-            $this->load->view('cs/input', $data);
+            $this->load->view('cs/inputOrder', $data);
             $this->load->view('templates/footer');
         }
 
