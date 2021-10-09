@@ -28,11 +28,9 @@ class Dashboard extends CI_Controller
 		$data['viewCountLhus'] = $this->user_model->getCountLhus();
 		$data['viewCountLhu'] = $this->user_model->getCountLhu();
 		
-		$data['pieChart'] = $this->user_model->pieChart();
-		
         $this->load->view('templates/header');
-        $this->load->view('cs/sidebar');
-        $this->load->view('cs/dashboard', $data);
+        $this->load->view('doctor/sidebar');
+        $this->load->view('doctor/dashboard', $data);
         $this->load->view('templates/footer');
     }
 }

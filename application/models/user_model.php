@@ -35,4 +35,12 @@
 			$this->db->from('testresult');
 			return $this->db->count_all_results();
 		}
+
+		function pieChart()
+		{
+			$this->db->select('gender, COUNT(*) as Total');
+			$this->db->from('customer');
+			$this->db->group_by('gender');
+			return $this->db->get();
+		}
     }
