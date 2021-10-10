@@ -18,3 +18,28 @@
 </body>
 
 </html>
+
+<script>
+    google.charts.load('current', {
+        'packages': ['corechart']
+    });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Tahun', 'Total'],
+            <?php
+            foreach ($pieChart as $pie) {
+                echo "['" . $pie['gender'] . "'," . $pie['total'] . "],";
+            }
+            ?>
+        ]);
+        var options = {
+            is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+    }
+</script>

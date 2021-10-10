@@ -143,7 +143,7 @@
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-pie pt-4 pb-2">
-                                        <div id="myPie"></div>
+                                        <div id="piechart"></div>
                                     </div>
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">

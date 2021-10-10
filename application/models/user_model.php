@@ -38,9 +38,20 @@
 
 		function pieChart()
 		{
-			$this->db->select('gender, COUNT(*) as Total');
+			/*$this->db->select('gender, COUNT(*) as Total');
 			$this->db->from('customer');
 			$this->db->group_by('gender');
-			return $this->db->get();
+			return $this->db->get();*/
+
+			$query = "SELECT COUNT(*) AS total, gender FROM customer GROUP BY gender ORDER BY gender ASC";
+        	$result = $this->db->query($query)->result_array();
+        	return $result;
+		}
+
+		public function barChart()
+		{
+			$query = "SELECT orderTime FROM order";
+			$result = $this->db->query($query)->result();
+			return $result;
 		}
     }
