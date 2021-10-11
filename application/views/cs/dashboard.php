@@ -40,7 +40,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Pelanggan</div>
+                                                Pasien</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php echo $viewCountVisitors ?></div>
                                             </div>
@@ -121,12 +121,12 @@
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-danger">Total Pelanggan</h6>
+                                    <h6 class="m-0 font-weight-bold text-danger">Total Order</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
+                                        <canvas id="barChart"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -138,20 +138,12 @@
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-danger">Ratio Pelanggan</h6>
+                                    <h6 class="m-0 font-weight-bold text-danger">Ratio Pasien</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <div id="piechart"></div>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Laki-laki
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-warning"></i> Perempuan
-                                        </span>
+                                    <div>
+                                        <div id="pieChart" style="width: 280px; height: 200px;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -203,3 +195,89 @@
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="<?php echo base_url() ?>assets/vendor/jquery/jquery.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="<?php echo base_url() ?>assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="<?php echo base_url() ?>assets/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="<?php echo base_url() ?>assets/vendor/chart.js/Chart.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/vendor/chart.js/Chart.js"></script>
+
+    <!-- Page level custom scripts -->
+    <!-- CDN CHART JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+</body>
+
+</html>
+
+<script>
+    google.charts.load('current', {
+        'packages': ['corechart']
+    });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Gender', 'Total'],
+            <?php
+            foreach ($pieChart as $pie) {
+                echo "['" . $pie['gender'] . "'," . $pie['total'] . "],";
+            }
+            ?>
+        ]);
+        var options = {
+            is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('pieChart'));
+
+        chart.draw(data, options);
+    }
+</script>
+
+<?php
+    $bulan = "";
+    $total = null;
+
+    foreach ($barChart as $bar)
+    {
+        $dataBulan = $bar->bulan;
+        $bulan .= "'$dataBulan'" . ",";
+        $dataTotal = $bar->total;
+        $total .= "'$dataTotal'" . ",";
+    }
+?>
+
+<script>
+    const barChart = document.getElementById('barChart').getContext('2d');
+    const chart = new Chart(barChart, {
+        type: 'bar',
+        data: {
+            labels: [<?= $bulan; ?>],
+            datasets: [{
+                label: 'Jumlah Pasien',
+                backgroundColor: ['rgba(255,74,59,1)', 'rgba(255,74,59,1)', 'rgba(255,74,59,1)', 'rgba(255,74,59,1)', 'rgba(255,74,59,1)', 'rgba(255,74,59,1)', 'rgba(255,74,59,1)'],
+                borderColor: ['rgb(255, 99, 132)'],
+                data: [<?= $total; ?>]
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>

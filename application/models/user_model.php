@@ -14,7 +14,7 @@
 
 		function getCountVisitors()
 		{
-			return $this->db->count_all('customer');
+			return $this->db->count_all('order');
 		}
 
 		function getCountSamples()
@@ -36,22 +36,19 @@
 			return $this->db->count_all_results();
 		}
 
+		function barChart()
+		{
+			$this->db->select('orderId, DATE_FORMAT(orderTime, "%M") AS bulan, COUNT(*) AS total');
+			$this->db->from('order');
+			$this->db->group_by('DATE_FORMAT(OrderTime, "%M")');
+			$this->db->order_by('orderId', 'ASC');
+			return $this->db->get();
+		}
+
 		function pieChart()
 		{
-			/*$this->db->select('gender, COUNT(*) as Total');
-			$this->db->from('customer');
-			$this->db->group_by('gender');
-			return $this->db->get();*/
-
 			$query = "SELECT COUNT(*) AS total, gender FROM customer GROUP BY gender ORDER BY gender ASC";
         	$result = $this->db->query($query)->result_array();
         	return $result;
-		}
-
-		public function barChart()
-		{
-			$query = "SELECT orderTime FROM order";
-			$result = $this->db->query($query)->result();
-			return $result;
 		}
     }

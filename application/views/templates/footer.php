@@ -13,33 +13,10 @@
     <script src="<?php echo base_url() ?>assets/vendor/chart.js/Chart.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="<?php echo base_url() ?>assets/js/demo/chart-area-demo.js"></script>
+    <!-- CDN CHART JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
 
 </body>
 
 </html>
-
-<script>
-    google.charts.load('current', {
-        'packages': ['corechart']
-    });
-    google.charts.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Tahun', 'Total'],
-            <?php
-            foreach ($pieChart as $pie) {
-                echo "['" . $pie['gender'] . "'," . $pie['total'] . "],";
-            }
-            ?>
-        ]);
-        var options = {
-            is3D: true,
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-        chart.draw(data, options);
-    }
-</script>
