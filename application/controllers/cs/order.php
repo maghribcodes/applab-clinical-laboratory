@@ -157,7 +157,7 @@
 
             $this->load->view('templates/header');
             $this->load->view('cs/sidebar');
-            $this->load->view('cs/update', $data);
+            $this->load->view('cs/updateOrder', $data);
             $this->load->view('templates/footer');
         }
 

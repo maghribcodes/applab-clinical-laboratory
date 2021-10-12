@@ -51,13 +51,13 @@
                     'contact' => $this->input->post('contact'),
                     'address' => $this->input->post('address'),
                 );
-                $input1=$this->order_model->inputDataClinical('customer', $tableCust);
+                $input1=$this->clinical_model->inputDataClinical('customer', $tableCust);
 
                 $tableOrder = array(
                     'custId' => $input1,
                     'empId' => $employess
                 );
-                $input2 = $this->order_model->inputDataClinical('order', $tableOrder);
+                $input2 = $this->clinical_model->inputDataClinical('order', $tableOrder);
 
                 $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Ditambahkan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 redirect('cs/clinical');
@@ -73,9 +73,56 @@
             $this->form_validation->set_rules('address','address','required',['required'=>'Data harus diisi']);
         }
 
+        function update($custId)
+        {
+            $data['updateClinical'] = $this->clinical_model->getDataCustomer($custId)->result();
+
+            $this->load->view('templates/header');
+            $this->load->view('cs/sidebar');
+            $this->load->view('cs/updateClinical', $data);
+            $this->load->view('templates/footer');
+        }
+
+        function updateClinical()
+        {
+            $employess = $this->session->userdata('empId');
+
+            $custId = $this->input->post('custId');
+            $where = array('custId' => $custId);
+            $tableCust = array(
+                'custName' => $this->input->post('custName'),
+                'birthDate' => $this->input->post('birthDate'),
+                'gender' => $this->input->post('gender'),
+                'contact' => $this->input->post('contact'),
+                'address' => $this->input->post('address'),
+            );
+            $this->clinical_model->updateDataClinical($where, 'customer', $tableCust);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            redirect('cs/clinical');
+        }
+
+        function delete($orderId, $custId)
+        {
+            $where = array('orderId' => $orderId);
+            $this->clinical_model->deleteDataClinical($where, 'order');
+
+            $where = array('custId' => $custId);
+            $this->clinical_model->deleteDataClinical($where, 'customer');
+
+            $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Dihapus!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            redirect('cs/clinical');
+        }
+
         function search()
         {
-            $match = $this->input->post('custName');
+            $keyword = $this->input->post('keyword');
+			$data['searchClinical'] = $this->clinical_model->getKeyword($keyword)->result();
+
+			$this->load->view('templates/header');
+            $this->load->view('cs/sidebar');
+            $this->load->view('cs/searchClinical', $data);
+            $this->load->view('templates/footer');
         }
     }
 

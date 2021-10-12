@@ -38,7 +38,9 @@
 
             <div class="card-body">
               	<div class="table-responsive">
-
+				<?php
+					if(count($searchClinical)>0)
+					{ ?>
 					<table class="table table-bordered" width="100%" cellspacing="0">
 						<thead>
 							<tr>
@@ -54,36 +56,43 @@
 
 							<?php 
 								$no=1;
-								foreach ($viewClinical as $vc): ?>
+								foreach ($searchClinical as $sc): ?>
 								<tr>
 									<td width="20px" style="text-align: center; vertical-align: middle;"><?php echo $no++ ?></td>
-									<td style="vertical-align: middle;"><?php echo $vc->custName ?></td>
-									<td style="text-align: center; vertical-align: middle;"><?php 
-											$birth = new DateTime($vc->birthDate);
+									<td style="vertical-align: middle;"><?php echo $sc->custName ?></td>
+									<td style="text-align: center; vertical-align: middle;">
+										<?php 
+											$birth = new DateTime($sc->birthDate);
 											$now = new DateTime();
 											$age = $now->diff($birth);
 											echo $age->y;
 										?>
-										</td>
-									<td style="text-align: center; vertical-align: middle;"><?php echo $vc->gender ?></td>
-									<td style="text-align: center; vertical-align: middle;"><?php echo $vc->contact ?></td>
-                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vc->address ?></td>
-                                    <td style="text-align: center; vertical-align: middle;">
-                                        <?php 
-                                            if($vc->sender != NULL)
-                                            {
-                                                ?><span class="badge badge-pill badge-success">Complete</span><?php
-                                            }
-                                            else
-                                            {
-                                                ?><span class="badge badge-pill badge-danger">Waiting</span><?php
-                                            }
-                                        ?>
-                                    </td>
-									<td width="20px"><?php echo anchor('cs/clinical/update/'.$vc->custId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
-									<td width="20px"><?php echo anchor('cs/clinical/delete/'.$vc->orderId.'/'.$vc->custId,'<div class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></div>') ?></td>
+									</td>
+									<td style="text-align: center; vertical-align: middle;"><?php echo $sc->gender ?></td>
+									<td style="text-align: center; vertical-align: middle;"><?php echo $sc->contact ?></td>
+									<td style="text-align: center; vertical-align: middle;"><?php echo $sc->address ?></td>
+									<td style="text-align: center; vertical-align: middle;">
+										<?php 
+											if($sc->sender != NULL)
+											{
+												?><span class="badge badge-pill badge-success">Complete</span><?php
+											}
+											else
+											{
+												?><span class="badge badge-pill badge-danger">Waiting</span><?php
+											}
+										?>
+									</td>
+									<td width="20px"><?php echo anchor('cs/clinical/update/'.$sc->custId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
+									<td width="20px"><?php echo anchor('cs/clinical/delete/'.$sc->orderId.'/'.$sc->custId,'<div class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></div>') ?></td>
 								</tr>
-								<?php endforeach; ?>
+							<?php endforeach; 
+					}
+					else
+					{
+						echo "Data Tidak Ditemukan.";
+					} ?>
+						
 						</thead>
 					</table>
 

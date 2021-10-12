@@ -12,6 +12,26 @@
 			return $this->db->get();
 		}
 
+		function getDataCustomer($custId)
+		{
+			$this->db->select('*');
+			$this->db->from('customer');
+			$this->db->where('custId', $custId);
+
+			return $this->db->get();
+		}
+
+		function getKeyword($keyword)
+		{
+			$this->db->select('*');
+			$this->db->from('order');
+			$this->db->join('customer', 'order.custId=customer.custId', 'left');
+			$this->db->order_by('order.orderId', 'desc');
+			$this->db->like('customer.custName', $keyword);
+
+			return $this->db->get();
+		}
+
         function inputDataClinical($table, $data)
 		{
 			$query=$this->db->insert($table, $data);
