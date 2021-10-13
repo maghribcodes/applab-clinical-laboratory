@@ -86,6 +86,8 @@
 								<?php endforeach; ?>
 						</thead>
 					</table>
+					
+					<?php echo $pagination; ?>
 
 				</div>
 			</div>

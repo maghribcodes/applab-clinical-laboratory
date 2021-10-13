@@ -21,6 +21,15 @@
 			return $this->db->get();
 		}
 
+		function getDataPagination($number, $offset){
+			$this->db->select('*');
+			$this->db->from('order', $number, $offset);
+			$this->db->join('customer', 'order.custId=customer.custId', 'left');
+			$this->db->order_by('order.orderId', 'desc');
+
+			return $this->db->get()->result();
+		}
+
 		function getKeyword($keyword)
 		{
 			$this->db->select('*');
@@ -30,6 +39,10 @@
 			$this->db->like('customer.custName', $keyword);
 
 			return $this->db->get();
+		}
+
+		function getOrder(){
+			return $this->db->get('order')->num_rows();
 		}
 
         function inputDataClinical($table, $data)
