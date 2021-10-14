@@ -15,19 +15,17 @@
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
 				<div class="row">
-					<div class="col-sm-12 col-md-9">
+					<div class="col-sm-12 col-md-8">
 						<?php echo anchor('cs/clinical/input', '<button class="btn btn-outline-danger m-0"><i class="fas fa-plus fa-sm"></i> Tambah Klinisi</button>') ?>
 					</div>
 
-					<div class="col-sm-12 col-md-3">
-						<form method="post" action="<?php echo base_url('cs/clinical/search') ?>">
+					<div class="col-sm-12 col-md-4">
+						<form method="post" action="<?php echo base_url('cs/clinical') ?>">
 							<div class="input-group">
-								<input type="text" name="keyword" class="form-control bg-light small" placeholder="Cari pasien..."
-									aria-label="Search" aria-describedby="basic-addon2">
+								<input type="text" name="keyword" class="form-control" placeholder="Cari pasien..." autocomplete="off">
 								<div class="input-group-append">
-									<button class="btn btn-danger" type="submit">
-										<i class="fas fa-search fa-sm"></i>
-									</button>
+									<input class="btn btn-danger" type="submit" name="submit" value="Submit">
+										<!--<i class="fas fa-search fa-sm"></i>-->
 								</div>
 							</div>
 						</form>
@@ -37,6 +35,7 @@
 			</div>
 
             <div class="card-body">
+
               	<div class="table-responsive">
 
 					<table class="table table-bordered" width="100%" cellspacing="0">
@@ -52,11 +51,20 @@
 								<th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
 							</tr>
 
-							<?php 
-								$no=1;
+							<?php
+								if(empty($viewClinical)): ?>
+								<tr>
+									<td colspan=8>
+										<div class="alert alert-danger" role="alert">
+											Data tidak ditemukan.
+										</div>
+									</td>
+								</tr>
+								<?php endif;
+
 								foreach ($viewClinical as $vc): ?>
 								<tr>
-									<td width="20px" style="text-align: center; vertical-align: middle;"><?php echo $no++ ?></td>
+									<td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
 									<td style="vertical-align: middle;"><?php echo $vc->custName ?></td>
 									<td style="text-align: center; vertical-align: middle;"><?php 
 											$birth = new DateTime($vc->birthDate);
@@ -87,7 +95,7 @@
 						</thead>
 					</table>
 					
-					<?php echo $pagination; ?>
+					<?php echo $this->pagination->create_links(); ?>
 
 				</div>
 			</div>
