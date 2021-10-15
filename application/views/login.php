@@ -50,7 +50,7 @@
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Username" name="username" value="<?php echo set_value('username'); ?>">
+                                                placeholder="Username" name="username" value="<?php echo set_value('username'); ?>" autocomplete="off">
                                                 <?php echo form_error('username', '<div class="text-danger small ml-3">','</div>') ?>
                                         </div>
                                         <div class="form-group">

@@ -9,6 +9,8 @@
 
     <br>
 
+    <?php echo $this->session->flashdata('message') ?>
+
 <form method="post" action="<?php echo base_url('cs/order/inputOrder') ?>">
 
     <div class="card shadow mb-4">
@@ -130,17 +132,17 @@
                                 <?php $no=1; foreach($viewParameterD as $mikrobiologi) : ?>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $mikrobiologi->parameterId; ?>" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $mikrobiologi->parameterId; ?><?php echo set_value('parameterId[]'); ?>" id="defaultCheck1">
                                         <label class="form-check-label" for="defaultCheck1">
                                             <?php echo $no++ ?>. <?php echo $mikrobiologi->parameterName ?>
                                         </label>
                                 </div>
 
                                 <?php endforeach; ?>
-
+                                <?php echo form_error('parameterId[]', '<div class="text-danger small">','</div>') ?>
                             </div>
+                            
                         </div>
-
                     </div>
 
                     <!-- Second Column -->

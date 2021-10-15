@@ -2,16 +2,24 @@
 
     class Order_model extends CI_Model
     {
-		function getDataCustomer()
+		function getDataCustomer($limit, $start, $keyword = null)
 	    {
+			if($keyword)
+			{
+				$this->db->like('orderdetail.noSample', $keyword);
+				$this->db->or_like('customer.custName', $keyword);
+				$this->db->or_like('order.sender', $keyword);
+			}
+
 			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR "-") as Samples');
 			$this->db->from('orderdetail');
 			$this->db->join('order', 'orderdetail.orderId=order.orderId');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
 			$this->db->group_by('order.orderId');
 			$this->db->order_by('GROUP_CONCAT(DISTINCT noSample)', 'desc');
+			$this->db->limit($limit, $start);
 
-			return $this->db->get();
+			return $this->db->get()->result();
 	    }
 
 		function getDataOrder($orderId)
@@ -72,14 +80,6 @@
 			$this->db->where('packageId', 'D');
 			$this->db->order_by('parameterName', 'asc');
 
-			return $this->db->get();
-		}
-
-		function getAllSamples()
-		{
-			$this->db->select('noSample');
-			$this->db->from('testresult');
-			
 			return $this->db->get();
 		}
 

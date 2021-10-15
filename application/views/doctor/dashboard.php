@@ -1,5 +1,5 @@
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="height:250px; background-color: rgba(255,74,59,1);">
+                <div class="container-fluid" style="height:250px; background-color: rgba(78, 115, 223, 1);">
 
                     <!-- Page Heading -->
                     <div>
@@ -16,10 +16,10 @@
 
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold mb-1 text-danger"><h4><b>Selamat Datang!</b><h4></div>
+                                    <div class="text-xs font-weight-bold mb-1 text-primary"><h4><b>Selamat Datang!</b><h4></div>
                                     <div class="text-xs font-weight text-gray-800"><h6>Hello, 
-                                        <span class="badge badge-danger"><?php echo $empName; ?>.</span>
-                                         Anda login sebagai <span class="badge badge-danger"><?php echo $roleName; ?>.</span><h6></div>
+                                        <span class="badge badge-primary"><?php echo $empName; ?>.</span>
+                                         Anda login sebagai <span class="badge badge-primary"><?php echo $roleName; ?>.</span><h6></div>
                                 </div>
 
                                 <div class="col-auto">
@@ -105,53 +105,6 @@
                                         <div class="col-auto">
                                             <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php ?>
-                    <!-- Content Row -->
-
-                    <div class="row">
-
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-danger">Total Pelanggan</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-danger">Ratio Pelanggan</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Laki-laki
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-warning"></i> Perempuan
-                                        </span>
                                     </div>
                                 </div>
                             </div>

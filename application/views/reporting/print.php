@@ -123,7 +123,7 @@ $tbl = <<<EOD
             <div> - Jenis Kelamin</div>
             <div> - Umur / Tgl. Lahir</div>
             <div> - Alamat</div>
-            <div> - No. Sampel</div>
+            <div> - No. Sample</div>
         </td>
         <td colspan="2"><div>: {$pn->custName}</div>
             <div>: {$pn->gender}</div>

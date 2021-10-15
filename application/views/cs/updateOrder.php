@@ -1,4 +1,3 @@
-<?php //echo json_encode($updateOrder); ?>
 <div class="container-fluid" style="height:250px; background-color: rgba(255,74,59,1);">
 
 <!-- Page Heading -->
@@ -44,6 +43,7 @@
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Pengirim</label>
                             <div class="col-sm-4">
                                 <input type="name" name="sender" value="<?php echo $uo->sender ?>" class="form-control" id="inputEmail3">
+                                <?php echo form_error('sender', '<div class="text-danger small">','</div>') ?>
                             </div>
                     </div>
 
@@ -97,8 +97,6 @@
 
             </div>
 
-    <?php //endforeach; ?>
-
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-danger">LAB UJI TERKAIT</h6>
             </div>
@@ -108,8 +106,6 @@
                 <div class="container-fluid">
                 <!-- Content Row -->
                     <div class="row">
-
-                    <?php //$parameters = explode(' ', $uo->Parameters); ?>
 
                         <!-- First Column -->
                         
@@ -257,5 +253,4 @@
         </div>
 
     </form>
-<?php //endforeach; ?>
 </div>

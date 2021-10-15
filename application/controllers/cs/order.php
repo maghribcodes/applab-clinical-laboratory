@@ -14,12 +14,32 @@
             }
 
             $this->load->library('pdf');
-            $this->load->library('pagination');
         }
 
         function index()
         {
-            $data['viewOrder'] = $this->order_model->getDataCustomer()->result();
+            if($this->input->post('submit'))
+            {
+                $data['keyword'] = $this->input->post('keyword');
+                $this->session->set_userdata('keyword', $data['keyword']);
+            }
+            else
+            {
+                $data['keyword'] = $this->session->userdata('keyword');
+            }
+
+            $this->db->like('noSample', $data['keyword']);
+            $this->db->from('orderdetail');
+			$this->db->group_by('orderId');
+
+            $config['base_url'] = 'http://localhost/talab/cs/order/index';
+            $config['total_rows'] = $this->db->count_all_results();
+            $config['per_page'] = 3;
+
+            $this->pagination->initialize($config);
+
+            $data['start'] = $this->uri->segment(4);
+            $data['viewOrder'] = $this->order_model->getDataCustomer($config['per_page'], $data['start'], $data['keyword']);
 
             $this->load->view('templates/header');
             $this->load->view('cs/sidebar');
@@ -65,7 +85,7 @@
                     'address' => $this->input->post('address'),
                 );
                 $input1=$this->order_model->inputDataOrder('customer', $tableCust);
-
+        
                 $getAllCost = $this->order_model->getAllParameters()->result();
                 $cost = array();
                 foreach($getAllCost as $gac)
@@ -83,7 +103,7 @@
                         $total = 0;
                     }
                 }
-
+        
                 $tableOrder = array(
                     'custId' => $input1,
                     'sender' => $this->input->post('sender'),
@@ -91,7 +111,7 @@
                     'empId' => $employess
                 );
                 $input2 = $this->order_model->inputDataOrder('order', $tableOrder);
-
+        
                 foreach($sample as $samp)
                 {
                     $this->order_model->inputDataOrder('testresult', array
@@ -99,7 +119,7 @@
                         'noSample' => $samp,
                         'empId' => $employess
                     ));
-
+        
                     foreach($parameters as $param)
                     {
                         $this->order_model->inputDataOrder('orderdetail', array
@@ -110,7 +130,6 @@
                         ));
                     }
                 }
-
                 $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Ditambahkan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 redirect('cs/order');
             }
@@ -118,13 +137,43 @@
 
         function _rules()
         {
-            $this->form_validation->set_rules('noSample','noSample','required',['required'=>'Data harus diisi']);
-            $this->form_validation->set_rules('sender','custName','required',['required'=>'Data harus diisi']);
-            $this->form_validation->set_rules('custName','custName','required',['required'=>'Data harus diisi']);
-            $this->form_validation->set_rules('birthDate','birthDate','required',['required'=>'Data harus diisi']);
-            $this->form_validation->set_rules('contact','contact','required',['required'=>'Data harus diisi']);
-            $this->form_validation->set_rules('gender','gender','required',['required'=>'Data harus diisi']);
-            $this->form_validation->set_rules('address','address','required',['required'=>'Data harus diisi']);
+            $this->form_validation->set_rules('noSample','Nomor Sampel','callback_checkSamples');
+            $this->form_validation->set_rules('sender','Pengirim','required',['required'=>'Data harus diisi']);
+            $this->form_validation->set_rules('custName','Nama Pasien','required',['required'=>'Data harus diisi']);
+            $this->form_validation->set_rules('birthDate','Tanggal Lahir','required',['required'=>'Data harus diisi']);
+            $this->form_validation->set_rules('contact','Kontak','required',['required'=>'Data harus diisi']);
+            $this->form_validation->set_rules('gender','Jenis Kelamin','required',['required'=>'Data harus diisi']);
+            $this->form_validation->set_rules('address','Alamat','required',['required'=>'Data harus diisi']);
+            //$this->form_validation->set_rules('parameterId[]','Parameter','required',['required'=>'Data harus diisi']);
+        }
+
+        function checkSamples($str)
+        {
+            if($str == NULL)
+            {
+                $this->form_validation->set_message('checkSamples', 'Data harus diisi');
+                return FALSE;
+            }
+            else
+            {
+                $samples = explode(', ', $str);
+                foreach($samples as $s)
+                {
+                    $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$s}'");
+                    $result = $query->result_array();
+                    $count = count($result);
+
+                    if($count > 0)
+                    {
+                        $this->form_validation->set_message('checkSamples', 'Nomor sampel sudah terdaftar');
+                        return FALSE;
+                    }
+                    else
+                    {
+                        return TRUE;
+                    }
+                }
+            }
         }
 
         function nota($orderId)
@@ -163,98 +212,107 @@
 
         function updateOrder()
         {
-            $employess = $this->session->userdata('empId');
+            $this->_rules();
 
-            $custId = $this->input->post('custId');
-            $where = array('custId' => $custId);
-            $tableCust = array(
-                'custName' => $this->input->post('custName'),
-                'birthDate' => $this->input->post('birthDate'),
-                'gender' => $this->input->post('gender'),
-                'contact' => $this->input->post('contact'),
-                'address' => $this->input->post('address'),
-            );
-            $this->order_model->updateDataOrder($where, 'customer', $tableCust);
+            if($this->form_validation->run() == FALSE)
+            {
+                
+            }
+            else
+            {
+                $employess = $this->session->userdata('empId');
 
-            $orderId = $this->input->post('orderId');
-            $where = array('orderId' => $orderId);
+                $custId = $this->input->post('custId');
+                $where = array('custId' => $custId);
+                $tableCust = array(
+                    'custName' => $this->input->post('custName'),
+                    'birthDate' => $this->input->post('birthDate'),
+                    'gender' => $this->input->post('gender'),
+                    'contact' => $this->input->post('contact'),
+                    'address' => $this->input->post('address'),
+                );
+                $this->order_model->updateDataOrder($where, 'customer', $tableCust);
 
-            $updatedParameters = $this->input->post('parameterId');
+                $orderId = $this->input->post('orderId');
+                $where = array('orderId' => $orderId);
 
-            $getAllCost = $this->order_model->getAllParameters()->result();
-                $cost = array();
-                foreach($getAllCost as $gac)
-                {
-                    if($updatedParameters != NULL)
+                $updatedParameters = $this->input->post('parameterId');
+
+                $getAllCost = $this->order_model->getAllParameters()->result();
+                    $cost = array();
+                    foreach($getAllCost as $gac)
                     {
-                        if(in_array($gac->parameterId, $updatedParameters))
+                        if($updatedParameters != NULL)
                         {
-                            $cost[] = $gac->parameterCost;
-                            $total = array_sum($cost);
+                            if(in_array($gac->parameterId, $updatedParameters))
+                            {
+                                $cost[] = $gac->parameterCost;
+                                $total = array_sum($cost);
+                            }
+                        }
+                        else
+                        {
+                            $total = 0;
                         }
                     }
-                    else
+                $tableOrder = array(
+                    'sender' => $this->input->post('sender'),
+                    'totalCost' => $total
+                );
+                $this->order_model->updateDataOrder($where, 'order', $tableOrder);
+
+                $samples = $this->input->post('samples');
+                $samplesExplode = explode(', ', $samples);
+
+                $updatedSamples = $this->input->post('noSample');
+                $updatedSamplesExplode = explode(', ', $updatedSamples);
+
+                $this->db->delete('orderdetail', array('orderId' => $orderId));
+
+                foreach($updatedSamplesExplode as $y)
+                {
+                    $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$y}'");
+                    $result = $query->result_array();
+                    $count = count($result);
+
+                    if(empty($count))
                     {
-                        $total = 0;
+                        $this->order_model->inputDataOrder('testresult', array
+                        (
+                            'noSample' => $y,
+                            'empId' => $employess
+                        ));
+                    }
+                    else if($count == 1)
+                    {
+                        $where = array('noSample' => $y);
+                        $this->order_model->updateDataOrder($where, 'testresult', array
+                        (
+                            'noSample' => $y,
+                            'empId' => $employess
+                        ));
+                    }
+
+                    foreach($updatedParameters as $param)
+                    {
+                        $this->order_model->inputDataOrder('orderdetail', array
+                        (
+                            'orderId' => $orderId,
+                            'noSample' => $y,
+                            'parameterId' => $param
+                        ));
                     }
                 }
-            $tableOrder = array(
-                'sender' => $this->input->post('sender'),
-                'totalCost' => $total
-            );
-            $this->order_model->updateDataOrder($where, 'order', $tableOrder);
 
-            $samples = $this->input->post('samples');
-            $samplesExplode = explode(', ', $samples);
-
-            $updatedSamples = $this->input->post('noSample');
-            $updatedSamplesExplode = explode(', ', $updatedSamples);
-
-            $this->db->delete('orderdetail', array('orderId' => $orderId));
-
-            foreach($updatedSamplesExplode as $y)
-            {
-                $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$y}'");
-                $result = $query->result_array();
-                $count = count($result);
-
-                if (empty($count))
+                $diff = array_diff($samplesExplode, $updatedSamplesExplode);
+                foreach($diff as $d)
                 {
-                    $this->order_model->inputDataOrder('testresult', array
-                    (
-                        'noSample' => $y,
-                        'empId' => $employess
-                    ));
-                }
-                else if($count == 1)
-                {
-                    $where = array('noSample' => $y);
-                    $this->order_model->updateDataOrder($where, 'testresult', array
-                    (
-                        'noSample' => $y,
-                        'empId' => $employess
-                    ));
+                    $this->db->delete('testresult', array('noSample' => $d));
                 }
 
-                foreach($updatedParameters as $param)
-                {
-                    $this->order_model->inputDataOrder('orderdetail', array
-                    (
-                        'orderId' => $orderId,
-                        'noSample' => $y,
-                        'parameterId' => $param
-                    ));
-                }
+                $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                redirect('cs/order');
             }
-
-            $diff = array_diff($samplesExplode, $updatedSamplesExplode);
-            foreach($diff as $d)
-            {
-                $this->db->delete('testresult', array('noSample' => $d));
-            }
-
-            $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            redirect('cs/order');
         }
 
         function delete($orderId, $custId, $Samples)

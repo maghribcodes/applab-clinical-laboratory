@@ -2,11 +2,6 @@
 
     class Clinical_model extends CI_Model
     {
-        function countAllOrders()
-		{
-			return $this->db->get('order')->num_rows();
-		}
-
 		function getDataClinical($limit, $start, $keyword = null)
 		{
 			if($keyword)
@@ -32,10 +27,6 @@
 			$this->db->where('custId', $custId);
 
 			return $this->db->get();
-		}
-
-		function getOrder(){
-			return $this->db->get('order')->num_rows();
 		}
 
         function inputDataClinical($table, $data)

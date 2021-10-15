@@ -1,7 +1,7 @@
 <div class="container-fluid" style="height:250px; background-color: rgba(255,74,59,1);">
     <!-- Page Heading -->
 	<div>
-        <br></br>
+        <br>
         <h2 class="m-0 font-weight text-light"><b>Nota Order</b></h2>
         <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
     </div>
@@ -51,7 +51,7 @@
                                     <div> - Jenis Kelamin</div>
                                     <div> - Umur / Tgl. Lahir</div>
                                     <div> - Alamat</div>
-                                    <div> - No. Sample</div>
+                                    <div> - No. Sampel</div>
                                 </td>
                                 <td>
                                     <div>: <?php echo $vn->custName ?></div>
@@ -130,7 +130,7 @@
             <div class="card shadow mb-4">
                 <div class="card-body">
                     <?php echo anchor('cs/order/printNota/'.$vn->orderId, 
-                        '<div class="btn btn-danger">
+                        '<div class="btn btn-danger col-lg-12">
                             <i class="fa fa-print"></i> Cetak Nota</div>')
                     ?>
                 </div>
