@@ -14,107 +14,102 @@
 
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-				<div class="row">
-					<div class="col-sm-12 col-md-8">
-						<?php echo anchor('cs/clinical/input', '<button class="btn btn-outline-danger m-0"><i class="fas fa-plus fa-sm"></i> Tambah Klinisi</button>') ?>
-					</div>
+			<div class="row">
+				<div class="col-sm-12 col-md-8">
+					<?php echo anchor('cs/clinical/input', '<button class="btn btn-outline-danger m-0"><i class="fas fa-plus fa-sm"></i> Tambah Klinisi</button>') ?>
+				</div>
 
-					<div class="col-sm-12 col-md-4">
-						<form method="post" action="<?php echo base_url('cs/clinical') ?>">
-							<div class="input-group">
-								<input type="text" name="keyword" class="form-control" placeholder="Cari pasien..." autocomplete="off">
-								<div class="input-group-append">
-									<input class="btn btn-danger" type="submit" name="submit" value="Submit">
-								</div>
+				<div class="col-sm-12 col-md-4">
+					<form method="post" action="<?php echo base_url('cs/clinical') ?>">
+						<div class="input-group">
+							<input type="text" name="keyword" class="form-control" placeholder="Cari pasien..." autocomplete="off">
+							<div class="input-group-append">
+								<input class="btn btn-danger" type="submit" name="submit" value="Submit">
 							</div>
-						</form>
-					</div>
-
+						</div>
+					</form>
 				</div>
+
 			</div>
-
-            <div class="card-body">
-
-              	<div class="table-responsive">
-
-					<table class="table table-bordered" width="100%" cellspacing="0">
-						<thead>
-							<tr>
-								<th style="text-align: center; vertical-align: middle;">No.</th>
-								<th style="text-align: center; vertical-align: middle;">Nama Pasien</th>
-								<th style="text-align: center; vertical-align: middle;">Usia</th>
-								<th style="text-align: center; vertical-align: middle;">Jenis Kelamin</th>
-                                <th style="text-align: center; vertical-align: middle;">Kontak</th>
-								<th style="text-align: center; vertical-align: middle;">Alamat</th>
-								<th style="text-align: center; vertical-align: middle;">Status Klinisi</th>
-								<th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
-							</tr>
-
-							<?php
-								if(empty($viewClinical)): ?>
-								<tr>
-									<td colspan=8>
-										<div class="alert alert-danger" role="alert">
-											Data tidak ditemukan.
-										</div>
-									</td>
-								</tr>
-								<?php endif;
-
-								foreach ($viewClinical as $vc): ?>
-								<tr>
-									<td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
-									<td style="vertical-align: middle;"><?php echo $vc->custName ?></td>
-									<td style="text-align: center; vertical-align: middle;"><?php 
-											$birth = new DateTime($vc->birthDate);
-											$now = new DateTime();
-											$age = $now->diff($birth);
-											echo $age->y;
-										?>
-										</td>
-									<td style="text-align: center; vertical-align: middle;"><?php echo $vc->gender ?></td>
-									<td style="text-align: center; vertical-align: middle;"><?php echo $vc->contact ?></td>
-                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vc->address ?></td>
-                                    <td style="text-align: center; vertical-align: middle;">
-                                        <?php 
-                                            if($vc->sender != NULL)
-                                            {
-                                                ?><span class="badge badge-pill badge-success">Complete</span><?php
-                                            }
-                                            else
-                                            {
-                                                ?><span class="badge badge-pill badge-danger">Waiting</span><?php
-                                            }
-                                        ?>
-                                    </td>
-									<td width="20px"><?php echo anchor('cs/clinical/update/'.$vc->custId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
-									<!--<td width="20px"><?php //echo anchor('cs/clinical/delete/'.$vc->orderId.'/'.$vc->custId,'<div class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></div>') ?></td>-->
-									<td width="20px"><div class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></div></td>
-
-										<!-- Delete Modal-->
-										<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-											aria-hidden="true">
-											<div class="modal-dialog" role="document">
-												<div class="modal-content">
-													<div class="modal-body">Apa anda yakin untuk menghapus data ini?</div>
-													<div class="modal-footer">
-														<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-														<?php echo anchor('cs/clinical/delete/'.$vc->orderId.'/'.$vc->custId,'<div class="btn btn-danger">Hapus</div>') ?>
-													</div>
-												</div>
-											</div>
-										</div>
-
-								</tr>
-								<?php endforeach; ?>
-						</thead>
-					</table>
-					
-					<?php echo $this->pagination->create_links(); ?>
-
-				</div>
-			</div>
-		
 		</div>
 
-</div>
+        <div class="card-body">
+            <div class="table-responsive">
+				<table class="table table-bordered" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+							<th style="text-align: center; vertical-align: middle;">No.</th>
+							<th style="text-align: center; vertical-align: middle;">Nama Pasien</th>
+							<th style="text-align: center; vertical-align: middle;">Usia</th>
+							<th style="text-align: center; vertical-align: middle;">Jenis Kelamin</th>
+                            <th style="text-align: center; vertical-align: middle;">Kontak</th>
+							<th style="text-align: center; vertical-align: middle;">Alamat</th>
+							<th style="text-align: center; vertical-align: middle;">Status Klinisi</th>
+							<th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
+						</tr>
+
+						<?php
+						if(empty($viewClinical)): ?>
+						<tr>
+							<td colspan=8>
+								<div class="alert alert-danger" role="alert">
+									Data tidak ditemukan.
+								</div>
+							</td>
+						</tr>
+						<?php endif;
+
+						foreach ($viewClinical as $vc): ?>
+						<tr>
+							<td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
+							<td style="vertical-align: middle;"><?php echo $vc->custName ?></td>
+							<td style="text-align: center; vertical-align: middle;"><?php 
+								$birth = new DateTime($vc->birthDate);
+								$now = new DateTime();
+								$age = $now->diff($birth);
+								echo $age->y;
+								?>
+							</td>
+							<td style="text-align: center; vertical-align: middle;"><?php echo $vc->gender ?></td>
+							<td style="text-align: center; vertical-align: middle;"><?php echo $vc->contact ?></td>
+                            <td style="text-align: center; vertical-align: middle;"><?php echo $vc->address ?></td>
+                            <td style="text-align: center; vertical-align: middle;">
+                                <?php 
+                                    if($vc->sender != NULL)
+                                    {
+                                        ?><span class="badge badge-pill badge-success">Lengkap</span><?php
+                                    }
+                                    else
+                                    {
+                                        ?><span class="badge badge-pill badge-danger">Menunggu</span><?php
+                                    }
+                                ?>
+                            </td>
+							<td width="20px"><?php echo anchor('cs/clinical/update/'.$vc->custId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
+							<td width="20px"><div class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></div></td>
+
+							<!-- Delete Modal-->
+								<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-body">Apa anda yakin untuk menghapus data ini?</div>
+											<div class="modal-footer">
+												<button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+												<?php echo anchor('cs/clinical/delete/'.$vc->orderId.'/'.$vc->custId,'<div class="btn btn-danger">Hapus</div>') ?>
+											</div>
+										</div>
+									</div>
+								</div>
+
+						</tr>
+						<?php endforeach; ?>
+					</thead>
+				</table>
+					
+				<?php echo $this->pagination->create_links(); ?>
+
+				</div>
+			</div>
+		</div>
+	</div>

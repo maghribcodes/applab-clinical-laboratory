@@ -23,14 +23,33 @@ class Dashboard extends CI_Controller
 					'roleName'=>$data->roleName
 				);
 
-		$data['viewCountVisitors'] = $this->user_model->getCountVisitors();
-		$data['viewCountSamples'] = $this->user_model->getCountSamples();
-		$data['viewCountLhus'] = $this->user_model->getCountLhus();
-		$data['viewCountLhu'] = $this->user_model->getCountLhu();
+		$data['viewClinical'] = $this->doctor_model->getDataCustomer()->result();
+		$data['viewResult'] = $this->doctor_model->getTestResult()->result();
 		
         $this->load->view('templates/header');
         $this->load->view('doctor/sidebar');
         $this->load->view('doctor/dashboard', $data);
         $this->load->view('templates/footer');
     }
+
+	function input($orderId)
+	{
+		$data['updateClinical'] = $this->doctor_model->getDataClinical($orderId)->result();
+		$data['lastSample'] = $this->db->query("SELECT noSample FROM testresult ORDER BY noSample DESC LIMIT 1")->result();
+        
+        $data['viewParameterA'] = $this->order_model->getParameterA()->result();
+        $data['viewParameterB'] = $this->order_model->getParameterB()->result();
+        $data['viewParameterC'] = $this->order_model->getParameterC()->result();
+        $data['viewParameterD'] = $this->order_model->getParameterD()->result();
+
+        $this->load->view('templates/header');
+        $this->load->view('doctor/sidebar');
+        $this->load->view('doctor/clinical', $data);
+        $this->load->view('templates/footer');
+	}
+
+	function inputClinical($orderId)
+	{
+		
+	}
 }

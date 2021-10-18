@@ -20,7 +20,7 @@
             
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url('cs/dashboard') ?>">
+                <a class="nav-link" href="<?php echo base_url('doctor/dashboard') ?>">
                     <br></br>
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -28,25 +28,6 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Pages -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url('cs/clinical') ?>">
-                    <i class="fas fa-folder fa-cog"></i>
-                    <span>Data Klinisi</span>
-                </a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Pages -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url('cs/order') ?>">
-                    <i class="fas fa-folder fa-cog"></i>
-                    <span>Data Order</span>
-                </a>
-            </li>
             
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -66,7 +47,7 @@
                         <div class="modal-body">Apa anda yakin untuk logout?</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                            <a class="btn btn-danger" href="<?php echo base_url('auth/logout') ?>">Logout</a>
+                            <a class="btn btn-primary" href="<?php echo base_url('auth/logout') ?>">Logout</a>
                         </div>
                     </div>
                 </div>
