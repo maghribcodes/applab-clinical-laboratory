@@ -100,4 +100,13 @@
 			$this->db->where($where);
 			$this->db->delete($table);
 		}
+
+		function checkUniqueSamples($id = '', $s) {
+			$this->db->where('noSample', $s);
+	
+			if($id) {
+				$this->db->where_not_in('noSample', $id);
+			}
+			return $this->db->get('testresult')->num_rows();
+		}
     }

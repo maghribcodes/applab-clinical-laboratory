@@ -1,6 +1,6 @@
 <?php
 
-    $config['num_links'] = 1;
+    $config['num_links'] = 2;
 
     $config['full_tag_open'] = '<nav><ul class="pagination justify-content-center">';
     $config['full_tag_close'] = '</ul></nav>';

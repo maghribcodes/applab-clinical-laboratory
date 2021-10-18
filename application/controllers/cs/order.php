@@ -61,7 +61,8 @@
         }
 
         function inputOrder()
-        {
+        {   
+            $this->form_validation->set_rules('noSample','Nomor Sampel','callback_checkSamples');
             $this->_rules();
 
             if($this->form_validation->run() == FALSE)
@@ -137,14 +138,13 @@
 
         function _rules()
         {
-            $this->form_validation->set_rules('noSample','Nomor Sampel','callback_checkSamples');
             $this->form_validation->set_rules('sender','Pengirim','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('custName','Nama Pasien','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('birthDate','Tanggal Lahir','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('contact','Kontak','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('gender','Jenis Kelamin','required',['required'=>'Data harus diisi']);
             $this->form_validation->set_rules('address','Alamat','required',['required'=>'Data harus diisi']);
-            //$this->form_validation->set_rules('parameterId[]','Parameter','required',['required'=>'Data harus diisi']);
+            $this->form_validation->set_rules('parameterId[]','Parameter','callback_checkParameters');
         }
 
         function checkSamples($str)
@@ -176,6 +176,19 @@
             }
         }
 
+        function checkParameters($str)
+        {
+            if($str == NULL)
+            {
+                $this->form_validation->set_message('checkParameters', 'Data harus diisi');
+                return FALSE;
+            }
+            else
+            {
+                return TRUE;
+            }
+        }
+
         function nota($orderId)
         {
             $data['viewNota'] = $this->order_model->getDataOrder($orderId)->result();
@@ -198,7 +211,7 @@
         function update($orderId)
         {
             $data['updateOrder'] = $this->order_model->getDataOrder($orderId)->result();
-
+        
             $data['viewParameterA'] = $this->order_model->getParameterA()->result();
             $data['viewParameterB'] = $this->order_model->getParameterB()->result();
             $data['viewParameterC'] = $this->order_model->getParameterC()->result();
@@ -210,13 +223,26 @@
             $this->load->view('templates/footer');
         }
 
-        function updateOrder()
+        function updateOrder($orderId)
         {
+            $oriSamples = $this->input->post('samples');
+            $oriSample = explode(', ', $oriSamples);
+            $newSamples = $this->input->post('noSample');
+            $newSample = explode(', ', $newSamples);
+            $validate = array_diff($oriSample, $newSample);
+
+            foreach($validate as $v)
+            {
+                $is_unique =  '|is_unique[testresult.noSample]';
+            }
+            $is_unique =  '';
+             
+            $this->form_validation->set_rules('noSample', 'Nomor Sampel', 'required'.$is_unique, ['required'=>'Data harus diisi']);
             $this->_rules();
 
             if($this->form_validation->run() == FALSE)
             {
-                
+                $this->update($orderId);
             }
             else
             {

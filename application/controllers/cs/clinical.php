@@ -105,23 +105,32 @@
             $this->load->view('templates/footer');
         }
 
-        function updateClinical()
+        function updateClinical($custId)
         {
-            $employess = $this->session->userdata('empId');
+            $this->_rules();
+            
+            if($this->form_validation->run() == FALSE)
+            {
+                $this->update($custId);
+            }
+            else
+            {
+                $employess = $this->session->userdata('empId');
 
-            $custId = $this->input->post('custId');
-            $where = array('custId' => $custId);
-            $tableCust = array(
-                'custName' => $this->input->post('custName'),
-                'birthDate' => $this->input->post('birthDate'),
-                'gender' => $this->input->post('gender'),
-                'contact' => $this->input->post('contact'),
-                'address' => $this->input->post('address'),
-            );
-            $this->clinical_model->updateDataClinical($where, 'customer', $tableCust);
+                $custId = $this->input->post('custId');
+                $where = array('custId' => $custId);
+                $tableCust = array(
+                    'custName' => $this->input->post('custName'),
+                    'birthDate' => $this->input->post('birthDate'),
+                    'gender' => $this->input->post('gender'),
+                    'contact' => $this->input->post('contact'),
+                    'address' => $this->input->post('address'),
+                );
+                $this->clinical_model->updateDataClinical($where, 'customer', $tableCust);
 
-            $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            redirect('cs/clinical');
+                $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                redirect('cs/clinical');
+            }
         }
 
         function delete($orderId, $custId)

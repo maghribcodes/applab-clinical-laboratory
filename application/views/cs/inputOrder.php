@@ -110,14 +110,16 @@
                                 <?php $no=1; foreach($viewParameterA as $hematologi) : ?>
                                 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $hematologi->parameterId; ?>" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" name="parameterId[]" 
+                                        value="<?php echo $hematologi->parameterId; ?>" 
+                                        <?php echo set_checkbox('parameterId[]', $hematologi->parameterId); ?> id="defaultCheck1">
                                         <label class="form-check-label" for="defaultCheck1">
                                             <?php echo $no++ ?>. <?php echo $hematologi->parameterName ?>
                                         </label>
                                 </div>
                                 
                                 <?php endforeach; ?>
-
+                                
                             </div>
 
                         </div>
@@ -132,7 +134,9 @@
                                 <?php $no=1; foreach($viewParameterD as $mikrobiologi) : ?>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $mikrobiologi->parameterId; ?><?php echo set_value('parameterId[]'); ?>" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" name="parameterId[]" 
+                                        value="<?php echo $mikrobiologi->parameterId; ?>" 
+                                        <?php echo set_checkbox('parameterId[]', $mikrobiologi->parameterId); ?> id="defaultCheck1">
                                         <label class="form-check-label" for="defaultCheck1">
                                             <?php echo $no++ ?>. <?php echo $mikrobiologi->parameterName ?>
                                         </label>
@@ -158,7 +162,9 @@
                                 <?php $no=1; foreach($viewParameterB as $kimiaklinik) : ?>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $kimiaklinik->parameterId; ?>" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" name="parameterId[]" 
+                                        value="<?php echo $kimiaklinik->parameterId; ?>" 
+                                        <?php echo set_checkbox('parameterId[]', $kimiaklinik->parameterId); ?> id="defaultCheck1">
                                         <label class="form-check-label" for="defaultCheck1">
                                             <?php echo $no++ ?>. <?php echo $kimiaklinik->parameterName ?>
                                         </label>
@@ -184,7 +190,9 @@
                                 <?php $no=1; foreach($viewParameterC as $serologi) : ?>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="parameterId[]" value="<?php echo $serologi->parameterId; ?>" id="defaultCheck1">
+                                    <input class="form-check-input" type="checkbox" name="parameterId[]" 
+                                        value="<?php echo $serologi->parameterId; ?>" 
+                                        <?php echo set_checkbox('parameterId[]', $serologi->parameterId); ?> id="defaultCheck1">
                                         <label class="form-check-label" for="defaultCheck1">
                                             <?php echo $no++ ?>. <?php echo $serologi->parameterName ?>
                                         </label>
@@ -195,8 +203,6 @@
                             </div>
                         </div>
                     </div>
-                
-                <?php //endforeach; ?>
 
                 </div>
             </div>

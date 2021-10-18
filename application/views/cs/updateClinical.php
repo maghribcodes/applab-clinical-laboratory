@@ -12,7 +12,7 @@
 <?php 
     foreach ($updateClinical as $uc): ?>
 
-<form method="post" action="<?php echo base_url('cs/clinical/updateClinical') ?>">
+<form method="post" action="<?php echo base_url('cs/clinical/updateClinical/'.$uc->custId) ?>">
 
     <div class="card shadow mb-4">
 
@@ -55,13 +55,15 @@
                         <legend class="col-form-label col-sm-2 pt-0">Jenis Kelamin</legend>
                             <div class="col-sm-10">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios1" value="<?php echo $uc->gender ?>" <?php if($uc->gender=='Laki-laki') echo 'checked="checked"' ?>>
+                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios1" 
+                                        value="Laki-laki" <?php echo set_value('gender', $uc->gender) == 'Laki-laki' ? "checked" : ""; ?>>
                                         <label class="form-check-label" for="gridRadios1">
                                             Laki-laki
                                         </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios2" value="<?php echo $uc->gender ?>" <?php if($uc->gender=='Perempuan') echo 'checked="checked"' ?>>
+                                    <input class="form-check-input" type="radio" name="gender" id="gridRadios2" 
+                                        value="Perempuan" <?php echo set_value('gender', $uc->gender) == 'Perempuan' ? "checked" : ""; ?>>
                                         <label class="form-check-label" for="gridRadios2">
                                             Perempuan
                                         </label>
