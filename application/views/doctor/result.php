@@ -50,6 +50,7 @@
                                                             <th style="text-align: center; vertical-align: middle;">Jenis Kelamin</th>
                                                             <th style="text-align: center; vertical-align: middle;">Kontak</th>
                                                             <th style="text-align: center; vertical-align: middle;">Alamat</th>
+                                                            <th style="text-align: center; vertical-align: middle;">Kiriman</th>
                                                             <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
                                                             <th colspan="2" style="text-align: center; vertical-align: middle;">Aksi</th>
                                                         </tr>
@@ -69,6 +70,7 @@
                                                             <td style="text-align: center; vertical-align: middle;"><?php echo $vr->gender ?></td>
                                                             <td style="text-align: center; vertical-align: middle;"><?php echo $vr->contact ?></td>
                                                             <td style="text-align: center; vertical-align: middle;"><?php echo $vr->address ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vr->sender ?></td>
                                                             <td style="text-align: center; vertical-align: middle;">
                                                                 <?php 
                                                                     if($vr->statusId == 0)

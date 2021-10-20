@@ -10,6 +10,7 @@
     <br>
 
     <?php echo $this->session->flashdata('message') ?>
+    <?php foreach($lastSample as $ls){} ?>
 
 <form method="post" action="<?php echo base_url('cs/order/inputOrder') ?>">
 
@@ -20,7 +21,9 @@
         </div>
 
         <div class="card-body">
-
+            <div class="alert alert-danger" role="alert">
+                Nomor sampel terakhir: <?php echo $ls->noSample ?>
+            </div>
             <form>
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">No. Sampel</label>

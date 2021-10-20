@@ -23,9 +23,19 @@ class Dashboard extends CI_Controller
 					'roleName'=>$data->roleName
 				);
 		
+		$data['viewSamples'] = $this->sample_model->getDataSamples()->result();
+
         $this->load->view('templates/header');
         $this->load->view('sampling/sidebar');
         $this->load->view('sampling/dashboard', $data);
         $this->load->view('templates/footer');
     }
+
+	function input($orderId)
+	{
+		$this->load->view('templates/header');
+        $this->load->view('sampling/sidebar');
+        $this->load->view('sampling/inputSample');
+        $this->load->view('templates/footer');
+	}
 }

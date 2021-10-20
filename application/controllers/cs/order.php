@@ -49,6 +49,8 @@
 
         function input()
         {
+            $data['lastSample'] = $this->db->query("SELECT noSample FROM testresult ORDER BY noSample DESC LIMIT 1")->result();
+            
             $data['viewParameterA'] = $this->order_model->getParameterA()->result();
             $data['viewParameterB'] = $this->order_model->getParameterB()->result();
             $data['viewParameterC'] = $this->order_model->getParameterC()->result();
