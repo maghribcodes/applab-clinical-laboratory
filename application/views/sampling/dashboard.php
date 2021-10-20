@@ -40,7 +40,7 @@
 
                                 <div class="card-body">
                                     <?php
-                                        if(empty($viewSamples))
+                                        if(empty($viewOrders))
                                         { ?>
                                             <div class="alert alert-secondary" role="alert">
                                                 Tidak ada data sampel baru.
@@ -64,25 +64,25 @@
 
                                                         <?php
                                                         $no=1;
-                                                        foreach ($viewSamples as $vs): ?>
+                                                        foreach ($viewOrders as $vo): ?>
                                                         <tr>
                                                             <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo $no++; ?></td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vs->Samples ?></td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vs->custName ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->Samples ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->custName ?></td>
                                                             <td style="text-align: center; vertical-align: middle;"><?php 
-                                                                    $date = new DateTime($vs->orderTime);
+                                                                    $date = new DateTime($vo->orderTime);
                                                                     $date = $date->format('d F Y');
                                                                     echo $date;
                                                                 ?>
                                                                 </td>
                                                             <td style="text-align: center; vertical-align: middle;"><?php 
-                                                                    $time = new DateTime($vs->orderTime);
+                                                                    $time = new DateTime($vo->orderTime);
                                                                     $time = $time->format('H:i:s A');
                                                                     echo $time;
                                                                 ?>
                                                                 </td>
                                                             <td style="text-align: center; vertical-align: middle;"><span class="badge badge-pill badge-danger">Menunggu</span></td>
-                                                            <td width="20px"><?php echo anchor('sampling/dashboard/input/'.$vs->orderId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
+                                                            <td width="20px"><?php echo anchor('sampling/dashboard/input/'.$vo->orderId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
                                                         </tr>
                                                         <?php endforeach; ?>
                                                     </thead>

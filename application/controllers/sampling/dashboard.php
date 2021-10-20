@@ -23,7 +23,7 @@ class Dashboard extends CI_Controller
 					'roleName'=>$data->roleName
 				);
 		
-		$data['viewSamples'] = $this->sample_model->getDataSamples()->result();
+		$data['viewOrders'] = $this->sample_model->getDataOrders()->result();
 
         $this->load->view('templates/header');
         $this->load->view('sampling/sidebar');
@@ -33,9 +33,11 @@ class Dashboard extends CI_Controller
 
 	function input($orderId)
 	{
+		$data['viewSample'] = $this->sample_model->getDataSamples($orderId)->result();
+
 		$this->load->view('templates/header');
         $this->load->view('sampling/sidebar');
-        $this->load->view('sampling/inputSample');
+        $this->load->view('sampling/inputSample', $data);
         $this->load->view('templates/footer');
 	}
 }
