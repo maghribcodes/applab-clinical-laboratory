@@ -18,6 +18,8 @@
                             
                         </div>
                     </div>
+
+                    <?php echo $this->session->flashdata('message') ?>
                     
                     <!-- Content Row -->
                     <div class="row">

@@ -108,6 +108,7 @@
                 $tableOrder = array(
                     'custId' => $input1,
                     'sender' => $this->input->post('sender'),
+                    'clinicalNotes' => $this->input->post('clinicalNotes'),
                     'totalCost' => $total,
                     'empId' => $employess
                 );
@@ -283,6 +284,7 @@
                     }
                 $tableOrder = array(
                     'sender' => $this->input->post('sender'),
+                    'clinicalNotes' => $this->input->post('clinicalNotes'),
                     'totalCost' => $total
                 );
                 $this->order_model->updateDataOrder($where, 'order', $tableOrder);

@@ -8,7 +8,7 @@
     </div>
 
     <br>
-
+    
     <?php
     foreach($updateClinical as $uc)
     { foreach($lastSample as $ls){}
@@ -32,12 +32,12 @@
                         <input type="hidden" name="custId" value="<?php echo $uc->custId ?>">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">No. Sampel</label>
                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                <input type="text" name="noSample" class="form-control" value="">
+                                <input type="text" name="noSample" class="form-control" value="<?php echo set_value('noSample'); ?>">
                                 <?php echo form_error('noSample', '<div class="text-danger small">','</div>') ?>
                             </div>
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Pengirim</label>
                             <div class="col-sm-4">
-                                <input type="name" name="sender" value="<?php echo $uc->sender ?>" class="form-control" id="inputEmail3">
+                                <input type="name" name="sender" value="<?php echo set_value('sender'); ?>" class="form-control" id="inputEmail3">
                                 <?php echo form_error('sender', '<div class="text-danger small">','</div>') ?>
                             </div>
                     </div>
@@ -90,6 +90,16 @@
                                 </div>
                         </div>
                     </fieldset>
+
+                    <fieldset class="form-group">
+                        <div class="row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Keterangan Klinisi</label>
+                            <div class="col-sm-10">
+                                <textarea name="clinicalNotes" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+
                 </form>
     <?php } ?>
             </div>
@@ -120,7 +130,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="parameterId[]"
                                             value="<?php echo $hematologi->parameterId; ?>"
-                                            id="defaultCheck1">
+                                            <?php echo set_checkbox('parameterId[]', $hematologi->parameterId); ?> id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $hematologi->parameterName ?>
                                             </label>
@@ -143,14 +153,15 @@
 
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="parameterId[]"
-                                            value="<?php echo $mikrobiologi->parameterId; ?>" id="defaultCheck1">
+                                            value="<?php echo $mikrobiologi->parameterId; ?>" 
+                                            <?php echo set_checkbox('parameterId[]', $mikrobiologi->parameterId); ?> id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $mikrobiologi->parameterName ?>
                                             </label>
                                     </div>
 
                                     <?php endforeach; ?>
-
+                                    <?php echo form_error('parameterId[]', '<div class="text-danger small">','</div>') ?>
                                 </div>
                             </div>
 
@@ -170,7 +181,8 @@
 
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="parameterId[]"
-                                                value="<?php echo $kimiaklinik->parameterId; ?>" id="defaultCheck1">
+                                                value="<?php echo $kimiaklinik->parameterId; ?>" 
+                                                <?php echo set_checkbox('parameterId[]', $kimiaklinik->parameterId); ?> id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $kimiaklinik->parameterName ?>
                                             </label>
@@ -197,7 +209,8 @@
 
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="parameterId[]"
-                                            value="<?php echo $serologi->parameterId; ?>" id="defaultCheck1">
+                                            value="<?php echo $serologi->parameterId; ?>" 
+                                            <?php echo set_checkbox('parameterId[]', $serologi->parameterId); ?> id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $serologi->parameterName ?>
                                             </label>

@@ -38,10 +38,10 @@
 
 		function barChart()
 		{
-			$this->db->select('orderId, DATE_FORMAT(orderTime, "%M") AS bulan, COUNT(*) AS total');
+			$this->db->select('DATE_FORMAT(orderTime, "%M") AS bulan, COUNT(*) AS total');
 			$this->db->from('order');
 			$this->db->group_by('DATE_FORMAT(OrderTime, "%M")');
-			$this->db->order_by('orderId', 'ASC');
+			$this->db->order_by('Month(OrderTime)');
 			return $this->db->get();
 		}
 

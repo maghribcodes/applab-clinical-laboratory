@@ -81,6 +81,16 @@
                             </div>
                     </div>
                 </fieldset>
+
+                <fieldset class="form-group">
+                    <div class="row">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Keterangan Klinisi</label>
+                        <div class="col-sm-10">
+                            <textarea name="clinicalNotes" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+
             </form>
 
         </div>

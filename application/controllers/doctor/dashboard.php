@@ -50,6 +50,132 @@ class Dashboard extends CI_Controller
 
 	function inputClinical($orderId)
 	{
-		
+		$this->form_validation->set_rules('noSample','Nomor Sampel','callback_checkSamples');
+        $this->_rules();
+
+        if($this->form_validation->run() == FALSE)
+        {
+            $this->input($orderId);
+        }
+        else
+        {
+			$employess = $this->session->userdata('empId');
+
+            $samples = $this->input->post('noSample');
+            $sample = explode(', ', $samples);
+
+            $parameters = $this->input->post('parameterId');
+
+			$custId = $this->input->post('custId');
+            $where = array('custId' => $custId);
+            $tableCust = array(
+                'custName' => $this->input->post('custName'),
+                'birthDate' => $this->input->post('birthDate'),
+                'gender' => $this->input->post('gender'),
+                'contact' => $this->input->post('contact'),
+                'address' => $this->input->post('address'),
+            );
+            $this->order_model->updateDataOrder($where, 'customer', $tableCust);
+        
+            $getAllCost = $this->order_model->getAllParameters()->result();
+            $cost = array();
+            foreach($getAllCost as $gac)
+            {
+                if($parameters != NULL)
+                {
+                    if(in_array($gac->parameterId, $parameters))
+                    {
+                        $cost[] = $gac->parameterCost;
+                        $total = array_sum($cost);
+                    }
+                }
+                else
+                {
+                    $total = 0;
+                }
+            }
+
+			$tableOrder = array(
+				'sender' => $this->input->post('sender'),
+				'totalCost' => $total,
+                'clinicalNotes' => $this->input->post('clinicalNotes'),
+				'empId' => $employess
+			);
+			$this->order_model->updateDataOrder($where, 'order', $tableOrder);
+        
+            foreach($sample as $samp)
+            {
+                $this->order_model->inputDataOrder('testresult', array
+                (
+                    'noSample' => $samp,
+                    'empId' => $employess
+                ));
+        
+                foreach($parameters as $param)
+                {
+                    $this->order_model->inputDataOrder('orderdetail', array
+                    (
+                        'orderId' => $orderId,
+                        'noSample'=> $samp,
+                        'parameterId'=> $param
+                    ));
+                }
+            }
+            $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data klinisi sudah diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            redirect('doctor/dashboard');
+		}
 	}
+
+	function _rules()
+    {
+        $this->form_validation->set_rules('sender','Pengirim','required',['required'=>'Data harus diisi']);
+        $this->form_validation->set_rules('custName','Nama Pasien','required',['required'=>'Data harus diisi']);
+        $this->form_validation->set_rules('birthDate','Tanggal Lahir','required',['required'=>'Data harus diisi']);
+        $this->form_validation->set_rules('contact','Kontak','required',['required'=>'Data harus diisi']);
+        $this->form_validation->set_rules('gender','Jenis Kelamin','required',['required'=>'Data harus diisi']);
+        $this->form_validation->set_rules('address','Alamat','required',['required'=>'Data harus diisi']);
+        $this->form_validation->set_rules('parameterId[]','Parameter','callback_checkParameters');
+    }
+
+    function checkSamples($str)
+    {
+        if($str == NULL)
+        {
+            $this->form_validation->set_message('checkSamples', 'Data harus diisi');
+            return FALSE;
+        }
+        else
+        {
+            $samples = explode(', ', $str);
+            foreach($samples as $s)
+            {
+                $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$s}'");
+                $result = $query->result_array();
+                $count = count($result);
+
+                if($count > 0)
+                {
+                    $this->form_validation->set_message('checkSamples', 'Nomor sampel sudah terdaftar');
+                    return FALSE;
+                }
+                else
+                {
+                    return TRUE;
+                }
+            }
+        }
+    }
+
+    function checkParameters($str)
+    {
+        if($str == NULL)
+        {
+            $this->form_validation->set_message('checkParameters', 'Data harus diisi');
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
 }
