@@ -28,6 +28,12 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url('doctor/result') ?>">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Data Hasil Uji</span></a>
+            </li>
             
             <!-- Divider -->
             <hr class="sidebar-divider my-0">

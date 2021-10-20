@@ -1,6 +1,13 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid" style="height:250px; background-color: rgba(78, 115, 223, 1);">
 
+                    <!-- Page Heading -->
+                    <div>
+                        <br>
+                        <h2 class="m-0 font-weight text-light"><b>Dashboard</b></h2>
+                        <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
+                    </div>
+
                     <br>
 
                     <div class="card mb-4 px-2">
@@ -24,7 +31,7 @@
                     <!-- Content Row -->
                     <div class="row">
 
-                        <div class="col-xl-6 col-md-6 mb-4">
+                        <div class="col-xl-12 col-md-6 mb-4">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">DATA KLINISI</h6>
@@ -47,6 +54,10 @@
                                                         <tr>
                                                             <th style="text-align: center; vertical-align: middle;">No.</th>
                                                             <th style="text-align: center; vertical-align: middle;">Nama Pasien</th>
+                                                            <th style="text-align: center; vertical-align: middle;">Usia</th>
+                                                            <th style="text-align: center; vertical-align: middle;">Jenis Kelamin</th>
+                                                            <th style="text-align: center; vertical-align: middle;">Kontak</th>
+                                                            <th style="text-align: center; vertical-align: middle;">Alamat</th>
                                                             <th style="text-align: center; vertical-align: middle;">Status Klinisi</th>
                                                             <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
                                                         </tr>
@@ -57,54 +68,18 @@
                                                         <tr>
                                                             <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo $no++; ?></td>
                                                             <td style="vertical-align: middle;"><?php echo $vc->custName ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php 
+                                                                $birth = new DateTime($vc->birthDate);
+                                                                $now = new DateTime();
+                                                                $age = $now->diff($birth);
+                                                                echo $age->y;
+                                                                ?>
+                                                            </td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vc->gender ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vc->contact ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vc->address ?></td>
                                                             <td style="text-align: center; vertical-align: middle;"><span class="badge badge-pill badge-danger">Menunggu</span></td>
                                                             <td width="20px"><?php echo anchor('doctor/dashboard/input/'.$vc->orderId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
-                                                        </tr>
-                                                        <?php endforeach; ?>
-                                                    </thead>
-                                                </table>
-                                            </div>
-                                        <?php
-                                        } ?>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-6 col-md-6 mb-4">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">DATA HASIL UJI</h6>
-                                </div>
-
-                                <div class="card-body">
-                                    <?php
-                                        if(empty($viewResult))
-                                        { ?>
-                                            <div class="alert alert-primary" role="alert">
-                                                Semua hasil uji sudah diverifikasi.
-                                            </div>
-                                        <?php
-                                        }
-                                        else
-                                        { ?>
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered" width="100%" cellspacing="0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="text-align: center; vertical-align: middle;">No.</th>
-                                                            <th style="text-align: center; vertical-align: middle;">Nama Pasien</th>
-                                                            <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
-                                                            <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
-                                                        </tr>
-
-                                                        <?php
-                                                        $no=1;
-                                                        foreach ($viewResult as $vr): ?>
-                                                        <tr>
-                                                            <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo $no++; ?></td>
-                                                            <td style="vertical-align: middle;"><?php echo $vr->custName ?></td>
-                                                            <td style="text-align: center; vertical-align: middle;"><span class="badge badge-pill badge-danger">Belum diverifikasi</span></td>
-                                                            <td width="20px"><?php echo anchor('doctor/dashboard/update/'.$vc->custId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
                                                         </tr>
                                                         <?php endforeach; ?>
                                                     </thead>

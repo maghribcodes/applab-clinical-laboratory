@@ -24,7 +24,6 @@ class Dashboard extends CI_Controller
 				);
 
 		$data['viewClinical'] = $this->doctor_model->getDataCustomer()->result();
-		$data['viewResult'] = $this->doctor_model->getTestResult()->result();
 		
         $this->load->view('templates/header');
         $this->load->view('doctor/sidebar');
@@ -95,6 +94,8 @@ class Dashboard extends CI_Controller
                 }
             }
 
+            $orderId = $this->input->post('orderId');
+            $where = array('orderId' => $orderId);
 			$tableOrder = array(
 				'sender' => $this->input->post('sender'),
 				'totalCost' => $total,
@@ -115,7 +116,7 @@ class Dashboard extends CI_Controller
                 {
                     $this->order_model->inputDataOrder('orderdetail', array
                     (
-                        'orderId' => $orderId,
+                        'orderId' => $this->input->post('orderId'),
                         'noSample'=> $samp,
                         'parameterId'=> $param
                     ));

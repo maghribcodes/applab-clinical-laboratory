@@ -11,7 +11,7 @@
     
     <?php
     foreach($updateClinical as $uc)
-    { foreach($lastSample as $ls){}
+    {} foreach($lastSample as $ls){}
     ?>
 
     <form method="post" action="<?php echo base_url('doctor/dashboard/inputClinical/'.$uc->orderId) ?>">
@@ -95,13 +95,13 @@
                         <div class="row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Keterangan Klinisi</label>
                             <div class="col-sm-10">
-                                <textarea name="clinicalNotes" class="form-control"></textarea>
+                                <textarea name="clinicalNotes" class="form-control"><?php echo set_value('clinicalNotes', $uc->clinicalNotes); ?></textarea>
                             </div>
                         </div>
                     </fieldset>
 
                 </form>
-    <?php } ?>
+    <?php //} ?>
             </div>
 
             <div class="card-header py-3">
