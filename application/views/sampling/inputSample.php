@@ -22,7 +22,7 @@
                         $param = array_unique($parameters);
                     }?>
 
-                <form method="post" action="<?php echo base_url('sampling/dashboard/inputSample') ?>">
+                <form method="post" action="<?php echo base_url('sampling/dashboard/inputSample/'.$vs->orderId) ?>">
                     <div class="card mb-4">
                         
                         <div class="card-body">
@@ -36,9 +36,11 @@
                                             <h6 class="m-0 font-weight-bold text-secondary">DATA SAMPEL</h6>
                                         </div>
                                         <div class="card-body">
+                                            <input type="hidden" name="orderId" value="<?php echo $vs->orderId ?>">
+                                            <input type="hidden" name="noSample" value="<?php echo implode(', ', $samp); ?>">
+                                            <input type="hidden" name="parameterId" value="<?php echo implode(', ', $param); ?>">
                                             <?php foreach($samp as $s): ?>
                                                 <div class="input-group mb-3">
-                                                <input type="hidden" name="orderId" value="<?php echo $vs->orderId ?>">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1"><?php echo $s ?></span>
                                                     </div>

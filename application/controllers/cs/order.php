@@ -64,7 +64,7 @@
 
         function inputOrder()
         {   
-            $this->form_validation->set_rules('noSample','Nomor Sampel','callback_checkSamples');
+            $this->form_validation->set_rules('noSample','Nomor Sampel','max_length[5]|callback_checkSamples');
             $this->_rules();
 
             if($this->form_validation->run() == FALSE)
@@ -214,6 +214,7 @@
         function update($orderId)
         {
             $data['updateOrder'] = $this->order_model->getDataOrder($orderId)->result();
+            $data['lastSample'] = $this->db->query("SELECT noSample FROM testresult ORDER BY noSample DESC LIMIT 1")->result();
         
             $data['viewParameterA'] = $this->order_model->getParameterA()->result();
             $data['viewParameterB'] = $this->order_model->getParameterB()->result();
@@ -228,19 +229,7 @@
 
         function updateOrder($orderId)
         {
-            $oriSamples = $this->input->post('samples');
-            $oriSample = explode(', ', $oriSamples);
-            $newSamples = $this->input->post('noSample');
-            $newSample = explode(', ', $newSamples);
-            $validate = array_diff($oriSample, $newSample);
-
-            foreach($validate as $v)
-            {
-                $is_unique =  '|is_unique[testresult.noSample]';
-            }
-            $is_unique =  '';
-             
-            $this->form_validation->set_rules('noSample', 'Nomor Sampel', 'required'.$is_unique, ['required'=>'Data harus diisi']);
+            $this->form_validation->set_rules('noSample','Nomor Sampel','max_length[5]|callback_checkUpdatedSamples');
             $this->_rules();
 
             if($this->form_validation->run() == FALSE)
@@ -366,5 +355,39 @@
 
             $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Dihapus!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             redirect('cs/order');
+        }
+
+        function checkUpdatedSamples($str)
+        {
+            if($str == NULL)
+            {
+                $this->form_validation->set_message('checkUpdatedSamples', 'Data harus diisi');
+                return FALSE;
+            }
+            else
+            {
+                $oriSamples = $this->input->post('samples');
+                $oriSample = explode(', ', $oriSamples);
+                $newSample = explode(', ', $str);
+                $validate = array_diff($newSample, $oriSample);
+
+                foreach($validate as $v)
+                {
+                    $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$v}'");
+                    $result = $query->result_array();
+                    $count = count($result);
+
+                    if($count > 0)
+                    {
+                        $this->form_validation->set_message('checkUpdatedSamples', 'Nomor sampel sudah terdaftar');
+                        return FALSE;
+                    }
+                    else
+                    {
+                        return TRUE;
+                    }
+                }
+                return TRUE;
+            }
         }
     }

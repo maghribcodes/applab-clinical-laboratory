@@ -89,7 +89,7 @@
                     <div class="row">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Keterangan Klinisi</label>
                         <div class="col-sm-10">
-                            <textarea name="clinicalNotes" class="form-control"></textarea>
+                            <textarea name="clinicalNotes" class="form-control"><?php echo set_value('clinicalNotes'); ?></textarea>
                         </div>
                     </div>
                 </fieldset>
@@ -108,8 +108,6 @@
             <!-- Content Row -->
                 <div class="row">
                 
-                <?php //foreach($totalCost as $tc) : ?>
-                    <?php //$sum = $tc->total ?>
                     <!-- First Column -->
                     <div class="col-lg-4">
 

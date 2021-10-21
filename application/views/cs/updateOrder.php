@@ -12,6 +12,7 @@
     <?php
         $samples=array();
         $parameters=array();
+        foreach($lastSample as $ls){}
 
         foreach($updateOrder as $uo)
         {
@@ -29,7 +30,9 @@
             </div>
 
             <div class="card-body">
-
+                <div class="alert alert-danger" role="alert">
+                    Nomor sampel terakhir: <?php echo $ls->noSample ?>
+                </div>
                 <form>
                     <div class="form-group row">
                         <input type="hidden" name="orderId" value="<?php echo $uo->orderId ?>">
@@ -37,12 +40,12 @@
                         <input type="hidden" name="samples" value="<?php echo implode(', ', $samp); ?>">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">No. Sampel</label>
                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                <input type="text" name="noSample" class="form-control" value="<?php echo implode(', ', $samp); ?>">
+                                <input type="text" name="noSample" class="form-control" value="<?php echo set_value('noSample', implode(', ', $samp)); ?>">
                                 <?php echo form_error('noSample', '<div class="text-danger small">','</div>') ?>
                             </div>
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Pengirim</label>
                             <div class="col-sm-4">
-                                <input type="name" name="sender" value="<?php echo $uo->sender ?>" class="form-control" id="inputEmail3">
+                                <input type="name" name="sender" value="<?php echo set_value('sender', $uo->sender)?>" class="form-control" id="inputEmail3">
                                 <?php echo form_error('sender', '<div class="text-danger small">','</div>') ?>
                             </div>
                     </div>
@@ -50,12 +53,12 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Pasien</label>
                             <div class="col-sm-4">
-                                <input type="text" name="custName" class="form-control" value="<?php echo $uo->custName ?>">
+                                <input type="text" name="custName" class="form-control" value="<?php echo set_value('custName', $uo->custName) ?>">
                                 <?php echo form_error('custName', '<div class="text-danger small">','</div>') ?>
                             </div>
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal Lahir</label>
                             <div class="col-sm-4">
-                                <input type="date" name="birthDate" class="form-control" id="inputEmail3" value="<?php echo $uo->birthDate ?>">
+                                <input type="date" name="birthDate" class="form-control" id="inputEmail3" value="<?php echo set_value('birthDate', $uo->birthDate) ?>">
                                 <?php echo form_error('birthDate', '<div class="text-danger small">','</div>') ?>
                             </div>
                     </div>
@@ -63,12 +66,12 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Kontak</label>
                             <div class="col-sm-4">
-                                <input type="name" name="contact" class="form-control" id="inputEmail3" value="<?php echo $uo->contact ?>">
+                                <input type="name" name="contact" class="form-control" id="inputEmail3" value="<?php echo set_value('contact', $uo->contact) ?>">
                                 <?php echo form_error('contact', '<div class="text-danger small">','</div>') ?>
                             </div>
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Alamat</label>
                             <div class="col-sm-4">
-                                <input type="name" name="address" class="form-control" id="inputEmail3" value="<?php echo $uo->address ?>">
+                                <input type="name" name="address" class="form-control" id="inputEmail3" value="<?php echo set_value('address', $uo->address) ?>">
                                 <?php echo form_error('address', '<div class="text-danger small">','</div>') ?>
                             </div>
                     </div>
@@ -132,16 +135,16 @@
                                 
                                     <?php $no=1; foreach($viewParameterA as $hematologi) : ?>
 
-                                        <?php if(in_array($hematologi->parameterId, $param)){
-                                                    $s= 'checked="checked"'; 
-                                                }
-                                                else{
-                                                    $s= '';
-                                                } ?>
+                                        <?php 
+                                            $s=FALSE;
+                                                if(in_array($hematologi->parameterId, $param)){
+                                                    $s=TRUE;
+                                                }?>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="parameterId[]" <?php echo $s; ?>
+                                        <input class="form-check-input" type="checkbox" name="parameterId[]"
                                             value="<?php echo $hematologi->parameterId; ?>"
+                                            <?php echo set_checkbox('parameterId[]', $hematologi->parameterId, $s); ?>
                                             id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $hematologi->parameterName ?>
@@ -163,23 +166,24 @@
 
                                     <?php $no=1; foreach($viewParameterD as $mikrobiologi) : ?>
 
-                                        <?php if(in_array($mikrobiologi->parameterId, $param)){
-                                                    $s= 'checked="checked"'; 
-                                                }
-                                                else{
-                                                    $s= '';
-                                                } ?>
+                                        <?php
+                                            $s=FALSE;
+                                                if(in_array($mikrobiologi->parameterId, $param)){
+                                                    $s=TRUE;
+                                                }?>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="parameterId[]" <?php echo $s; ?>
-                                            value="<?php echo $mikrobiologi->parameterId; ?>" id="defaultCheck1">
+                                        <input class="form-check-input" type="checkbox" name="parameterId[]"
+                                            value="<?php echo $mikrobiologi->parameterId; ?>" 
+                                            <?php echo set_checkbox('parameterId[]', $mikrobiologi->parameterId, $s); ?>
+                                            id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $mikrobiologi->parameterName ?>
                                             </label>
                                     </div>
 
                                     <?php endforeach; ?>
-
+                                    <?php echo form_error('parameterId[]', '<div class="text-danger small">','</div>') ?>
                                 </div>
                             </div>
 
@@ -197,16 +201,17 @@
                                     
                                     <?php $no=1; foreach($viewParameterB as $kimiaklinik) : ?>
 
-                                        <?php if(in_array($kimiaklinik->parameterId, $param)){
-                                                    $s= 'checked="checked"'; 
-                                                }
-                                                else{
-                                                    $s= '';
-                                                } ?>
+                                        <?php 
+                                            $s=FALSE;
+                                                if(in_array($kimiaklinik->parameterId, $param)){
+                                                    $s=TRUE;
+                                                }?>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="parameterId[]" <?php echo $s; ?>
-                                                value="<?php echo $kimiaklinik->parameterId; ?>" id="defaultCheck1">
+                                        <input class="form-check-input" type="checkbox" name="parameterId[]"
+                                                value="<?php echo $kimiaklinik->parameterId; ?>" 
+                                                <?php echo set_checkbox('parameterId[]', $kimiaklinik->parameterId, $s); ?>
+                                                id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $kimiaklinik->parameterName ?>
                                             </label>
@@ -231,16 +236,17 @@
 
                                     <?php $no=1; foreach($viewParameterC as $serologi) : ?>
 
-                                        <?php if(in_array($serologi->parameterId, $param)){
-                                                    $s= 'checked="checked"'; 
-                                                }
-                                                else{
-                                                    $s= '';
-                                                } ?>
+                                        <?php 
+                                            $s=FALSE;
+                                                if(in_array($serologi->parameterId, $param)){
+                                                    $s=TRUE;
+                                                }?>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="parameterId[]" <?php echo $s; ?>
-                                            value="<?php echo $serologi->parameterId; ?>" id="defaultCheck1">
+                                        <input class="form-check-input" type="checkbox" name="parameterId[]"
+                                            value="<?php echo $serologi->parameterId; ?>" 
+                                            <?php echo set_checkbox('parameterId[]', $serologi->parameterId, $s); ?> 
+                                            id="defaultCheck1">
                                             <label class="form-check-label" for="defaultCheck1">
                                                 <?php echo $no++ ?>. <?php echo $serologi->parameterName ?>
                                             </label>
@@ -259,7 +265,6 @@
 
             <div class="card-body">
                 <button type="submit" class="btn btn-danger btn-lg btn-block">UPDATE</button>
-                <!--<button type="submit" class="btn btn-secondary btn-lg btn-block">BATAL</button>-->
             </div>
 
         </div>

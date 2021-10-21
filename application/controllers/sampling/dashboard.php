@@ -40,4 +40,30 @@ class Dashboard extends CI_Controller
         $this->load->view('sampling/inputSample', $data);
         $this->load->view('templates/footer');
 	}
+
+	function inputSample($orderId)
+	{	
+		$orderId = $this->input->post('orderId');
+		$noSamples = $this->input->post('noSample');
+		$noSample = explode(', ', $noSamples);
+		$sampleType = $this->input->post('type');
+		$parameterIds = $this->input->post('parameterId');
+		$parameterId = explode(', ', $parameterIds);
+
+		foreach($noSample as $no)
+		{
+			$where = array('orderId' => $orderId, 'noSample' => $no);
+		
+			foreach($sampleType as $st)
+			{
+				$data = array('sampleType' => $st);
+				$this->order_model->updateDataOrder($where, 'orderdetail', array
+				(
+					'sampleType' => $st
+				));
+			}
+		}
+		$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil ditambahkan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+        redirect('sampling/dashboard');
+	}
 }

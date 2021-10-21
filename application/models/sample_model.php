@@ -11,7 +11,7 @@
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
             $this->db->where('orderdetail.sampleType', '');
 			$this->db->group_by('order.orderId');
-			$this->db->order_by('GROUP_CONCAT(DISTINCT noSample)', 'desc');
+			$this->db->order_by('GROUP_CONCAT(DISTINCT noSample)', 'asc');
 
 			return $this->db->get();
         }

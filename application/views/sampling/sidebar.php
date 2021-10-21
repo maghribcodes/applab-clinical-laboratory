@@ -51,7 +51,7 @@
                         <div class="modal-body">Apa anda yakin untuk logout?</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                            <a class="btn btn-warning" href="<?php echo base_url('auth/logout') ?>">Logout</a>
+                            <a class="btn btn-secondary" href="<?php echo base_url('auth/logout') ?>">Logout</a>
                         </div>
                     </div>
                 </div>
