@@ -7,19 +7,21 @@
                         <h2 class="m-0 font-weight text-light"><b>Input Sampel</b></h2>
                         <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
                     </div>
-
                     <br>
 
                     <?php
                     $samples=array();
-                    $parameters=array();
+                    $parameterIds=array();
+                    $parameterNames=array();
 
                     foreach($viewSample as $vs)
                     {
                         $samples[] = $vs->noSample;
-                        $parameters[] = $vs->parameterName;
+                        $parameterIds[] = $vs->parameterId;
+                        $parameterNames[] = $vs->parameterName;
                         $samp = array_unique($samples);
-                        $param = array_unique($parameters);
+                        $param1 = array_unique($parameterIds);
+                        $param2 = array_unique($parameterNames);
                     }?>
 
                 <form method="post" action="<?php echo base_url('sampling/dashboard/inputSample/'.$vs->orderId) ?>">
@@ -38,15 +40,16 @@
                                         <div class="card-body">
                                             <input type="hidden" name="orderId" value="<?php echo $vs->orderId ?>">
                                             <input type="hidden" name="noSample" value="<?php echo implode(', ', $samp); ?>">
-                                            <input type="hidden" name="parameterId" value="<?php echo implode(', ', $param); ?>">
+                                            <input type="hidden" name="parameterId" value="<?php echo implode(', ', $param1); ?>">
                                             <?php foreach($samp as $s): ?>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1"><?php echo $s ?></span>
                                                     </div>
-                                                    <input type="text" name="type[]" class="form-control" placeholder="Tipe sampel..." aria-label="Username" aria-describedby="basic-addon1">
+                                                    <input type="text" name="type[]" class="form-control" placeholder="Tipe sampel..." value="<?php echo set_value('type[]'); ?>" aria-label="Username" aria-describedby="basic-addon1">
                                                 </div>
                                             <?php endforeach;?>
+                                            <?php echo form_error('type[]', '<div class="text-danger small">','</div>') ?>
                                         </div>
                                     </div>
                                 </div>
@@ -57,26 +60,28 @@
                                             <h6 class="m-0 font-weight-bold text-secondary">DATA PARAMETER</h6>
                                         </div>
                                         <div class="card-body">
-                                            <?php foreach($param as $p): ?>
+                                            <?php foreach($param2 as $p): ?>
                                                 <div class="row">
-                                                    <label class="col-sm-4"><?php echo $p ?></label>
-                                                    <div class="dropdown col-sm-2">
-                                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            Unit
-                                                        </button>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            <a class="dropdown-item" href="#">%</a>
-                                                            <a class="dropdown-item" href="#">g/dL</a>
-                                                            <a class="dropdown-item" href="#">/uL</a>
-                                                            <a class="dropdown-item" href="#">mm/Jam</a>
-                                                        </div>
+                                                    <div class="col-sm-3">
+                                                        <label><?php echo $p ?></label>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" name="custName" placeholder="Nilai rujukan..." class="form-control">
+                                                    <div class="col-sm-4">
+                                                        <select name="unit[]" class="form-control">
+                                                            <option value="" <?php echo set_select('unit', ''); ?>>Satuan</option>
+                                                            <option value= "%" <?php echo set_select('unit', '%'); ?>>%</option>
+                                                            <option value= "g/dL" <?php echo set_select('unit', 'g/dL'); ?>>g/dL</option>
+                                                            <option value= "/uL" <?php echo set_select('unit', '/uL'); ?>>/uL</option>
+                                                            <option value= "mm/Jam" <?php echo set_select('unit', 'mm/Jam'); ?>>mm/Jam</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-5">
+                                                        <input type="text" name="reference[]" placeholder="Nilai rujukan..." value="<?php echo set_value('reference[]'); ?>" class="form-control">
                                                     </div>
                                                 </div>
                                                 <br>
                                             <?php endforeach;?>
+                                            <?php echo form_error('unit[]', '<div class="text-danger small">','</div>') ?>
+                                            <?php echo form_error('reference[]', '<div class="text-danger small">','</div>') ?>
                                         </div>
                                     </div>
                                 </div>
