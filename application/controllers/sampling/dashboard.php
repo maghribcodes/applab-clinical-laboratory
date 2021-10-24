@@ -103,8 +103,8 @@ class Dashboard extends CI_Controller
 
 	function _rules()
     {
-        $this->form_validation->set_rules('type[]','Tipe sampel','required',['required'=>'Data harus diisi']);
-		$this->form_validation->set_rules('unit[]','Satuan','required',['required'=>'Data harus diisi']);
-		$this->form_validation->set_rules('reference[]','Nilai rujukan','required',['required'=>'Data harus diisi']);
+        $this->form_validation->set_rules('type[]','Tipe sampel','required',['required'=>'Tipe sampel harus diisi']);
+		$this->form_validation->set_rules('unit[]','Satuan','required',['required'=>'Satuan harus diisi']);
+		$this->form_validation->set_rules('reference[]','Nilai rujukan','required',['required'=>'Nilai rujukan harus diisi']);
     }
 }

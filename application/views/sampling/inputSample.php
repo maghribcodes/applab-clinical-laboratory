@@ -65,21 +65,15 @@
                                                     <div class="col-sm-3">
                                                         <label><?php echo $p ?></label>
                                                     </div>
-                                                    <div class="col-sm-4">
-                                                        <select name="unit[]" class="form-control">
-                                                            <option value="" <?php echo set_select('unit', ''); ?>>Satuan</option>
-                                                            <option value= "%" <?php echo set_select('unit', '%'); ?>>%</option>
-                                                            <option value= "g/dL" <?php echo set_select('unit', 'g/dL'); ?>>g/dL</option>
-                                                            <option value= "/uL" <?php echo set_select('unit', '/uL'); ?>>/uL</option>
-                                                            <option value= "mm/Jam" <?php echo set_select('unit', 'mm/Jam'); ?>>mm/Jam</option>
-                                                        </select>
+                                                    <div class="col-sm-3">
+                                                        <input type="text" name="unit[]" placeholder="Satuan..." value="<?php echo set_value('unit[]'); ?>" class="form-control">
                                                     </div>
-                                                    <div class="col-sm-5">
+                                                    <div class="col-sm-6">
                                                         <input type="text" name="reference[]" placeholder="Nilai rujukan..." value="<?php echo set_value('reference[]'); ?>" class="form-control">
                                                     </div>
                                                 </div>
                                                 <br>
-                                            <?php endforeach;?>
+                                            <?php endforeach; ?>
                                             <?php echo form_error('unit[]', '<div class="text-danger small">','</div>') ?>
                                             <?php echo form_error('reference[]', '<div class="text-danger small">','</div>') ?>
                                         </div>

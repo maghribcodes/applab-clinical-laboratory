@@ -36,11 +36,10 @@
                                     <thead>
                                         <tr>
                                             <th style="text-align: center; vertical-align: middle;">No.</th>
-                                            <th style="text-align: center; vertical-align: middle;">No. Sampel</th>
-                                            <th style="text-align: center; vertical-align: middle;">Tanggal Order</th>
-                                            <th style="text-align: center; vertical-align: middle;">Jam Order</th>
-                                            <th style="text-align: center; vertical-align: middle;">Tanggal Sampel</th>
-                                            <th style="text-align: center; vertical-align: middle;">Jam Sampel</th>
+                                            <th style="text-align: center; vertical-align: middle;">Nomor Sampel</th>
+                                            <th style="text-align: center; vertical-align: middle;">Tipe Sampel</th>
+                                            <th style="text-align: center; vertical-align: middle;">Nama Pasien</th>
+                                            <th style="text-align: center; vertical-align: middle;">Tanggal Penerimaan</th>
                                             <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
                                         </tr>
 
@@ -58,31 +57,13 @@
                                                 foreach ($viewOrder as $vo): ?>
                                                 <tr>
                                                     <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
-                                                    <td style="vertical-align: middle;"><?php
-                                                        echo $vo->Samples;
-                                                    ?></td>
-                                                    <td style="vertical-align: middle;"><?php 
+                                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vo->Samples ?></td>
+                                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vo->Types ?></td>
+                                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vo->custName ?></td>
+                                                    <td style="text-align: center; vertical-align: middle;"><?php 
                                                             $date = new DateTime($vo->orderTime);
                                                             $date = $date->format('d F Y');
                                                             echo $date;
-                                                        ?>
-                                                        </td>
-                                                    <td style="vertical-align: middle;"><?php 
-                                                            $time = new DateTime($vo->orderTime);
-                                                            $time = $time->format('H:i:s A');
-                                                            echo $time;
-                                                        ?>
-                                                        </td>
-                                                    <td style="vertical-align: middle;"><?php 
-                                                            $date = new DateTime($vo->sampleTime);
-                                                            $date = $date->format('d F Y');
-                                                            echo $date;
-                                                        ?>
-                                                        </td>
-                                                    <td style="vertical-align: middle;"><?php 
-                                                            $time = new DateTime($vo->sampleTime);
-                                                            $time = $time->format('H:i:s A');
-                                                            echo $time;
                                                         ?>
                                                         </td>
                                                     <td width="20px"><?php echo anchor('cs/order/nota/'.$vo->orderId, '<div class="btn btn-sm btn-success"><i class="far fa-eye"></i></div>') ?></td>

@@ -37,7 +37,7 @@ class Sample extends CI_Controller
 		$this->pagination->initialize($config);
 	
 		$data['start'] = $this->uri->segment(4);
-		$data['viewOrder'] = $this->order_model->getDataCustomer($config['per_page'], $data['start'], $data['keyword']);
+		$data['viewOrder'] = $this->sample_model->getAllSamples($config['per_page'], $data['start'], $data['keyword']);
 
         $this->load->view('templates/header');
         $this->load->view('sampling/sidebar');

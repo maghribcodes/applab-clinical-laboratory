@@ -11,8 +11,7 @@
 				$this->db->or_like('order.sender', $keyword);
 			}
 
-			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR "-") as Samples,
-									GROUP_CONCAT(DISTINCT sampleType SEPARATOR "-") as Types');
+			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR "-") as Samples');
 			$this->db->from('orderdetail');
 			$this->db->join('order', 'orderdetail.orderId=order.orderId');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');

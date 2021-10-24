@@ -4,7 +4,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
     
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center">
@@ -33,18 +33,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url('cs/clinical') ?>">
                     <i class="fas fa-folder fa-cog"></i>
-                    <span>Data Klinisi</span>
-                </a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Pages -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url('cs/order') ?>">
-                    <i class="fas fa-folder fa-cog"></i>
-                    <span>Data Order</span>
+                    <span>Data Hasil Uji</span>
                 </a>
             </li>
             
