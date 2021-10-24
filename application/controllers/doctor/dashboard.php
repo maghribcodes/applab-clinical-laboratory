@@ -49,7 +49,7 @@ class Dashboard extends CI_Controller
 
 	function inputClinical($orderId)
 	{
-		$this->form_validation->set_rules('noSample','Nomor Sampel','max_length[5]|callback_checkSamples');
+		$this->form_validation->set_rules('noSample','Nomor Sampel','callback_checkSamples');
         $this->_rules();
 
         if($this->form_validation->run() == FALSE)

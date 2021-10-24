@@ -64,7 +64,7 @@
 
         function inputOrder()
         {   
-            $this->form_validation->set_rules('noSample','Nomor Sampel','max_length[5]|callback_checkSamples');
+            $this->form_validation->set_rules('noSample','Nomor Sampel','callback_checkSamples');
             $this->_rules();
 
             if($this->form_validation->run() == FALSE)
@@ -229,7 +229,7 @@
 
         function updateOrder($orderId)
         {
-            $this->form_validation->set_rules('noSample','Nomor Sampel','max_length[5]|callback_checkUpdatedSamples');
+            $this->form_validation->set_rules('noSample','Nomor Sampel','callback_checkUpdatedSamples');
             $this->_rules();
 
             if($this->form_validation->run() == FALSE)

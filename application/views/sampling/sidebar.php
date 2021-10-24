@@ -4,7 +4,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion" id="accordionSidebar">
     
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center">
@@ -21,16 +21,6 @@
                     <br></br>
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
-            </li>
-            
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-            
-            <!-- Nav Item -->
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url('sampling/sample') ?>">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Data Sampel</span></a>
             </li>
 
             <!-- Divider -->

@@ -2,32 +2,7 @@
 
     class Sample_model extends CI_Model
     {
-        function getDataOrders()
-        {
-            $this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR "-") as Samples');
-			$this->db->from('orderdetail');
-			$this->db->join('order', 'orderdetail.orderId=order.orderId');
-			$this->db->join('customer', 'order.custId=customer.custId', 'left');
-            $this->db->where('orderdetail.sampleType', '');
-			$this->db->group_by('order.orderId');
-			$this->db->order_by('GROUP_CONCAT(DISTINCT noSample)', 'asc');
-
-			return $this->db->get();
-        }
-
-        function getDataSamples($orderId)
-        {
-            $this->db->select('*');
-			$this->db->from('orderdetail');
-			$this->db->join('order', 'orderdetail.orderId=order.orderId');
-			$this->db->join('customer', 'order.custId=customer.custId', 'left');
-            $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-            $this->db->where('order.orderId', $orderId);
-
-			return $this->db->get();
-        }
-
-        function getAllSamples($limit, $start, $keyword = null)
+        function getDataOrders($limit, $start, $keyword = null)
         {
             if($keyword)
 			{
@@ -41,11 +16,24 @@
 			$this->db->from('orderdetail');
 			$this->db->join('order', 'orderdetail.orderId=order.orderId');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
-            //$this->db->where('GROUP_CONCAT(DISTINCT sampleType) IS NOT NULL');
+			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
+			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
 			$this->db->group_by('order.orderId');
 			$this->db->order_by('GROUP_CONCAT(DISTINCT noSample)', 'desc');
 			$this->db->limit($limit, $start);
 
 			return $this->db->get()->result();
+        }
+
+        function getDataSamples($orderId)
+        {
+            $this->db->select('*');
+			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId');
+			$this->db->join('customer', 'order.custId=customer.custId', 'left');
+            $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
+            $this->db->where('order.orderId', $orderId);
+
+			return $this->db->get();
         }
     }

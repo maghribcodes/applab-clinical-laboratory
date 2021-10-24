@@ -1,5 +1,5 @@
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="height:250px; background-color: rgba(133, 135, 150, 1);">
+                <div class="container-fluid" style="height:250px; background-color: rgba(246, 194, 62, 1);">
 
                     <!-- Page Heading -->
                     <div>
@@ -17,9 +17,11 @@
                     foreach($viewSample as $vs)
                     {
                         $samples[] = $vs->noSample;
+                        $sampleTypes[] = $vs->sampleType;
                         $parameterIds[] = $vs->parameterId;
                         $parameterNames[] = $vs->parameterName;
                         $samp = array_unique($samples);
+                        $type = array_unique($sampleTypes);
                         $param1 = array_unique($parameterIds);
                         $param2 = array_unique($parameterNames);
                     }?>
@@ -46,7 +48,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1"><?php echo $s ?></span>
                                                     </div>
-                                                    <input type="text" name="type[]" class="form-control" placeholder="Tipe sampel..." value="<?php echo set_value('type[]'); ?>" aria-label="Username" aria-describedby="basic-addon1">
+                                                    <input type="text" name="type[]" class="form-control" placeholder="Tipe sampel..." value="<?php echo set_value('type[]', $type); ?>" aria-label="Username" aria-describedby="basic-addon1">
                                                 </div>
                                             <?php endforeach;?>
                                             <?php echo form_error('type[]', '<div class="text-danger small">','</div>') ?>
@@ -82,7 +84,7 @@
 
                             </div>
 
-                            <button type="submit" class="btn btn-secondary btn-lg btn-block">SIMPAN</button>
+                            <button type="submit" class="btn btn-warning btn-lg btn-block">SIMPAN</button>
                         </div>
                     </div>
                 </form>
