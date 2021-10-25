@@ -11,8 +11,11 @@
 
                     <?php
                     $samples=array();
+                    $sampleTypes=array();
                     $parameterIds=array();
                     $parameterNames=array();
+                    $units=array();
+                    $references=array();
 
                     foreach($viewSample as $vs)
                     {
@@ -20,10 +23,15 @@
                         $sampleTypes[] = $vs->sampleType;
                         $parameterIds[] = $vs->parameterId;
                         $parameterNames[] = $vs->parameterName;
+                        $units[] = $vs->unit;
+                        $references[]= $vs->reference;
+
+                        $combined1 = array_combine($samples, $sampleTypes);
+                        $combined2 = array_combine($parameterNames, $units);
+                        $combined3 = array_combine($parameterNames, $references);
+
                         $samp = array_unique($samples);
-                        $type = array_unique($sampleTypes);
                         $param1 = array_unique($parameterIds);
-                        $param2 = array_unique($parameterNames);
                     }?>
 
                 <form method="post" action="<?php echo base_url('sampling/dashboard/inputSample/'.$vs->orderId) ?>">
@@ -43,12 +51,12 @@
                                             <input type="hidden" name="orderId" value="<?php echo $vs->orderId ?>">
                                             <input type="hidden" name="noSample" value="<?php echo implode(', ', $samp); ?>">
                                             <input type="hidden" name="parameterId" value="<?php echo implode(', ', $param1); ?>">
-                                            <?php foreach($samp as $s): ?>
+                                            <?php foreach($combined1 as $noSample => $sampleType): ?>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1"><?php echo $s ?></span>
+                                                        <span class="input-group-text" id="basic-addon1"><?php echo $noSample ?></span>
                                                     </div>
-                                                    <input type="text" name="type[]" class="form-control" placeholder="Tipe sampel..." value="<?php echo set_value('type[]', $type); ?>" aria-label="Username" aria-describedby="basic-addon1">
+                                                    <input type="text" name="type[]" class="form-control" value="<?php echo set_value('type[]', $sampleType); ?>" placeholder="Tipe sampel..." aria-label="Username" aria-describedby="basic-addon1">
                                                 </div>
                                             <?php endforeach;?>
                                             <?php echo form_error('type[]', '<div class="text-danger small">','</div>') ?>
@@ -62,20 +70,23 @@
                                             <h6 class="m-0 font-weight-bold text-secondary">DATA PARAMETER</h6>
                                         </div>
                                         <div class="card-body">
-                                            <?php foreach($param2 as $p): ?>
-                                                <div class="row">
-                                                    <div class="col-sm-3">
-                                                        <label><?php echo $p ?></label>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <input type="text" name="unit[]" placeholder="Satuan..." value="<?php echo set_value('unit[]'); ?>" class="form-control">
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" name="reference[]" placeholder="Nilai rujukan..." value="<?php echo set_value('reference[]'); ?>" class="form-control">
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <?php foreach($combined2 as $parameterName => $unit): ?>
+                                                        <label class="m-0 font-weight-bold text-secondary"><?php echo $parameterName ?></label>
+                                                        <input type="text" name="unit[]" value="<?php echo set_value('unit[]', $unit); ?>" placeholder="Satuan..." class="form-control">
+                                                        <br>
+                                                    <?php endforeach; ?>
                                                 </div>
-                                                <br>
-                                            <?php endforeach; ?>
+                                                <div class="col-sm-6">
+                                                    <?php foreach($combined3 as $parameterName => $reference): ?>
+                                                        <br>
+                                                        <input type="text" name="reference[]" value="<?php echo set_value('reference[]', $reference); ?>" placeholder="Nilai rujukan..." class="form-control">
+                                                        <br>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </div>
+                                            <br>
                                             <?php echo form_error('unit[]', '<div class="text-danger small">','</div>') ?>
                                             <?php echo form_error('reference[]', '<div class="text-danger small">','</div>') ?>
                                         </div>

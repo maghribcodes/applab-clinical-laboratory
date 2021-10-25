@@ -14,4 +14,12 @@ class Dashboard extends CI_Controller
 		}
 	}
 
+	function index()
+	{
+		$this->load->view('templates/header');
+        $this->load->view('reporting/sidebar');
+        $this->load->view('reporting/dashboard');
+        $this->load->view('templates/footer');
+	}
+
 }
