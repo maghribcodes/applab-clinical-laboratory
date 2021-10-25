@@ -1,11 +1,11 @@
 <?php
 //============================================================+
-// File name   : example_048.php
-// Begin       : 2009-03-20
+// File name   : example_003.php
+// Begin       : 2008-03-04
 // Last Update : 2013-05-14
 //
-// Description : Example 048 for TCPDF class
-//               HTML tables and table headers
+// Description : Example 003 for TCPDF class
+//               Custom Header and Footer
 //
 // Author: Nicola Asuni
 //
@@ -19,28 +19,59 @@
 /**
  * Creates an example PDF TEST document using TCPDF
  * @package com.tecnick.tcpdf
- * @abstract TCPDF - Example: HTML tables and table headers
+ * @abstract TCPDF - Example: Custom Header and Footer
  * @author Nicola Asuni
- * @since 2009-03-20
+ * @since 2008-03-04
  */
 
-// Include the main TCPDF library (search for installation path).
-//require_once('tcpdf_include.php');
+// Extend the TCPDF class to create custom Header and Footer
+class MYPDF extends TCPDF {
+
+	//Page header
+	public function Header() {
+		// Logo
+		$image_file = K_PATH_IMAGES.'sumbar.png';
+		$this->Image($image_file, 15, 10, 15, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+		// Set font
+		$this->SetFont('times', 'B', 11);
+		// Title
+		$this->Cell(150, 15, 'DINAS KESEHATAN PROVINSI SUMATRA BARAT', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this->Ln(5);
+        $this->SetFont('times', 'B', 12);
+        $this->Cell(0, 15, 'UPTD LABORATORIUM KESEHATAN', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this->Ln(5);
+        $this->Cell(0, 15, 'PROVINSI SUMATRA BARAT', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this->Ln(7);
+        $this->SetFont('times', 'B', 9);
+        $this->Cell(0, 15, 'Jl. Gajah Mada (Gunung Pangilun) Padang. Telp.:0751-7054023. Fax.:0751-41927', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this->Ln(6);
+        $this->writeHTML("<hr>", true, false, false, false, '');
+        $this->Line(15,32,195,32);
+    }
+
+	// Page footer
+	public function Footer() {
+		// Position at 15 mm from bottom
+		$this->SetY(-15);
+		// Set font
+		$this->SetFont('times', 'I', 8);
+		// Page number
+		$this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+	}
+}
 
 // create new PDF document
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor('Labkes');
-$pdf->SetTitle('Nota');
+$pdf->SetAuthor('LABKES');
+$pdf->SetTitle('LHU');
 $pdf->SetSubject('');
 $pdf->SetKeywords('');
 
 // set default header data
-//$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 048', PDF_HEADER_STRING);
-$pdf->setPrintHeader(false);
-$pdf->setPrintFooter(false);
+$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 
 // set header and footer fonts
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -69,150 +100,140 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 // ---------------------------------------------------------
 
 // set font
-$pdf->SetFont('helvetica', 'B', 20);
+$pdf->SetFont('times', 'B', 12);
 
 // add a page
 $pdf->AddPage();
+$pdf->Ln(15);
+// set some text to print
+$txt = <<<EOD
+LAPORAN HASIL UJI
+EOD;
 
-//$pdf->Write(0, 'Example of HTML tables', '', 0, 'L', true, 0, false, false, 0);
+$pdf->Write(0, $txt, '', 0, 'C', false, 0, false, false, 0);
+// -----------------------------------------------------------------------------
 
 $pdf->SetFont('times', '', 12);
-
-// -----------------------------------------------------------------------------
 
 $samples=array();
 $parameters=array();
     
-foreach($printNota as $pn)
+foreach($printResult as $pr)
 {
-    $samples[] = $pn->noSample;
-    $parameters[] = $pn->parameterId;
+    $samples[] = $pr->noSample;
     $samp = array_unique($samples);
+    $sampleTypes[] = $pr->sampleType;
+    $sampt = array_unique($sampleTypes);
+    $parameters[] = $pr->parameterId;
     $param = array_unique($parameters);
 }
 
-$birth = new DateTime($pn->birthDate);
+$s= implode(', ', $samp);
+$n = implode(' / ', $samp);
+$t = implode(', ', $sampt);
+
+$month = new DateTime($pr->orderTime);
+$month = $month->format('m');
+
+$year = new DateTime($pr->orderTime);
+$year = $year->format('Y');
+
+$birth = new DateTime($pr->birthDate);
 $now = new DateTime();
 $age = $now->diff($birth);
 $a = $age->y;
 
-$date = new DateTime($pn->birthDate);
-$date = $date->format('d F Y');
+$ot = new DateTime($pr->orderTime);
+$ot = $ot->format('d F Y');
 
-$s= implode(', ', $samp);
+$st = new DateTime($pr->sampleTime);
+$st = $st->format('d F Y');
 
-$tbl = <<<EOD
-<table cellspacing="0" cellpadding="1" border="1">
-    <tr>
-        <td align="center">PEMERINTAH PROVINSI<br />SUMATERA BARAT<br />UPTD LAB. KES PADANG</td>
-        <td align="center">SURAT KETETAPAN RETRIBUSI DAERAH (SKRD)<br />PELAYANAN KESEHATAN (YANKES)</td>
-        <td align="center" vertical-align="middle"><br /><br />NT{$pn->orderId}</td>
-    </tr>
-</table>
-<table cellspacing="0" cellpadding="1" border="1">
-    <tr>
-        <td colspan="2"> A. IDENTITAS WAJIB RETRIBUSI / PASIEN</td>
-        <td> PENGIRIM: {$pn->sender}</td>
-    </tr>
-</table>
-<br />
+$pdf->Ln(15);
+
+$txt = <<<EOD
 <br />
 <table cellpadding="5">
     <tr>
-        <td><div> - Nama</div>
-            <div> - Jenis Kelamin</div>
-            <div> - Umur / Tgl. Lahir</div>
-            <div> - Alamat</div>
-            <div> - No. Sample</div>
+        <td><label>Nomor LHU</label><br />
+            <label>Nama</label><br />
+            <label>Umur/Jenis Kelamin</label><br />
+            <label>Alamat</label><br />
+            <label>Kontak</label><br />
+            <label>Pengirim</label><br />
+            <label>Jenis Sampel</label><br />
+            <label>Nomor Sampel</label><br />
+            <label>Tanggal Penerimaan</label><br />
+            <label>Tanggal Pengujian</label><br />
+            <label>Keterangan Klinis</label><br />
         </td>
-        <td colspan="2"><div>: {$pn->custName}</div>
-            <div>: {$pn->gender}</div>
-            <div>: {$a} th / {$date}</div>
-            <div>: {$pn->address}</div>
-            <div>: {$s}</div>
+        <td colspan="2"><label>: {$n} / LHU / LK-SB / {$month} / {$year}</label><br />
+            <label>: {$pr->custName}</label><br />
+            <label>: {$a} th / {$pr->gender}</label><br />
+            <label>: {$pr->address}</label><br />
+            <label>: {$pr->contact}</label><br />
+            <label>: {$pr->sender}</label><br />
+            <label>: {$t}</label><br />
+            <label>: {$s}</label><br />
+            <label>: {$ot}</label><br />
+            <label>: {$st}</label><br />
+            <label>: {$pr->clinicalNotes}</label><br />
         </td>
     </tr>
 </table>
 EOD;
 
-$pdf->writeHTML($tbl, true, false, false, false, '');
+$pdf->writeHTML($txt, true, false, false, false, '');
 
+// ---------------------------------------------------------
+
+$pdf->SetFont('times', 'B', 12);
+$txt = <<<EOD
+HASIL PENGUJIAN
+EOD;
+
+$pdf->Write(0, $txt, '', 0, 'C', false, 0, false, false, 0);
 // -----------------------------------------------------------------------------
 
+$pdf->SetFont('times', '', 12);
+$pdf->Ln(5);
 $tbl = <<<EOD
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
-        <td colspan="3"> B. NOTA PERHITUNGAN</td>
-    </tr>
-    <tr>
-        <td width="30" align="center">No.</td>
-        <td width="408" align="center">Jenis Pemeriksaan</td>
-        <td width="200" align="center">Tarif (Rp.)</td>
+        <th width="30" align="center">No.</th>
+        <th width="180" align="center">Parameter</th>
+        <th width="60" align="center">Satuan</th>
+        <th width="150" align="center">Nilai Rujukan</th>
+        <th width="60" align="center">Hasil</th>
+        <th width="150" align="center">Spesifikasi Metoda</th>
     </tr>
 </table>
 EOD;
 
 $no=1;
-$cost = array();
-foreach($printCost as $pc)
-{ 
-    if(in_array($pc->parameterId, $param))
-    {
-        $cost[] = $pc->parameterCost;
-        $total = array_sum($cost);
-        $format1 = number_format($pc->parameterCost, 2, ',', '.');
-        $nomor = $no++;
+foreach($param as $p)
+{
+    $nomor = $no++;
 $tbl .= <<<EOD
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
         <td width="30" align="center">{$nomor}</td>
-        <td width="408"> {$pc->parameterName}</td>
-        <td width="200" align="center">{$format1}</td>
+        <td width="180" align="center"></td>
+        <td width="60" align="center"></td>
+        <td width="150" align="center"></td>
+        <td width="60" align="center"></td>
+        <td width="150" align="center"></td>
     </tr>
 </table>
 EOD;
-    }
+
 }
 
-$format2 = number_format($total, 2, ',', '.');
-$tbl.=<<<EOD
-<table cellspacing="0" cellpadding="1" border="1">
-    <tr>
-        <td width="438" align="center" colspan="2">JUMLAH YANG DIBAYAR</td>
-        <td width="200" align="center">{$format2}</td>
-    </tr>
-</table>
-EOD;
-
 $pdf->writeHTML($tbl, true, false, false, false, '');
-// -----------------------------------------------------------------------------
-
-$date2 = new DateTime($pn->orderTime);
-$date2 = $date2->format('d F Y');
-
-$tbl = <<<EOD
-<table>
-    <tr>
-        <td align="right">PADANG, {$date2}</td>
-    </tr>
-</table>
-<table cellspacing="0" cellpadding="1" border="1">
-    <tr>
-        <td colspan="2"> C. LEGALISASI PEMBAYARAN</td>
-    </tr>
-    <tr>
-        <td align="center">Yang menerima<br />BENDAHARA KHUSUS PENERIMA<br /><br /><br />{$pn->empName}</td>
-        <td align="center">Yang membayar<br />WAJIB RETRIBUSI / KUASA<br /><br /><br />{$pn->custName}</td>
-    </tr>
-</table>
-EOD;
-
-$pdf->writeHTML($tbl, true, false, false, false, '');
-
-// -----------------------------------------------------------------------------
+// ---------------------------------------------------------
 
 //Close and output PDF document
-$pdf->Output('nota.pdf', 'I');
+$pdf->Output('LHU.pdf', 'I');
 
 //============================================================+
 // END OF FILE

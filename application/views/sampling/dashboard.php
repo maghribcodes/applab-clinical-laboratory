@@ -65,7 +65,7 @@
                                                 if(empty($viewOrders)): ?>
                                                 <tr>
                                                     <td colspan=9>
-                                                        <div class="alert alert-danger" role="alert">
+                                                        <div class="alert alert-warning" role="alert">
                                                             Data tidak ditemukan.
                                                         </div>
                                                     </td>

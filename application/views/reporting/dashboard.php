@@ -1,205 +1,121 @@
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="height:250px; background-color: rgba(255,74,59,1);">
+                <div class="container-fluid" style="height:250px; background-color: rgba(28, 200, 138, 1);">
 
                     <!-- Page Heading -->
                     <div>
                         <br>
-                        <h2 class="m-0 font-weight text-light"><b>Dashboard</h2>
+                        <h2 class="m-0 font-weight text-light"><b>Dashboard</b></h2>
                         <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
                     </div>
 
                     <br>
 
-                    <div class="card mb-4 px-5">
+                    <div class="card mb-4 px-2">
 
                         <div class="card-body">
 
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold mb-1 text-danger"><h4><b>Selamat Datang!</b><h4></div>
+                            <div class="row no-gutters align-items-right">
+                                <div class="col">
+                                    <div class="text-xs font-weight-bold mb-1 text-success"><h4><b>Selamat Datang!</b><h4></div>
                                     <div class="text-xs font-weight text-gray-800"><h6>Hello, 
-                                        <span class="badge badge-danger"><?php echo $empName; ?>.</span>
-                                         Anda login sebagai <span class="badge badge-danger"><?php echo $roleName; ?>.</span><h6></div>
-                                </div>
-
-                                <div class="col-auto">
-                                    <img class="img-fluid px-5 px-sm-4 mt-3 mb-4" src="<?php echo base_url() ?>assets/img/cs.jpg" width=270px height=280px>
+                                        <span class="badge badge-success"><?php echo $empName; ?>.</span>
+                                         Anda login sebagai <span class="badge badge-success"><?php echo $roleName; ?>.</span><h6></div>
                                 </div>
                             </div>
                             
                         </div>
                     </div>
 
-                    <!-- Content Row -->
-                    <div class="row">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <div class="row">
 
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Pelanggan</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php echo $viewCountVisitors ?></div>
-                                            </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-users fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Total Sampel</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $viewCountSamples ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-vials fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Lembar Hasil Uji Sementara
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $viewCountLhus ?></div>
-                                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <form method="post" action="<?php echo base_url('reporting/dashboard') ?>">
+                                        <div class="input-group">
+                                            <input type="text" name="keyword" class="form-control" placeholder="Cari pasien..." autocomplete="off">
+                                            <div class="input-group-append">
+                                                <input class="btn btn-success" type="submit" name="submit" value="Submit">
                                             </div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
+
                             </div>
                         </div>
 
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Lembar Hasil Uji</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $viewCountLhu ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="card-body">
+                                <table class="table table-bordered" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center; vertical-align: middle;">No.</th>
+                                            <th style="text-align: center; vertical-align: middle;">Nama Pasien</th>
+                                            <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
+                                            <th style="text-align: center; vertical-align: middle;">Lab Terkait</th>
+                                            <th style="text-align: center; vertical-align: middle;">Kiriman</th>
+                                            <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
+                                        </tr>
+
+                                            <?php 
+                                                if(empty($viewOrders)): ?>
+                                                <tr>
+                                                    <td colspan=9>
+                                                        <div class="alert alert-success" role="alert">
+                                                            Data tidak ditemukan.
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <?php endif;
+                                                
+                                                foreach ($viewOrders as $vo): ?>
+                                                <tr>
+                                                    <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
+                                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vo->custName ?></td>
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <?php 
+                                                            if($vo->statusId == 0)
+                                                            {
+                                                                ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
+                                                            }
+                                                            else if($vo->statusId == 1)
+                                                            {
+                                                                ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
+                                                            }
+                                                            else if($vo->statusId == 2)
+                                                            {
+                                                                ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
+                                                            }
+                                                        ?>
+                                                    </td>
+                                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vo->packageName ?></td>
+                                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vo->sender ?></td>
+                                                    <?php 
+                                                            if($vo->statusId == 0)
+                                                            {
+                                                                ?> 
+                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
+                                                                <?php
+                                                            }
+                                                            if($vo->statusId == 1)
+                                                            {
+                                                                ?> 
+                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
+                                                                <?php
+                                                            }
+                                                            if($vo->statusId == 2)
+                                                            {
+                                                                ?> 
+                                                                    <td width="20px"><?php echo anchor('reporting/dashboard/print/'.$vo->orderId, '<div class="btn btn-sm btn-success"><i class="fa fa-print"></i></div>') ?></td>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                        </thead>
+                                    </table>
+
+                                    <?php echo $this->pagination->create_links(); ?>
+
                             </div>
-                        </div>
+                        
                     </div>
-                    <?php ?>
-                    <!-- Content Row -->
-
-                    <div class="row">
-
-                        <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-danger">Total Pelanggan</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pie Chart -->
-                        <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-danger">Ratio Pelanggan</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Laki-laki
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-warning"></i> Perempuan
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer 
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
