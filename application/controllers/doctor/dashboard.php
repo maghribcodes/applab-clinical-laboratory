@@ -58,7 +58,8 @@ class Dashboard extends CI_Controller
         }
         else
         {
-			$employess = $this->session->userdata('empId');
+			$empId = $this->session->userdata('empId');
+            $empName = $this->session->userdata('empName');
 
             $samples = $this->input->post('noSample');
             $sample = explode(', ', $samples);
@@ -97,10 +98,10 @@ class Dashboard extends CI_Controller
             $orderId = $this->input->post('orderId');
             $where = array('orderId' => $orderId);
 			$tableOrder = array(
-				'sender' => $this->input->post('sender'),
+				'sender' => $empName,
 				'totalCost' => $total,
                 'clinicalNotes' => $this->input->post('clinicalNotes'),
-				'empId' => $employess
+				'empId' => $empId
 			);
 			$this->order_model->updateDataOrder($where, 'order', $tableOrder);
         
@@ -109,7 +110,7 @@ class Dashboard extends CI_Controller
                 $this->order_model->inputDataOrder('testresult', array
                 (
                     'noSample' => $samp,
-                    'empId' => $employess
+                    'empId' => $empId
                 ));
         
                 foreach($parameters as $param)
@@ -129,7 +130,6 @@ class Dashboard extends CI_Controller
 
 	function _rules()
     {
-        $this->form_validation->set_rules('sender','Pengirim','required',['required'=>'Data harus diisi']);
         $this->form_validation->set_rules('custName','Nama Pasien','required',['required'=>'Data harus diisi']);
         $this->form_validation->set_rules('birthDate','Tanggal Lahir','required',['required'=>'Data harus diisi']);
         $this->form_validation->set_rules('contact','Kontak','required',['required'=>'Data harus diisi']);

@@ -98,7 +98,7 @@
                                                             if($vr->statusId == 1)
                                                             {
                                                                 ?> 
-                                                                    <td width="20px"><?php echo anchor('doctor/result/'.$vr->orderId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
+                                                                    <td width="20px"><?php echo anchor('doctor/result/verification/'.$vr->orderId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
                                                                 <?php
                                                             }
                                                             if($vr->statusId == 2)

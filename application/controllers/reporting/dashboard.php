@@ -56,9 +56,16 @@ class Dashboard extends CI_Controller
 	function print($orderId)
 	{
 		$data['printResult'] = $this->reporting_model->getTestResult($orderId)->result();
+		$data['printParameter'] = $this->reporting_model->getParameters($orderId)->result();
 
         $this->load->view('reporting/print', $data);
-		//$this->load->view('reporting/tes', $data);
 	}
 
+	function send($orderId)
+	{
+		$data['printResult'] = $this->reporting_model->getTestResult($orderId)->result();
+		$data['printParameter'] = $this->reporting_model->getParameters($orderId)->result();
+
+		$this->load->view('reporting/send', $data);
+	}
 }

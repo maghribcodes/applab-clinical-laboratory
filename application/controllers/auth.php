@@ -32,6 +32,7 @@
                     foreach ($verify->result() as $ver)
                     {
 						$session_data['empId'] = $ver->empId;
+						$session_data['empName'] = $ver->empName;
 					    $session_data['username'] = $ver->username;
 					    $session_data['roleId'] = $ver->roleId;
 

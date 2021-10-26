@@ -26,13 +26,14 @@
 				    {
 					    $session_data['logged_in'] = TRUE;
 						$session_data['empId'] = $ver->empId;
+						$session_data['empName'] = $ver->empName;
 					    $session_data['username'] = $ver->username;
 					    $session_data['password'] = $ver->password;
 					    $session_data['roleId'] = $ver->roleId;
 
 					    $this->session->set_userdata($session_data); //call session
 				    }
-				    redirect('cs/dashboard');
+				    //redirect('cs/dashboard');
 			    }
 		    }
 		    else

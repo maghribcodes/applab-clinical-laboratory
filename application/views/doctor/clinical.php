@@ -8,10 +8,9 @@
     </div>
 
     <br>
-    
     <?php
-    foreach($updateClinical as $uc)
-    {} foreach($lastSample as $ls){}
+    foreach($updateClinical as $uc){}
+    foreach($lastSample as $ls){}
     ?>
 
     <form method="post" action="<?php echo base_url('doctor/dashboard/inputClinical/'.$uc->orderId) ?>">
@@ -34,11 +33,6 @@
                             <div class="col-sm-4 mb-3 mb-sm-0">
                                 <input type="text" name="noSample" class="form-control" value="<?php echo set_value('noSample'); ?>">
                                 <?php echo form_error('noSample', '<div class="text-danger small">','</div>') ?>
-                            </div>
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">Pengirim</label>
-                            <div class="col-sm-4">
-                                <input type="name" name="sender" value="<?php echo set_value('sender'); ?>" class="form-control" id="inputEmail3">
-                                <?php echo form_error('sender', '<div class="text-danger small">','</div>') ?>
                             </div>
                     </div>
 

@@ -1,1 +1,0 @@
-<?php foreach($printResult as $pr){} var_dump($printResult);?>

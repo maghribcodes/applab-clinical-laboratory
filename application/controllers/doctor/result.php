@@ -44,4 +44,15 @@
             $this->load->view('doctor/result', $data);
             $this->load->view('templates/footer');
         }
+
+        function verification($orderId)
+        {
+            $data['viewResult'] = $this->reporting_model->getTestResult($orderId)->result();
+		    $data['viewParameter'] = $this->reporting_model->getParameters($orderId)->result();
+
+            $this->load->view('templates/header');
+            $this->load->view('doctor/sidebar');
+            $this->load->view('doctor/verification', $data);
+            $this->load->view('templates/footer');
+        }
     }

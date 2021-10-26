@@ -292,6 +292,10 @@ $pdf->Write(0, $txt, '', 0, 'C', false, 0, false, false, 0);
 // -----------------------------------------------------------------------------
 
 $pdf->Ln(20);
+$img_file = K_PATH_IMAGES.'ttd.png';
+$pdf->Image($img_file, 50, 170, 100, 100, '', '', '', false, 200, '', false, false, 0);
+$img_file = K_PATH_IMAGES.'stempel.png';
+$pdf->Image($img_file, 100, 200, 50, 50, '', '', '', false, 200, '', false, false, 0);
 $txt = <<<EOD
 dr. Tuty Prihandani, SpPK
 NIP. 196303221990112001

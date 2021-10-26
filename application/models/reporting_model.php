@@ -31,8 +31,18 @@
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
 			$this->db->join('testresult', 'testresult.noSample=orderdetail.noSample', 'left');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-			//$this->db->group_by('testresult.noSample');
 			$this->db->where('order.orderId', $orderId);
+			
+			return $this->db->get();
+		}
+
+		function getParameters($orderId)
+		{
+			$this->db->select('*');
+			$this->db->from('orderdetail');
+			$this->db->group_by('orderdetail.parameterId');
+			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
+			$this->db->where('orderdetail.orderId', $orderId);
 			
 			return $this->db->get();
 		}
