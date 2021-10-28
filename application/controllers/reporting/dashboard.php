@@ -61,7 +61,7 @@ class Dashboard extends CI_Controller
         $this->load->view('reporting/print', $data);
 	}
 
-	function send($orderId)
+	function download($orderId)
 	{
 		$data['printResult'] = $this->reporting_model->getTestResult($orderId)->result();
 		$data['printParameter'] = $this->reporting_model->getParameters($orderId)->result();
@@ -80,13 +80,33 @@ class Dashboard extends CI_Controller
         $this->load->view('templates/footer');
 	}
 
+	function upload_file()
+    {
+        $config['upload_path'] = 'uploads/';
+        $config['allowed_types'] = 'pdf';
+		$config['max_size'] = 3000;
+
+        $this->load->library('upload', $config);
+
+        if($this->upload->do_upload('file'))
+        {
+            return $this->upload->data();
+        }
+        else
+        {
+            return $this->upload->display_errors();
+        }
+    }
+
 	function sendMail()
 	{
 		$email = $this->input->post('email');
 		$subject = $this->input->post('subject');
 		$message = $this->input->post('message');
 
-		if(!empty($email))
+		$file_data = $this->upload_file();
+		
+		if(is_array($file_data))
 		{
 			$config = [
 				'mailType' => 'text',
@@ -107,16 +127,30 @@ class Dashboard extends CI_Controller
 			$this->email->to($email);
 			$this->email->subject($subject);
 			$this->email->message($message);
+			$this->email->attach($file_data['full_path']);
 
 			if($this->email->send())
 			{
-				$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil dikirim!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-				redirect('reporting/dashboard');
+				if(delete_files($file_data['file_path']))
+          		{
+					$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil dikirim!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					redirect('reporting/dashboard');
+          		}	
 			}
 			else
 			{
-				show_error($this->email->print_debugger());
+				if(delete_files($file_data['file_path']))
+				{
+					$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Ada error pada email yang dikirim!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					redirect('reporting/dashboard');
+					//show_error($this->email->print_debugger());
+				}
 			}
+		}
+		else
+		{
+			$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Ada error pada file yang diupload!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+			redirect('reporting/dashboard');
 		}
 	}
 }

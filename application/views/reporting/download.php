@@ -164,6 +164,8 @@ $ot = $ot->format('d F Y');
 $st = new DateTime($pr->sampleTime);
 $st = $st->format('d F Y');
 
+$name = $pr->custName;
+
 $pdf->Ln(15);
 
 $txt = <<<EOD
@@ -293,7 +295,7 @@ $pdf->Write(0, $txt, '', 0, 'C', false, 0, false, false, 0);
 
 $pdf->Ln(20);
 $img_file = K_PATH_IMAGES.'ttd.png';
-$pdf->Image($img_file, 50, 170, 100, 100, '', '', '', false, 200, '', false, false, 0);
+$pdf->Image($img_file, 52, 172, 100, 100, '', '', '', false, 200, '', false, false, 0);
 $img_file = K_PATH_IMAGES.'stempel.png';
 $pdf->Image($img_file, 100, 200, 50, 50, '', '', '', false, 200, '', false, false, 0);
 $txt = <<<EOD
@@ -304,7 +306,8 @@ EOD;
 $pdf->Write(0, $txt, '', 0, 'C', false, 0, false, false, 0);
 
 //Close and output PDF document
-$pdf->Output('LHU.pdf', 'D');
+$filename = 'LHU '.$name.'.pdf';
+$pdf->Output($filename, 'D');
 
 //============================================================+
 // END OF FILE

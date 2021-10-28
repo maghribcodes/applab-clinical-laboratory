@@ -19,7 +19,7 @@
                             <h6 class="m-0 font-weight-bold text-success">Unduh Hasil Uji</h6>
                         </div>  
                         <div class="card-body">
-                            <?php echo anchor('reporting/dashboard/mail/'.$vr->orderId, 
+                            <?php echo anchor('reporting/dashboard/download/'.$vr->orderId, 
                                 '<div class="btn btn-success col-lg-12">
                                 <i class="fas fa-file-download"></i> PDF</div>')
                             ?>
@@ -32,7 +32,7 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-success">Kirim Hasil Uji via email</h6>
                         </div>
-                            <form method="post" action="<?php echo base_url('reporting/dashboard/sendMail') ?>">
+                            <form method="post" action="<?php echo base_url('reporting/dashboard/sendMail') ?>" enctype="multipart/form-data">
                                 <div class="card-body">
                                     <div class="form-group row">
                                         <input type="hidden" name="custId" value="<?php echo $vr->custId ?>">
@@ -66,8 +66,7 @@
                                         <label for="inputEmail3" class="col-sm-3 col-form-label">File</label>
                                         <div class="input-group col-sm-9 mb-3 mb-sm-0">
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="inputGroupFile01">
-                                                <label class="custom-file-label" for="inputGroupFile01"></label>
+                                                <input type="file" name="file" accept=".doc,.docx, .pdf" required />
                                             </div>
                                         </div>
                                     </div>
