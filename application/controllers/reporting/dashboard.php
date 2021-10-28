@@ -23,7 +23,9 @@ class Dashboard extends CI_Controller
 					'empName'=>$data->empName,
 					'roleName'=>$data->roleName
 				);
-
+		
+		$data['countLhu'] = $this->reporting_model->getCountLhu();
+		
 		if($this->input->post('submit'))
 		{
 			$data['keyword'] = $this->input->post('keyword');

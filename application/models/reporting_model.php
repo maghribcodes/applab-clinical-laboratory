@@ -46,4 +46,11 @@
 			
 			return $this->db->get();
 		}
+
+		function getCountLhu()
+		{
+			$this->db->like('statusId', '2');
+			$this->db->from('testresult');
+			return $this->db->count_all_results();
+		}
     }

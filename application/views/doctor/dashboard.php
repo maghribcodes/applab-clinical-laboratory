@@ -1,5 +1,5 @@
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="height:250px; background-color: rgba(78, 115, 223, 1);">
+                <div class="container-fluid" style="height:245px; background-color: rgba(78, 115, 223, 1);">
 
                     <!-- Page Heading -->
                     <div>
@@ -20,6 +20,38 @@
                                     <div class="text-xs font-weight text-gray-800"><h6>Hello, 
                                         <span class="badge badge-primary"><?php echo $empName; ?>.</span>
                                          Anda login sebagai <span class="badge badge-primary"><?php echo $roleName; ?>.</span><h6></div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="card border-left-primary h-100">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-dark mb-1">
+                                                        Data Klinisi</div>
+                                                    <div class="h6 mb-0 font-weight-bold text-gray-800"><?php echo $countClinical ?></div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="far fa-file-alt fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="card border-left-primary h-100">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-dark mb-1">
+                                                        Hasil Uji yang belum diverifikasi</div>
+                                                    <div class="h6 mb-0 font-weight-bold text-gray-800"><?php echo $countLhus?></div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-file-contract fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             

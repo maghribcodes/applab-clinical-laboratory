@@ -23,6 +23,8 @@ class Dashboard extends CI_Controller
 					'roleName'=>$data->roleName
 				);
 		
+		$data['countSamp'] = $this->sample_model->getCountSamples();
+
 		if($this->input->post('submit'))
 		{
 			$data['keyword'] = $this->input->post('keyword');

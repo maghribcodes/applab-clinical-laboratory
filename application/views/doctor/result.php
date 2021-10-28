@@ -1,5 +1,5 @@
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="height:250px; background-color: rgba(78, 115, 223, 1);">
+                <div class="container-fluid" style="height:245px; background-color: rgba(78, 115, 223, 1);">
                     
                     <!-- Page Heading -->
                     <div>

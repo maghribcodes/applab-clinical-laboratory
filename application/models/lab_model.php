@@ -31,4 +31,19 @@
 
 			return $this->db->get();
         }
+
+        function getCountSamples()
+		{
+			$this->db->where('result', '');
+			$this->db->from('orderdetail');
+            $this->db->group_by('noSample');
+			return $this->db->count_all_results();
+		}
+
+        function getCountLhus()
+		{
+			$this->db->like('statusId', '1');
+			$this->db->from('testresult');
+			return $this->db->count_all_results();
+		}
     }

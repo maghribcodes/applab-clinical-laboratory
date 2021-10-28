@@ -36,4 +36,12 @@
 
 			return $this->db->get();
         }
+
+		function getCountSamples()
+		{
+			$this->db->where('sampleType', '');
+			$this->db->from('orderdetail');
+			$this->db->group_by('noSample');
+			return $this->db->count_all_results();
+		}
     }

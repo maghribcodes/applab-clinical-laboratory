@@ -43,4 +43,18 @@
 
 			return $this->db->get()->result();
         }
+
+		function getCountClinical()
+		{
+			$this->db->where('sender', '');
+			$this->db->from('order');
+			return $this->db->count_all_results();
+		}
+
+		function getCountLhus()
+		{
+			$this->db->like('statusId', '1');
+			$this->db->from('testresult');
+			return $this->db->count_all_results();
+		}
     }

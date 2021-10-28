@@ -24,6 +24,8 @@ class Dashboard extends CI_Controller
 				);
 
 		$data['viewClinical'] = $this->doctor_model->getDataCustomer()->result();
+        $data['countClinical'] = $this->doctor_model->getCountClinical();
+        $data['countLhus'] = $this->doctor_model->getCountLhus();
 		
         $this->load->view('templates/header');
         $this->load->view('doctor/sidebar');
