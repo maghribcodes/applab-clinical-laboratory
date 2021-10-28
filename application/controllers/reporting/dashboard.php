@@ -66,6 +66,57 @@ class Dashboard extends CI_Controller
 		$data['printResult'] = $this->reporting_model->getTestResult($orderId)->result();
 		$data['printParameter'] = $this->reporting_model->getParameters($orderId)->result();
 
-		$this->load->view('reporting/send', $data);
+		$this->load->view('reporting/download', $data);
+	}
+
+	function mail($orderId)
+	{
+		$data['subject'] = "Laporan Hasil Uji";
+		$data['viewResult'] = $this->reporting_model->getTestResult($orderId)->result();
+
+		$this->load->view('templates/header');
+        $this->load->view('reporting/sidebar');
+        $this->load->view('reporting/email', $data);
+        $this->load->view('templates/footer');
+	}
+
+	function sendMail()
+	{
+		$email = $this->input->post('email');
+		$subject = $this->input->post('subject');
+		$message = $this->input->post('message');
+
+		if(!empty($email))
+		{
+			$config = [
+				'mailType' => 'text',
+				'charset' => 'iso-8859-1',
+				'protocol' => 'smtp',
+				'smtp_host' => 'ssl://smtp.googlemail.com',
+				'smtp_user' => 'labkes2021@gmail.com',
+				'smtp_pass' => 'Talab2020',
+				'smtp_port' => 465
+			];
+
+			$config['newline'] = "\r\n";
+
+			$this->load->library('email', $config);
+			$this->email->initialize($config);
+
+			$this->email->from('labkes2021@gmail.com');
+			$this->email->to($email);
+			$this->email->subject($subject);
+			$this->email->message($message);
+
+			if($this->email->send())
+			{
+				$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil dikirim!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+				redirect('reporting/dashboard');
+			}
+			else
+			{
+				show_error($this->email->print_debugger());
+			}
+		}
 	}
 }

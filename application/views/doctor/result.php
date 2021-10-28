@@ -104,20 +104,7 @@
                                                             if($vr->statusId == 2)
                                                             {
                                                                 ?> 
-                                                                    <td width="20px"><div class="btn btn-sm btn-success" data-toggle="modal" data-target="#viewModal"><i class="fas fa-eye"></i></div></td>
-
-                                                                    <!-- View Modal-->
-                                                                    <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                                        aria-hidden="true">
-                                                                        <div class="modal-dialog" role="document">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-body">Apa anda yakin untuk menghapus data ini?</div>
-                                                                                <div class="modal-footer">
-                                                                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                    <td width="20px"><?php echo anchor('reporting/dashboard/print/'.$vr->orderId, '<div class="btn btn-sm btn-success"><i class="fas fa-eye"></i></div>') ?></td>
 
                                                                 <?php
                                                             }

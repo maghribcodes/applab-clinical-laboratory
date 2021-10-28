@@ -45,7 +45,7 @@
 							<th style="text-align: center; vertical-align: middle;">Usia</th>
 							<th style="text-align: center; vertical-align: middle;">Jenis Kelamin</th>
 							<th style="text-align: center; vertical-align: middle;">Kiriman</th>
-							<th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
+							<th colspan="4" style="text-align: center; vertical-align: middle;">Aksi</th>
 						</tr>
 
 							<?php 
@@ -89,6 +89,7 @@
 									<td style="text-align: center; vertical-align: middle;"><?php echo $vo->sender ?></td>
 									<td width="20px"><?php echo anchor('cs/order/nota/'.$vo->orderId, '<div class="btn btn-sm btn-success"><i class="far fa-eye"></i></div>') ?></td>
 									<td width="20px"><?php echo anchor('cs/order/update/'.$vo->orderId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
+									<td width="20px"><?php echo anchor('cs/order/mail/'.$vo->orderId, '<div class="btn btn-sm btn-warning"><i class="fas fa-envelope-open-text"></i></div>') ?></td>
 									<td width="20px"><div class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></div></td>
 
 										<!-- Delete Modal-->

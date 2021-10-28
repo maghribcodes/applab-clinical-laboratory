@@ -304,7 +304,7 @@ EOD;
 $pdf->Write(0, $txt, '', 0, 'C', false, 0, false, false, 0);
 
 //Close and output PDF document
-$pdf->Output('LHU.pdf', 'I');
+$pdf->Output('LHU.pdf', 'D');
 
 //============================================================+
 // END OF FILE

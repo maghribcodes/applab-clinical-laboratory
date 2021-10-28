@@ -390,4 +390,36 @@
                 return TRUE;
             }
         }
+
+        function mail($orderId)
+        {
+            $data['viewOrder'] = $this->order_model->getDataOrder($orderId)->result();
+
+            $this->load->view('templates/header');
+            $this->load->view('cs/sidebar');
+            $this->load->view('cs/email', $data);
+            $this->load->view('templates/footer');
+        }
+
+        function sendMail($orderId)
+        {
+            $this->form_validation->set_rules('email','Mail','required|valid_email',['required'=>'Data harus diisi']);
+            
+            if($this->form_validation->run() == FALSE)
+            {
+                $this->mail($orderId);
+            }
+            else
+            {
+                $custId = $this->input->post('custId');
+                $where = array('custId' => $custId);
+                $tableCust = array(
+                    'email' => $this->input->post('email')
+                );
+                $this->order_model->updateDataOrder($where, 'customer', $tableCust);
+                
+                $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Disimpan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                redirect('cs/order');
+            }
+        }
     }

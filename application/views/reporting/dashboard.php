@@ -26,6 +26,8 @@
                         </div>
                     </div>
 
+                    <?php echo $this->session->flashdata('message') ?>
+
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <div class="row">
@@ -94,19 +96,32 @@
                                                             {
                                                                 ?> 
                                                                     <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
+                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
                                                                 <?php
                                                             }
                                                             if($vo->statusId == 1)
                                                             {
                                                                 ?> 
                                                                     <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
+                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
                                                                 <?php
                                                             }
                                                             if($vo->statusId == 2)
                                                             {
-                                                                ?> 
-                                                                    <td width="20px"><?php echo anchor('reporting/dashboard/print/'.$vo->orderId, '<div class="btn btn-sm btn-success"><i class="fa fa-print"></i></div>') ?></td>
-                                                                <?php
+                                                                if($vo->email == NULL)
+                                                                {
+                                                                    ?>
+                                                                        <td width="20px"><?php echo anchor('reporting/dashboard/print/'.$vo->orderId, '<div class="btn btn-sm btn-success"><i class="fa fa-print"></i></div>') ?></td>
+                                                                        <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
+                                                                    <?php
+                                                                }
+                                                                else
+                                                                {
+                                                                    ?> 
+                                                                        <td width="20px"><?php echo anchor('reporting/dashboard/print/'.$vo->orderId, '<div class="btn btn-sm btn-success"><i class="fa fa-print"></i></div>') ?></td>
+                                                                        <td width="20px"><?php echo anchor('reporting/dashboard/mail/'.$vo->orderId, '<div class="btn btn-sm btn-success"><i class="fas fa-envelope-open-text"></i></div>') ?></td>
+                                                                    <?php
+                                                                }
                                                             }
                                                             ?>
                                                 </tr>

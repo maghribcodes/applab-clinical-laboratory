@@ -11,10 +11,17 @@
                     <br>
 
                     <?php
-                    foreach($viewResult as $vr){}
+                    foreach($viewResult as $vr)
+                    {
+                        $samples[] = $vr->noSample;
+                        $samp = array_unique($samples);
+
+                        $sampleTypes[] = $vr->sampleType;
+                        $sampt = array_unique($sampleTypes);
+                    }
                     ?>
 
-                    <form method="post" action="<?php echo base_url('doctor/dashboard/inputClinical/'.$vr->orderId) ?>">
+                    <form method="post" action="<?php echo base_url('doctor/result/verified/'.$vr->orderId) ?>">
                         <div class="card shadow mb-4">
 
                             <div class="card-header py-3">
@@ -22,7 +29,75 @@
                             </div>
 
                             <div class="card-body">
-                                
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Pasien</label>
+                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                            <span class="input-group-text" id="basic-addon1"><?php echo $vr->custName ?></span>
+                                        </div>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Pengirim</label>
+                                        <div class="col-sm-4">
+                                            <span class="input-group-text" id="basic-addon1"><?php echo $vr->sender ?></span>
+                                        </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Jenis Kelamin</label>
+                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                            <span class="input-group-text" id="basic-addon1"><?php echo $vr->gender ?></span>
+                                        </div>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Usia</label>
+                                        <div class="col-sm-4">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <?php 
+                                                    $birth = new DateTime($vr->birthDate);
+                                                    $now = new DateTime();
+                                                    $age = $now->diff($birth);
+                                                    echo $age->y;
+                                                ?> Tahun
+                                            </span>
+                                        </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Kontak</label>
+                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                            <span class="input-group-text" id="basic-addon1"><?php echo $vr->contact ?></span>
+                                        </div>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Alamat</label>
+                                        <div class="col-sm-4">
+                                            <span class="input-group-text" id="basic-addon1"><?php echo $vr->address ?></span>
+                                        </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <input type="hidden" name="samples" value="<?php echo implode(', ', $samp); ?>">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Sampel</label>
+                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                            <span class="input-group-text" id="basic-addon1"><?php echo implode(', ', $samp) ?></span>
+                                        </div>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tipe Sampel</label>
+                                        <div class="col-sm-4">
+                                            <span class="input-group-text" id="basic-addon1"><?php echo implode(', ', $sampt) ?></span>
+                                        </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Keterangan Klinisi</label>
+                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                            <span class="input-group-text" id="basic-addon1">
+                                                <?php 
+                                                if($vr->clinicalNotes == NULL)
+                                                {
+                                                    echo "-";
+                                                }
+                                                else
+                                                {
+                                                    echo $vr->clinicalNotes;
+                                                }
+                                                ?>
+                                            </span>
+                                        </div>
+                                </div>
                             </div>
 
                             <div class="card-header py-3">
@@ -63,6 +138,7 @@
                                     <label class="form-check-label" for="defaultCheck1">
                                         Data klinisi sudah sesuai dengan hasil uji lab.
                                     </label>
+                                    <?php echo form_error('statusId', '<div class="text-danger small">','</div>') ?>
                                 </div>
 
                             </div>

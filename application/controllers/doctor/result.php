@@ -55,4 +55,34 @@
             $this->load->view('doctor/verification', $data);
             $this->load->view('templates/footer');
         }
+
+        function verified($orderId)
+        {
+            $this->_rules();
+
+            if($this->form_validation->run() == FALSE)
+            {
+                $this->verification($orderId);
+            }
+            else
+            {
+                $samples = $this->input->post('samples');
+                $noSample = explode(', ', $samples);
+
+                foreach($noSample as $no)
+                {
+                    $this->db->set('statusId', 2);
+                    $this->db->where('noSample', $no);
+                    $this->db->update('testresult');
+                }
+
+                $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diverifikasi!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                redirect('doctor/result');
+            }
+        }
+
+        function _rules()
+        {
+            $this->form_validation->set_rules('statusId','Status','required',['required'=>'Beri tanda check terlebih dahulu']);
+        }
     }
