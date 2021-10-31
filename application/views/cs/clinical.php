@@ -3,7 +3,7 @@
 	<!-- Page Heading -->
 	<div>
         <br>
-        <h2 class="m-0 font-weight text-light"><b>Data Klinisi</b></h2>
+        <h2 class="m-0 font-weight text-light"><b>Data Pasien</b></h2>
         <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
     </div>
 
@@ -16,7 +16,7 @@
 		<div class="card-header py-3">
 			<div class="row">
 				<div class="col-sm-12 col-md-8">
-					<?php echo anchor('cs/clinical/input', '<button class="btn btn-outline-danger m-0"><i class="fas fa-plus fa-sm"></i> Tambah Klinisi</button>') ?>
+					<?php echo anchor('cs/clinical/input', '<button class="btn btn-outline-danger m-0"><i class="fas fa-plus fa-sm"></i> Tambah Data</button>') ?>
 				</div>
 
 				<div class="col-sm-12 col-md-4">

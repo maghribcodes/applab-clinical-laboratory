@@ -33,7 +33,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url('cs/clinical') ?>">
                     <i class="fas fa-folder fa-cog"></i>
-                    <span>Data Klinisi</span>
+                    <span>Data Pasien</span>
                 </a>
             </li>
 

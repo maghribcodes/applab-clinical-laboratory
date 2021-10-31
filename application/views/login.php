@@ -51,12 +51,12 @@
                                             <input type="text" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="Username" name="username" value="<?php echo set_value('username'); ?>" autocomplete="off">
-                                                <?php echo form_error('username', '<div class="text-danger small ml-3">','</div>') ?>
+                                                <?php echo form_error('username', '<div class="text-light small ml-3">','</div>') ?>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
                                                 id="exampleInputPassword" placeholder="Password" name="password" value="<?php echo set_value('password'); ?>">
-                                                <?php echo form_error('password', '<div class="text-danger small ml-3">','</div>') ?>
+                                                <?php echo form_error('password', '<div class="text-light small ml-3">','</div>') ?>
                                         </div>
                                         
                                         <button class="btn btn-primary btn-user btn-block">

@@ -34,7 +34,7 @@
 
             $config['base_url'] = 'http://localhost/talab/cs/order/index';
             $config['total_rows'] = $this->db->count_all_results();
-            $config['per_page'] = 3;
+            $config['per_page'] = 5;
 
             $this->pagination->initialize($config);
 
@@ -190,17 +190,6 @@
             {
                 return TRUE;
             }
-        }
-
-        function nota($orderId)
-        {
-            $data['viewNota'] = $this->order_model->getDataOrder($orderId)->result();
-            $data['viewCost'] = $this->order_model->getAllParameters()->result();
-
-            $this->load->view('templates/header');
-            $this->load->view('cs/sidebar');
-            $this->load->view('cs/nota', $data);
-            $this->load->view('templates/footer');
         }
 
         function printNota($orderId)

@@ -2,8 +2,8 @@
 
 <!-- Page Heading -->
     <div>
-        <br></br>
-        <h2 class="m-0 font-weight text-light"><b>Tambah Klinisi</b></h2>
+        <br>
+        <h2 class="m-0 font-weight text-light"><b>Tambah Data</b></h2>
         <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
     </div>
 
@@ -14,7 +14,7 @@
     <div class="card shadow mb-4">
 
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-danger">DATA KLINISI</h6>
+            <h6 class="m-0 font-weight-bold text-danger">DATA PASIEN</h6>
         </div>
 
         <div class="card-body">

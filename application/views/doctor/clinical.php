@@ -2,7 +2,7 @@
 
 <!-- Page Heading -->
     <div>
-        <br></br>
+        <br>
         <h2 class="m-0 font-weight text-light"><b>Data Klinisi</b></h2>
         <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
     </div>
