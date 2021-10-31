@@ -28,7 +28,6 @@
                 <form>
                     <div class="form-group row">
                         <input type="hidden" name="orderId" value="<?php echo $uc->orderId ?>">
-                        <input type="hidden" name="custId" value="<?php echo $uc->custId ?>">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">No. Sampel</label>
                             <div class="col-sm-4 mb-3 mb-sm-0">
                                 <input type="text" name="noSample" class="form-control" value="<?php echo set_value('noSample'); ?>">
@@ -39,48 +38,36 @@
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Pasien</label>
                             <div class="col-sm-4">
-                                <input type="text" name="custName" class="form-control" value="<?php echo set_value('custName', $uc->custName) ?>">
-                                <?php echo form_error('custName', '<div class="text-danger small">','</div>') ?>
+                                <span class="input-group-text" id="basic-addon2"><?php echo $uc->custName ?></span>
                             </div>
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal Lahir</label>
                             <div class="col-sm-4">
-                                <input type="date" name="birthDate" class="form-control" id="inputEmail3" value="<?php echo set_value('birthDate', $uc->birthDate) ?>">
-                                <?php echo form_error('birthDate', '<div class="text-danger small">','</div>') ?>
+                                <span class="input-group-text" id="basic-addon2">
+                                    <?php
+                                        $date = new DateTime($uc->birthDate);
+										$date = $date->format('d F Y');
+										echo $date;
+                                    ?>
+                                </span>
                             </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Kontak</label>
                             <div class="col-sm-4">
-                                <input type="name" name="contact" class="form-control" id="inputEmail3" value="<?php echo set_value('contact', $uc->contact) ?>">
-                                <?php echo form_error('contact', '<div class="text-danger small">','</div>') ?>
+                                <span class="input-group-text" id="basic-addon2"><?php echo $uc->contact ?></span>
                             </div>
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Alamat</label>
                             <div class="col-sm-4">
-                                <input type="name" name="address" class="form-control" id="inputEmail3" value="<?php echo set_value('address', $uc->address) ?>">
-                                <?php echo form_error('address', '<div class="text-danger small">','</div>') ?>
+                                <span class="input-group-text" id="basic-addon2"><?php echo $uc->address ?></span>
                             </div>
                     </div>
 
                     <fieldset class="form-group">
                         <div class="row">
                             <legend class="col-form-label col-sm-2 pt-0">Jenis Kelamin</legend>
-                                <div class="col-sm-10">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="gridRadios1" 
-                                            value="Laki-laki" <?php echo set_value('gender', $uc->gender) == 'Laki-laki' ? "checked" : ""; ?>>
-                                            <label class="form-check-label" for="gridRadios1">
-                                                Laki-laki
-                                            </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="gridRadios2" 
-                                            value="Perempuan" <?php echo set_value('gender', $uc->gender) == 'Perempuan' ? "checked" : ""; ?>>
-                                            <label class="form-check-label" for="gridRadios2">
-                                                Perempuan
-                                            </label>
-                                    </div>
-                                    <?php echo form_error('gender', '<div class="text-danger small">','</div>') ?>
+                                <div class="col-sm-4">
+                                    <span class="input-group-text" id="basic-addon2"><?php echo $uc->gender ?></span>
                                 </div>
                         </div>
                     </fieldset>

@@ -31,7 +31,25 @@
 		{
 			$this->db->select('*');
 			$this->db->from('employee');
-			$this->db->where('empId', $empId);
+			$this->db->where('employee.empId', $empId);
+
+			return $this->db->get();
+		}
+
+		function getPackages()
+		{
+			$this->db->select('*');
+            $this->db->from('package');
+
+            return $this->db->get();
+		}
+
+		function getLab($empId)
+		{
+			$this->db->select('*');
+			$this->db->from('lab');
+			$this->db->join('package', 'lab.packageId=package.packageId', 'left');
+			$this->db->where('lab.empId', $empId);
 
 			return $this->db->get();
 		}
@@ -58,5 +76,4 @@
 		{
 			return $this->db->count_all('employee');
 		}
-    
     }

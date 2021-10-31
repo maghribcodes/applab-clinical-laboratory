@@ -60,7 +60,6 @@ class Dashboard extends CI_Controller
 		$this->load->view('templates/header');
         $this->load->view('administrator/sidebar');
         $this->load->view('administrator/addStaff', $data);
-        $this->load->view('templates/footer');
 	}
 
 	function addStaff()
@@ -71,7 +70,16 @@ class Dashboard extends CI_Controller
 			'password' => $this->input->post('password'),
 			'roleId' => $this->input->post('role')
 		);
-		$this->admin_model->inputData('employee', $tableEmp);
+		$empId = $this->admin_model->inputData('employee', $tableEmp);
+
+		if($this->input->post('role') == 5)
+		{
+			$tableLab = array(
+				'empId' => $empId,
+				'packageId' => $this->input->post('lab')
+			);
+			$this->admin_model->inputData('lab', $tableLab);
+		}
 
 		$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil disimpan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         redirect('administrator/dashboard');
@@ -81,11 +89,12 @@ class Dashboard extends CI_Controller
 	{
 		$data['viewEmp'] = $this->admin_model->getEmp($empId)->result();
 		$data['viewRoles'] = $this->admin_model->getRoles()->result();
+		$data['viewPackages'] = $this->admin_model->getPackages()->result();
+		$data['viewLab'] = $this->admin_model->getLab($empId)->result();
 
 		$this->load->view('templates/header');
         $this->load->view('administrator/sidebar');
         $this->load->view('administrator/editStaff', $data);
-        $this->load->view('templates/footer');
 	}
 
 	function editStaff($empId)
@@ -100,12 +109,53 @@ class Dashboard extends CI_Controller
         );
         $this->admin_model->updateData($where, 'employee', $tableEmp);
 
+		$query = $this->db->query("SELECT * FROM lab WHERE empId = '{$empId}'");
+        $result = $query->result_array();
+        $count = count($result);
+
+		if($this->input->post('role') == 5)
+		{
+            if(empty($count))
+            {
+                $tableLab = array(
+					'empId' => $empId,
+					'packageId' => $this->input->post('lab')
+				);
+				$this->admin_model->inputData('lab', $tableLab);
+            }
+            else if($count == 1)
+            {
+                $where = array('empId' => $empId);
+                $this->admin_model->updateData($where, 'lab', array
+                (
+                    'empId' => $empId,
+                    'packageId' => $this->input->post('lab')
+                ));
+            }
+		}
+		else
+		{
+			if($count > 0)
+			{
+				$this->db->delete('lab', array('empId' => $empId));
+			}
+		}
+
 		$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         redirect('administrator/dashboard');
 	}
 
 	function delete($empId)
 	{
+		$query = $this->db->query("SELECT * FROM lab WHERE empId = '{$empId}'");
+        $result = $query->result_array();
+        $count = count($result);
+
+		if($count > 0)
+        {
+			$this->db->delete('lab', array('empId' => $empId));
+		}
+
 		$where = array('empId' => $empId);
         $this->admin_model->deleteData($where, 'employee');
 

@@ -104,7 +104,7 @@
                                                             echo $vo->Types;
                                                         }
                                                         else{
-                                                            ?><span class="badge badge-pill badge-danger">Belum ada</span><?php
+                                                            ?> <span class="badge badge-pill badge-danger">Belum ada</span> <?php
                                                         } ?>
                                                     </td>
                                                     <td style="text-align: center; vertical-align: middle;"><?php echo $vo->custName ?></td>

@@ -142,7 +142,23 @@
                                                             }
                                                         ?>
                                                     </td>
-                                                    <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td>
+                                                    <?php
+                                                        if($vo->statusId == 2)
+                                                        {
+                                                            ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
+                                                        }
+                                                        else
+                                                        {
+                                                            if(!empty($vo->sampleType))
+                                                            {
+                                                                ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
+                                                            }
+                                                            else
+                                                            {
+                                                                ?> <td width="20px" style="text-align: center; vertical-align: middle;"> - </td> <?php
+                                                            }
+                                                        }
+                                                    ?>
                                                 </tr>
                                                 <?php endforeach; ?>
                                         </thead>

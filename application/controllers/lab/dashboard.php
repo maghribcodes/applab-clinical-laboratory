@@ -124,4 +124,14 @@ class Dashboard extends CI_Controller
         $this->form_validation->set_rules('method[]','Metode','required',['required'=>'Metode harus diisi']);
 		$this->form_validation->set_rules('result[]','Hasil','required',['required'=>'Hasil harus diisi']);
     }
+
+	function detail($orderId)
+	{
+		$data['viewSample'] = $this->lab_model->getSample($orderId)->result();
+
+		$this->load->view('templates/header');
+        $this->load->view('lab/sidebar');
+        $this->load->view('lab/detail', $data);
+        $this->load->view('templates/footer');
+	}
 }

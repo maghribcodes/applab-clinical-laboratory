@@ -67,17 +67,6 @@ class Dashboard extends CI_Controller
             $sample = explode(', ', $samples);
 
             $parameters = $this->input->post('parameterId');
-
-			$custId = $this->input->post('custId');
-            $where = array('custId' => $custId);
-            $tableCust = array(
-                'custName' => $this->input->post('custName'),
-                'birthDate' => $this->input->post('birthDate'),
-                'gender' => $this->input->post('gender'),
-                'contact' => $this->input->post('contact'),
-                'address' => $this->input->post('address'),
-            );
-            $this->order_model->updateDataOrder($where, 'customer', $tableCust);
         
             $getAllCost = $this->order_model->getAllParameters()->result();
             $cost = array();
