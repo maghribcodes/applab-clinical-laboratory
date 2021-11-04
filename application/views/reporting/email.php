@@ -19,10 +19,24 @@
                             <h6 class="m-0 font-weight-bold text-success">Unduh Hasil Uji</h6>
                         </div>  
                         <div class="card-body">
-                            <?php echo anchor('reporting/dashboard/download/'.$vr->orderId, 
-                                '<div class="btn btn-success col-lg-12">
-                                <i class="fas fa-file-download"></i> PDF</div>')
+                            <?php
+                                if($vr->statusId == 3)
+                                {
+                                    echo anchor('reporting/dashboard/download/'.$vr->orderId, 
+                                        '<div class="btn btn-success col-lg-12">
+                                        <i class="fas fa-file-download"></i> PDF</div>')
+                                    ?> <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                        <div class="alert alert-success" role="alert">
+                                            Anda harus mendapatkan persetujuan dari Manager.
+                                        </div>
+                                    <?php
+                                }
                             ?>
+                            
                         </div>
                     </div>
                 </div>

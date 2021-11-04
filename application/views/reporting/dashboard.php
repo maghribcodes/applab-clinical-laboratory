@@ -99,7 +99,7 @@
                                                             {
                                                                 ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
                                                             }
-                                                            else if($vo->statusId == 2)
+                                                            else
                                                             {
                                                                 ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
                                                             }

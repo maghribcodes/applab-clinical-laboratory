@@ -162,18 +162,27 @@
                 $samples = explode(', ', $str);
                 foreach($samples as $s)
                 {
-                    $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$s}'");
-                    $result = $query->result_array();
-                    $count = count($result);
-
-                    if($count > 0)
+                    $length = strlen($s);
+                    if($length == 5)
                     {
-                        $this->form_validation->set_message('checkSamples', 'Nomor sampel sudah terdaftar');
-                        return FALSE;
+                        $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$s}'");
+                        $result = $query->result_array();
+                        $count = count($result);
+
+                        if($count > 0)
+                        {
+                            $this->form_validation->set_message('checkSamples', 'Nomor sampel sudah terdaftar');
+                            return FALSE;
+                        }
+                        else
+                        {
+                            return TRUE;
+                        }
                     }
                     else
                     {
-                        return TRUE;
+                        $this->form_validation->set_message('checkSamples', 'Penulisan Nomor sampel tidak sesuai');
+                        return FALSE;
                     }
                 }
             }
