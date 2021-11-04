@@ -22,19 +22,19 @@
                                     <input type="hidden" name="empId" value="<?php echo $ve->empId ?>">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Lengkap</label>
                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                            <input type="text" name="empName" class="form-control" value="<?php echo $ve->empName ?>" required>
+                                            <input type="text" name="empName" class="form-control" value="<?php echo $ve->empName ?>" autocomplete="off" required>
                                         </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                            <input type="text" name="username" class="form-control" value="<?php echo $ve->username ?>" required>
+                                            <input type="text" name="username" class="form-control" value="<?php echo $ve->username ?>" autocomplete="off" required>
                                         </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Password</label>
                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                            <input type="text" name="password" class="form-control" value="<?php echo $ve->password ?>" required>
+                                            <input type="text" name="password" class="form-control" value="<?php echo $ve->password ?>" autocomplete="off" required>
                                         </div>
                                 </div>
                                 <div class="form-group row">

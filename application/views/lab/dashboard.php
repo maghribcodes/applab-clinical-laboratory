@@ -9,7 +9,7 @@
                     </div>
 
                     <br>
-
+                    <?php //var_dump($viewLab); ?>
                     <div class="card mb-4 px-2">
 
                         <div class="card-body">
@@ -79,93 +79,377 @@
                             </div>
                         </div>
 
-                            <div class="card-body">
-                                <table class="table table-bordered" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align: center; vertical-align: middle;">No.</th>
-                                            <th style="text-align: center; vertical-align: middle;">Nomor Sampel</th>
-                                            <th style="text-align: center; vertical-align: middle;">Tipe Sampel</th>
-                                            <th style="text-align: center; vertical-align: middle;">Lab Terkait</th>
-                                            <th style="text-align: center; vertical-align: middle;">Status Sampel</th>
-                                            <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
-                                            <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
-                                        </tr>
-
-                                            <?php 
-                                                if(empty($viewOrders)): ?>
+                        <?php
+                        foreach($viewLab as $vl): 
+                            if($vl->empName == $empName)
+                            {
+                                if($vl->packageId == "A")
+                                { ?>
+                                    <div class="card-body">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
                                                 <tr>
-                                                    <td colspan=9>
-                                                        <div class="alert alert-info" role="alert">
-                                                            Data tidak ditemukan.
-                                                        </div>
-                                                    </td>
+                                                    <th style="text-align: center; vertical-align: middle;">No.</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Nomor Sampel</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Tipe Sampel</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Lab Terkait</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Status Sampel</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
+                                                    <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
                                                 </tr>
-                                                <?php endif;
-                                                
-                                                foreach ($viewOrders as $vo): ?>
+
+                                                    <?php 
+                                                        if(empty($viewOrdersA)): ?>
+                                                        <tr>
+                                                            <td colspan=9>
+                                                                <div class="alert alert-info" role="alert">
+                                                                    Data tidak ditemukan.
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <?php endif;
+                                                        
+                                                        foreach ($viewOrdersA as $vo): ?>
+                                                        <tr>
+                                                            <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->noSample ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <?php if(!empty($vo->sampleType))
+                                                                {
+                                                                    echo $vo->sampleType;
+                                                                }
+                                                                else{
+                                                                    ?><span class="badge badge-pill badge-danger">Belum ada</span><?php
+                                                                } ?>
+                                                            </td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->packageName ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <?php if($vo->result == '')
+                                                                {
+                                                                    ?><span class="badge badge-pill badge-danger">Belum diuji</span><?php
+                                                                }
+                                                                else{
+                                                                    ?><span class="badge badge-pill badge-success">Sudah diuji</span><?php
+                                                                } ?>
+                                                            </td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <?php 
+                                                                    if($vo->statusId == 0)
+                                                                    {
+                                                                        ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
+                                                                    }
+                                                                    else if($vo->statusId == 1)
+                                                                    {
+                                                                        ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
+                                                                    }
+                                                                    else if($vo->statusId == 2)
+                                                                    {
+                                                                        ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
+                                                                    }
+                                                                ?>
+                                                            </td>
+                                                            <?php
+                                                                if($vo->statusId == 2)
+                                                                {
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
+                                                                }
+                                                                else
+                                                                {
+                                                                    if(!empty($vo->sampleType))
+                                                                    {
+                                                                        ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?> <td width="20px" style="text-align: center; vertical-align: middle;"> - </td> <?php
+                                                                    }
+                                                                }
+                                                            ?>
+                                                        </tr>
+                                                        <?php endforeach; ?>
+                                                </thead>
+                                            </table>
+
+                                            <?php echo $this->pagination->create_links(); ?>
+
+                                    </div> <?php
+                                }
+                                else if($vl->packageId == "B")
+                                { ?>
+                                    <div class="card-body">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
                                                 <tr>
-                                                    <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
-                                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vo->noSample ?></td>
-                                                    <td style="text-align: center; vertical-align: middle;">
-                                                        <?php if(!empty($vo->sampleType))
-                                                        {
-                                                            echo $vo->sampleType;
-                                                        }
-                                                        else{
-                                                            ?><span class="badge badge-pill badge-danger">Belum ada</span><?php
-                                                        } ?>
-                                                    </td>
-                                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vo->packageName ?></td>
-                                                    <td style="text-align: center; vertical-align: middle;">
-                                                        <?php if($vo->result == '')
-                                                        {
-                                                            ?><span class="badge badge-pill badge-danger">Belum diuji</span><?php
-                                                        }
-                                                        else{
-                                                            ?><span class="badge badge-pill badge-success">Sudah diuji</span><?php
-                                                        } ?>
-                                                    </td>
-                                                    <td style="text-align: center; vertical-align: middle;">
-                                                        <?php 
-                                                            if($vo->statusId == 0)
-                                                            {
-                                                                ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
-                                                            }
-                                                            else if($vo->statusId == 1)
-                                                            {
-                                                                ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
-                                                            }
-                                                            else if($vo->statusId == 2)
-                                                            {
-                                                                ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
-                                                            }
-                                                        ?>
-                                                    </td>
-                                                    <?php
-                                                        if($vo->statusId == 2)
-                                                        {
-                                                            ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
-                                                        }
-                                                        else
-                                                        {
-                                                            if(!empty($vo->sampleType))
-                                                            {
-                                                                ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
-                                                            }
-                                                            else
-                                                            {
-                                                                ?> <td width="20px" style="text-align: center; vertical-align: middle;"> - </td> <?php
-                                                            }
-                                                        }
-                                                    ?>
+                                                    <th style="text-align: center; vertical-align: middle;">No.</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Nomor Sampel</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Tipe Sampel</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Lab Terkait</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Status Sampel</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
+                                                    <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
                                                 </tr>
-                                                <?php endforeach; ?>
-                                        </thead>
-                                    </table>
 
-                                    <?php echo $this->pagination->create_links(); ?>
+                                                    <?php 
+                                                        if(empty($viewOrdersB)): ?>
+                                                        <tr>
+                                                            <td colspan=9>
+                                                                <div class="alert alert-info" role="alert">
+                                                                    Data tidak ditemukan.
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <?php endif;
+                                                        
+                                                        foreach ($viewOrdersB as $vo): ?>
+                                                        <tr>
+                                                            <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->noSample ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <?php if(!empty($vo->sampleType))
+                                                                {
+                                                                    echo $vo->sampleType;
+                                                                }
+                                                                else{
+                                                                    ?><span class="badge badge-pill badge-danger">Belum ada</span><?php
+                                                                } ?>
+                                                            </td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->packageName ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <?php if($vo->result == '')
+                                                                {
+                                                                    ?><span class="badge badge-pill badge-danger">Belum diuji</span><?php
+                                                                }
+                                                                else{
+                                                                    ?><span class="badge badge-pill badge-success">Sudah diuji</span><?php
+                                                                } ?>
+                                                            </td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <?php 
+                                                                    if($vo->statusId == 0)
+                                                                    {
+                                                                        ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
+                                                                    }
+                                                                    else if($vo->statusId == 1)
+                                                                    {
+                                                                        ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
+                                                                    }
+                                                                    else if($vo->statusId == 2)
+                                                                    {
+                                                                        ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
+                                                                    }
+                                                                ?>
+                                                            </td>
+                                                            <?php
+                                                                if($vo->statusId == 2)
+                                                                {
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
+                                                                }
+                                                                else
+                                                                {
+                                                                    if(!empty($vo->sampleType))
+                                                                    {
+                                                                        ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?> <td width="20px" style="text-align: center; vertical-align: middle;"> - </td> <?php
+                                                                    }
+                                                                }
+                                                            ?>
+                                                        </tr>
+                                                        <?php endforeach; ?>
+                                                </thead>
+                                            </table>
 
-                            </div>
+                                            <?php echo $this->pagination->create_links(); ?>
+
+                                    </div> <?php
+                                }
+                                else if($vl->packageId == "C")
+                                { ?>
+                                    <div class="card-body">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: center; vertical-align: middle;">No.</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Nomor Sampel</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Tipe Sampel</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Lab Terkait</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Status Sampel</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
+                                                    <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
+                                                </tr>
+
+                                                    <?php 
+                                                        if(empty($viewOrdersC)): ?>
+                                                        <tr>
+                                                            <td colspan=9>
+                                                                <div class="alert alert-info" role="alert">
+                                                                    Data tidak ditemukan.
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <?php endif;
+                                                        
+                                                        foreach ($viewOrdersC as $vo): ?>
+                                                        <tr>
+                                                            <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->noSample ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <?php if(!empty($vo->sampleType))
+                                                                {
+                                                                    echo $vo->sampleType;
+                                                                }
+                                                                else{
+                                                                    ?><span class="badge badge-pill badge-danger">Belum ada</span><?php
+                                                                } ?>
+                                                            </td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->packageName ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <?php if($vo->result == '')
+                                                                {
+                                                                    ?><span class="badge badge-pill badge-danger">Belum diuji</span><?php
+                                                                }
+                                                                else{
+                                                                    ?><span class="badge badge-pill badge-success">Sudah diuji</span><?php
+                                                                } ?>
+                                                            </td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <?php 
+                                                                    if($vo->statusId == 0)
+                                                                    {
+                                                                        ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
+                                                                    }
+                                                                    else if($vo->statusId == 1)
+                                                                    {
+                                                                        ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
+                                                                    }
+                                                                    else if($vo->statusId == 2)
+                                                                    {
+                                                                        ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
+                                                                    }
+                                                                ?>
+                                                            </td>
+                                                            <?php
+                                                                if($vo->statusId == 2)
+                                                                {
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
+                                                                }
+                                                                else
+                                                                {
+                                                                    if(!empty($vo->sampleType))
+                                                                    {
+                                                                        ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?> <td width="20px" style="text-align: center; vertical-align: middle;"> - </td> <?php
+                                                                    }
+                                                                }
+                                                            ?>
+                                                        </tr>
+                                                        <?php endforeach; ?>
+                                                </thead>
+                                            </table>
+
+                                            <?php echo $this->pagination->create_links(); ?>
+
+                                    </div> <?php
+                                }
+                                else if($vl->packageId == "D")
+                                { ?>
+                                    <div class="card-body">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: center; vertical-align: middle;">No.</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Nomor Sampel</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Tipe Sampel</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Lab Terkait</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Status Sampel</th>
+                                                    <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
+                                                    <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
+                                                </tr>
+
+                                                    <?php 
+                                                        if(empty($viewOrdersD)): ?>
+                                                        <tr>
+                                                            <td colspan=9>
+                                                                <div class="alert alert-info" role="alert">
+                                                                    Data tidak ditemukan.
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <?php endif;
+                                                        
+                                                        foreach ($viewOrdersD as $vo): ?>
+                                                        <tr>
+                                                            <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->noSample ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <?php if(!empty($vo->sampleType))
+                                                                {
+                                                                    echo $vo->sampleType;
+                                                                }
+                                                                else{
+                                                                    ?><span class="badge badge-pill badge-danger">Belum ada</span><?php
+                                                                } ?>
+                                                            </td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->packageName ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <?php if($vo->result == '')
+                                                                {
+                                                                    ?><span class="badge badge-pill badge-danger">Belum diuji</span><?php
+                                                                }
+                                                                else{
+                                                                    ?><span class="badge badge-pill badge-success">Sudah diuji</span><?php
+                                                                } ?>
+                                                            </td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <?php 
+                                                                    if($vo->statusId == 0)
+                                                                    {
+                                                                        ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
+                                                                    }
+                                                                    else if($vo->statusId == 1)
+                                                                    {
+                                                                        ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
+                                                                    }
+                                                                    else if($vo->statusId == 2)
+                                                                    {
+                                                                        ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
+                                                                    }
+                                                                ?>
+                                                            </td>
+                                                            <?php
+                                                                if($vo->statusId == 2)
+                                                                {
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
+                                                                }
+                                                                else
+                                                                {
+                                                                    if(!empty($vo->sampleType))
+                                                                    {
+                                                                        ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?> <td width="20px" style="text-align: center; vertical-align: middle;"> - </td> <?php
+                                                                    }
+                                                                }
+                                                            ?>
+                                                        </tr>
+                                                        <?php endforeach; ?>
+                                                </thead>
+                                            </table>
+
+                                            <?php echo $this->pagination->create_links(); ?>
+
+                                    </div> <?php
+                                }
+                            }
+                        endforeach;
+                        ?>
+                            
                         
                     </div>

@@ -25,7 +25,8 @@ class Dashboard extends CI_Controller
 		
 		$data['countSamp'] = $this->lab_model->getCountSamples();
 		$data['countLhus'] = $this->lab_model->getCountLhus();
-		
+		$data['viewLab'] = $this->lab_model->getLab();
+
 		if($this->input->post('submit'))
 		{
 			$data['keyword'] = $this->input->post('keyword');
@@ -47,7 +48,10 @@ class Dashboard extends CI_Controller
 		$this->pagination->initialize($config);
 					
 		$data['start'] = $this->uri->segment(4);
-		$data['viewOrders'] = $this->lab_model->getAllSamples($config['per_page'], $data['start'], $data['keyword']);
+		$data['viewOrdersA'] = $this->lab_model->getAllSamplesA($config['per_page'], $data['start'], $data['keyword']);
+		$data['viewOrdersB'] = $this->lab_model->getAllSamplesB($config['per_page'], $data['start'], $data['keyword']);
+		$data['viewOrdersC'] = $this->lab_model->getAllSamplesC($config['per_page'], $data['start'], $data['keyword']);
+		$data['viewOrdersD'] = $this->lab_model->getAllSamplesD($config['per_page'], $data['start'], $data['keyword']);
 		
 
         $this->load->view('templates/header');
@@ -56,9 +60,9 @@ class Dashboard extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-	function input($orderId)
+	function input($orderId, $noSample)
 	{
-		$data['viewSample'] = $this->lab_model->getSample($orderId)->result();
+		$data['viewSampleA'] = $this->lab_model->getSampleA($orderId, $noSample)->result();
 
 		$this->load->view('templates/header');
         $this->load->view('lab/sidebar');

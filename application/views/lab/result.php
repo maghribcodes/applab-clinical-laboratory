@@ -9,14 +9,14 @@
                     </div>
 
                     <br>
-
+                    <?php //var_dump($viewSampleA); ?>
                     <?php
                     $parameterIds=array();
                     $parameterNames=array();
                     $results=array();
                     $methods=array();
 
-                    foreach($viewSample as $vs)
+                    foreach($viewSampleA as $vs)
                     {
                         $parameterIds[] = $vs->parameterId;
                         $parameterNames[] = $vs->parameterName;
@@ -26,7 +26,7 @@
                         $combined2 = array_combine($parameterNames, $methods);
                         $combined3 = array_combine($parameterNames, $results);
                     }?>
-
+                    <?php //var_dump($parameterIds); ?>
                     <form method="post" action="<?php echo base_url('lab/dashboard/inputResult/'.$vs->orderId) ?>">
                         <div class="card shadow mb-4">
 
