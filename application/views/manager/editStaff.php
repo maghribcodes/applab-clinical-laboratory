@@ -16,7 +16,7 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-dark">Edit Data Staff</h6>
                         </div>
-                        <form method="post" action="<?php echo base_url('administrator/dashboard/editStaff/'.$ve->empId) ?>">
+                        <form method="post" action="<?php echo base_url('manager/dashboard/editStaff/'.$ve->empId) ?>">
                             <div class="card-body">
                                 <div class="form-group row">
                                     <input type="hidden" name="empId" value="<?php echo $ve->empId ?>">

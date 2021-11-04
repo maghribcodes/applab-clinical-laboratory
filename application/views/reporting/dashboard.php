@@ -122,7 +122,7 @@
                                                                     <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
                                                                 <?php
                                                             }
-                                                            if($vo->statusId == 2)
+                                                            if($vo->statusId == 2  || $vo->statusId == 3)
                                                             {
                                                                 if($vo->email == NULL)
                                                                 {

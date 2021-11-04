@@ -40,7 +40,7 @@
 				    }
 				    if($session_data['roleId']=='1')
 				    {
-					    redirect('administrator/dashboard');
+					    redirect('manager/dashboard');
 				    }
 				    else if($session_data['roleId']=='2')
 				    {

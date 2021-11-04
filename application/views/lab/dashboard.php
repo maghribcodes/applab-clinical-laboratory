@@ -9,7 +9,7 @@
                     </div>
 
                     <br>
-                    <?php //var_dump($viewLab); ?>
+                    
                     <div class="card mb-4 px-2">
 
                         <div class="card-body">
@@ -28,7 +28,31 @@
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-dark mb-1">
                                                         Data sampel yang belum diuji</div>
-                                                    <div class="h6 mb-0 font-weight-bold text-gray-800"><?php echo $countSamp ?></div>
+                                                    <div class="h6 mb-0 font-weight-bold text-gray-800">
+                                                        <?php
+                                                            foreach($viewLab as $vl): 
+                                                                if($vl->empName == $empName)
+                                                                {
+                                                                    if($vl->packageId == "A")
+                                                                    {
+                                                                        echo $countSampA;
+                                                                    }
+                                                                    if($vl->packageId == "B")
+                                                                    {
+                                                                        echo $countSampB;
+                                                                    }
+                                                                    if($vl->packageId == "C")
+                                                                    {
+                                                                        echo $countSampC;
+                                                                    }
+                                                                    if($vl->packageId == "D")
+                                                                    {
+                                                                        echo $countSampD;
+                                                                    }
+                                                                }
+                                                            endforeach;
+                                                        ?>
+                                                    </div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-bong fa-2x text-gray-300"></i>
@@ -37,7 +61,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-auto">
+                                <!--<div class="col-auto">
                                     <div class="card border-left-info h-100">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
@@ -52,7 +76,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             
                         </div>
@@ -142,16 +166,16 @@
                                                                     {
                                                                         ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
                                                                     }
-                                                                    else if($vo->statusId == 2)
+                                                                    else
                                                                     {
                                                                         ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
                                                                     }
                                                                 ?>
                                                             </td>
                                                             <?php
-                                                                if($vo->statusId == 2)
+                                                                if($vo->statusId == 2  || $vo->statusId == 3)
                                                                 {
-                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
                                                                 }
                                                                 else
                                                                 {
@@ -233,16 +257,16 @@
                                                                     {
                                                                         ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
                                                                     }
-                                                                    else if($vo->statusId == 2)
+                                                                    else
                                                                     {
                                                                         ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
                                                                     }
                                                                 ?>
                                                             </td>
                                                             <?php
-                                                                if($vo->statusId == 2)
+                                                                if($vo->statusId == 2  || $vo->statusId == 3)
                                                                 {
-                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
                                                                 }
                                                                 else
                                                                 {
@@ -324,16 +348,16 @@
                                                                     {
                                                                         ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
                                                                     }
-                                                                    else if($vo->statusId == 2)
+                                                                    else
                                                                     {
                                                                         ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
                                                                     }
                                                                 ?>
                                                             </td>
                                                             <?php
-                                                                if($vo->statusId == 2)
+                                                                if($vo->statusId == 2  || $vo->statusId == 3)
                                                                 {
-                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
                                                                 }
                                                                 else
                                                                 {
@@ -415,16 +439,16 @@
                                                                     {
                                                                         ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
                                                                     }
-                                                                    else if($vo->statusId == 2)
+                                                                    else
                                                                     {
                                                                         ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
                                                                     }
                                                                 ?>
                                                             </td>
                                                             <?php
-                                                                if($vo->statusId == 2)
+                                                                if($vo->statusId == 2  || $vo->statusId == 3)
                                                                 {
-                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
                                                                 }
                                                                 else
                                                                 {

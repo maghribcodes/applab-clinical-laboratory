@@ -20,7 +20,6 @@
 
 			$this->db->select('*');
 			$this->db->from('orderdetail');
-			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
             $this->db->join('testresult', 'orderdetail.noSample=testresult.noSample', 'left');
@@ -105,11 +104,86 @@
 			return $this->db->get();
         }
 
-        function getCountSamples()
-		{
-			$this->db->where('result', '');
+		function getSampleB($orderId, $noSample)
+        {
+            $this->db->select('*');
 			$this->db->from('orderdetail');
-            $this->db->group_by('noSample');
+            $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
+			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
+			$this->db->where('package.packageId', 'B');
+            $this->db->where('orderdetail.orderId', $orderId);
+			$this->db->where('orderdetail.noSample', $noSample);
+
+			return $this->db->get();
+        }
+
+		function getSampleC($orderId, $noSample)
+        {
+            $this->db->select('*');
+			$this->db->from('orderdetail');
+            $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
+			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
+			$this->db->where('package.packageId', 'C');
+            $this->db->where('orderdetail.orderId', $orderId);
+			$this->db->where('orderdetail.noSample', $noSample);
+
+			return $this->db->get();
+        }
+
+		function getSampleD($orderId, $noSample)
+        {
+            $this->db->select('*');
+			$this->db->from('orderdetail');
+            $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
+			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
+			$this->db->where('package.packageId', 'D');
+            $this->db->where('orderdetail.orderId', $orderId);
+			$this->db->where('orderdetail.noSample', $noSample);
+
+			return $this->db->get();
+        }
+
+        function getCountSamplesA()
+		{
+			$this->db->select('*');
+			$this->db->from('orderdetail');
+			$this->db->like('parameterId', 'A');
+			$this->db->where('result', '');
+			$this->db->group_by('noSample');
+
+			return $this->db->count_all_results();
+		}
+
+		function getCountSamplesB()
+		{
+			$this->db->select('*');
+			$this->db->from('orderdetail');
+			$this->db->like('parameterId', 'B');
+			$this->db->where('result', '');
+			$this->db->group_by('noSample');
+
+			return $this->db->count_all_results();
+		}
+
+		function getCountSamplesC()
+		{
+			$this->db->select('*');
+			$this->db->from('orderdetail');
+			$this->db->like('parameterId', 'C');
+			$this->db->where('result', '');
+			$this->db->group_by('noSample');
+
+			return $this->db->count_all_results();
+		}
+
+		function getCountSamplesD()
+		{
+			$this->db->select('*');
+			$this->db->from('orderdetail');
+			$this->db->like('parameterId', 'D');
+			$this->db->where('result', '');
+			$this->db->group_by('noSample');
+
 			return $this->db->count_all_results();
 		}
 
@@ -117,6 +191,8 @@
 		{
 			$this->db->like('statusId', '1');
 			$this->db->from('testresult');
+
 			return $this->db->count_all_results();
 		}
+
     }

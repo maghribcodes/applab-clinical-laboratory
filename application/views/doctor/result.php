@@ -81,7 +81,7 @@
                                                                     {
                                                                         ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
                                                                     }
-                                                                    else if($vr->statusId == 2)
+                                                                    else
                                                                     {
                                                                         ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
                                                                     }
@@ -95,13 +95,13 @@
                                                                     <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
                                                                 <?php
                                                             }
-                                                            if($vr->statusId == 1)
+                                                            else if($vr->statusId == 1)
                                                             {
                                                                 ?> 
                                                                     <td width="20px"><?php echo anchor('doctor/result/verification/'.$vr->orderId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
                                                                 <?php
                                                             }
-                                                            if($vr->statusId == 2)
+                                                            else
                                                             {
                                                                 ?> 
                                                                     <td width="20px"><?php echo anchor('reporting/dashboard/print/'.$vr->orderId, '<div class="btn btn-sm btn-success"><i class="fas fa-eye"></i></div>') ?></td>

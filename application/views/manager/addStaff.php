@@ -14,7 +14,7 @@
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-dark">Tambah Data Staff</h6>
                         </div>
-                        <form method="post" action="<?php echo base_url('administrator/dashboard/addStaff') ?>">
+                        <form method="post" action="<?php echo base_url('manager/dashboard/addStaff') ?>">
                             <div class="card-body">
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Lengkap</label>

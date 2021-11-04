@@ -31,7 +31,7 @@
 
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo base_url('doctor/result') ?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-folder fa-cog"></i>
                     <span>Data Hasil Uji</span></a>
             </li>
             

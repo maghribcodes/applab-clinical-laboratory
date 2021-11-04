@@ -23,8 +23,13 @@ class Dashboard extends CI_Controller
 					'roleName'=>$data->roleName
 				);
 		
-		$data['countSamp'] = $this->lab_model->getCountSamples();
-		$data['countLhus'] = $this->lab_model->getCountLhus();
+		$data['countSampA'] = $this->lab_model->getCountSamplesA();
+		$data['countSampB'] = $this->lab_model->getCountSamplesB();
+		$data['countSampC'] = $this->lab_model->getCountSamplesC();
+		$data['countSampD'] = $this->lab_model->getCountSamplesD();
+
+		//$data['countLhus'] = $this->lab_model->getCountTest();
+		
 		$data['viewLab'] = $this->lab_model->getLab();
 
 		if($this->input->post('submit'))
@@ -62,7 +67,13 @@ class Dashboard extends CI_Controller
 
 	function input($orderId, $noSample)
 	{
+		$data['empName'] = $this->session->userdata('empName');
+		$data['viewLab'] = $this->lab_model->getLab();
+
 		$data['viewSampleA'] = $this->lab_model->getSampleA($orderId, $noSample)->result();
+		$data['viewSampleB'] = $this->lab_model->getSampleB($orderId, $noSample)->result();
+		$data['viewSampleC'] = $this->lab_model->getSampleC($orderId, $noSample)->result();
+		$data['viewSampleD'] = $this->lab_model->getSampleD($orderId, $noSample)->result();
 
 		$this->load->view('templates/header');
         $this->load->view('lab/sidebar');
@@ -70,13 +81,13 @@ class Dashboard extends CI_Controller
         $this->load->view('templates/footer');
 	}
 
-	function inputResult($orderId)
+	function inputResult($orderId, $noSample)
 	{
 		$this->_rules();
 
         if($this->form_validation->run() == FALSE)
         {
-            $this->input($orderId);
+            $this->input($orderId, $noSample);
         }
         else
         {
@@ -129,9 +140,15 @@ class Dashboard extends CI_Controller
 		$this->form_validation->set_rules('result[]','Hasil','required',['required'=>'Hasil harus diisi']);
     }
 
-	function detail($orderId)
+	function detail($orderId, $noSample)
 	{
-		$data['viewSample'] = $this->lab_model->getSample($orderId)->result();
+		$data['empName'] = $this->session->userdata('empName');
+		$data['viewLab'] = $this->lab_model->getLab();
+
+		$data['viewSampleA'] = $this->lab_model->getSampleA($orderId, $noSample)->result();
+		$data['viewSampleB'] = $this->lab_model->getSampleB($orderId, $noSample)->result();
+		$data['viewSampleC'] = $this->lab_model->getSampleC($orderId, $noSample)->result();
+		$data['viewSampleD'] = $this->lab_model->getSampleD($orderId, $noSample)->result();
 
 		$this->load->view('templates/header');
         $this->load->view('lab/sidebar');

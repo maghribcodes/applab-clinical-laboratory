@@ -50,11 +50,11 @@
                                 <div class="card-header py-3">
                                     <div class="row">
                                         <div class="col-sm-12 col-md-8">
-                                            <?php echo anchor('administrator/dashboard/add', '<button class="btn btn-outline-dark m-0"><i class="fas fa-plus fa-sm"></i> Tambah Staff</button>') ?>
+                                            <?php echo anchor('manager/dashboard/add', '<button class="btn btn-outline-dark m-0"><i class="fas fa-plus fa-sm"></i> Tambah Staff</button>') ?>
                                         </div>
 
                                         <div class="col-sm-12 col-md-4">
-                                            <form method="post" action="<?php echo base_url('administrator/dashboard') ?>">
+                                            <form method="post" action="<?php echo base_url('manager/dashboard') ?>">
                                                 <div class="input-group">
                                                     <input type="text" name="keyword" class="form-control" placeholder="Cari staff..." autocomplete="off">
                                                     <div class="input-group-append">
@@ -121,7 +121,7 @@
                                                                 }
                                                             ?>
                                                         </td>
-                                                        <td width="20px"><?php echo anchor('administrator/dashboard/edit/'.$vs->empId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
+                                                        <td width="20px"><?php echo anchor('manager/dashboard/edit/'.$vs->empId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
                                                         <td width="20px"><div class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></div></td>
 
                                                             <!-- Delete Modal-->
@@ -132,7 +132,7 @@
                                                                         <div class="modal-body">Apa anda yakin untuk menghapus data ini?</div>
                                                                         <div class="modal-footer">
                                                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                                                            <?php echo anchor('administrator/dashboard/delete/'.$vs->empId,'<div class="btn btn-dark">Hapus</div>') ?>
+                                                                            <?php echo anchor('manager/dashboard/delete/'.$vs->empId,'<div class="btn btn-dark">Hapus</div>') ?>
                                                                         </div>
                                                                     </div>
                                                                 </div>

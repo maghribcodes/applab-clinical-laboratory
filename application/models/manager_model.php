@@ -1,6 +1,6 @@
 <?php
 
-    class Admin_model extends CI_Model
+    class Manager_model extends CI_Model
     {
         function getAllEmployee($limit, $start, $keyword = null)
         {

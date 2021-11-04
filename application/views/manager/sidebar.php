@@ -20,12 +20,30 @@
             
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url('administrator/dashboard') ?>">
+                <a class="nav-link" href="<?php echo base_url('manager/dashboard') ?>">
                     <br></br>
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
             
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url('manager/staff') ?>">
+                    <i class="fas fa-folder fa-cog"></i>
+                    <span>Data Staff</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?php echo base_url('manager/approval') ?>">
+                    <i class="fas fa-folder fa-cog"></i>
+                    <span>Data Hasil Uji</span></a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             
