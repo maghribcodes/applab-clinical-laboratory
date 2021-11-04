@@ -98,13 +98,13 @@
                                                             else if($vr->statusId == 1)
                                                             {
                                                                 ?> 
-                                                                    <td width="20px"><?php echo anchor('doctor/result/verification/'.$vr->orderId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
+                                                                    <td width="20px"><?php echo anchor('doctor/result/verification/'.$vr->orderId, '<div class="btn btn-sm btn-primary"><i class="far fa-check-square"></i></div>') ?></td>
                                                                 <?php
                                                             }
                                                             else
                                                             {
                                                                 ?> 
-                                                                    <td width="20px"><?php echo anchor('reporting/dashboard/print/'.$vr->orderId, '<div class="btn btn-sm btn-success"><i class="fas fa-eye"></i></div>') ?></td>
+                                                                    <td width="20px"><?php echo anchor('reporting/dashboard/print/'.$vr->orderId, '<div class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></div>') ?></td>
 
                                                                 <?php
                                                             }
