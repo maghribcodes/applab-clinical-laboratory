@@ -31,7 +31,7 @@ class Parameter extends CI_Controller
 			
 		$config['base_url'] = 'http://localhost/talab/manager/parameter/index';
 		$config['total_rows'] = $this->db->count_all_results();
-		$config['per_page'] = 5;
+		$config['per_page'] = 4;
 			
 		$this->pagination->initialize($config);
 			
@@ -41,118 +41,121 @@ class Parameter extends CI_Controller
         $this->load->view('templates/header');
         $this->load->view('manager/sidebar');
         $this->load->view('manager/parameter', $data);
-        $this->load->view('templates/footer');
+		$this->load->view('templates/footer');
     }
 
 	function add()
 	{
-		//$data['viewRoles'] = $this->manager_model->getRoles()->result();
+		$data['viewPackages'] = $this->manager_model->getPackages()->result();
+		$data['idA'] = $this->manager_model->getLastIdA()->result();
+		$data['idB'] = $this->manager_model->getLastIdB()->result();
+		$data['idC'] = $this->manager_model->getLastIdC()->result();
+		$data['idD'] = $this->manager_model->getLastIdD()->result();
 
 		$this->load->view('templates/header');
         $this->load->view('manager/sidebar');
-        $this->load->view('manager/addParameter');
+        $this->load->view('manager/addParameter', $data);
         $this->load->view('templates/footer');
 	}
 
-	function addStaff()
+	function addParameter()
 	{
-		$tableEmp = array(
-			'empName' => $this->input->post('empName'),
-			'username' => $this->input->post('username'),
-			'password' => $this->input->post('password'),
-			'roleId' => $this->input->post('role')
-		);
-		$empId = $this->manager_model->inputData('employee', $tableEmp);
-
-		if($this->input->post('role') == 5)
+		if($this->input->post('role') == "A")
 		{
-			$tableLab = array(
-				'empId' => $empId,
-				'packageId' => $this->input->post('lab')
+			$tableParam = array(
+				'parameterId' => $this->input->post('idA'),
+				'parameterName' => $this->input->post('parameterName'),
+				'unit' => $this->input->post('unit'),
+				'reference' => $this->input->post('reference'),
+				'method' => $this->input->post('method'),
+				'parameterCost' => $this->input->post('parameterCost'),
+				'packageId' => $this->input->post('role')
 			);
-			$this->manager_model->inputData('lab', $tableLab);
+			$this->manager_model->inputData('parameter', $tableParam);
+		}
+		else if($this->input->post('role') == "B")
+		{
+			$tableParam = array(
+				'parameterId' => $this->input->post('idB'),
+				'parameterName' => $this->input->post('parameterName'),
+				'unit' => $this->input->post('unit'),
+				'reference' => $this->input->post('reference'),
+				'method' => $this->input->post('method'),
+				'parameterCost' => $this->input->post('parameterCost'),
+				'packageId' => $this->input->post('role')
+			);
+			$this->manager_model->inputData('parameter', $tableParam);
+		}
+		else if($this->input->post('role') == "C")
+		{
+			$tableParam = array(
+				'parameterId' => $this->input->post('idC'),
+				'parameterName' => $this->input->post('parameterName'),
+				'unit' => $this->input->post('unit'),
+				'reference' => $this->input->post('reference'),
+				'method' => $this->input->post('method'),
+				'parameterCost' => $this->input->post('parameterCost'),
+				'packageId' => $this->input->post('role')
+			);
+			$this->manager_model->inputData('parameter', $tableParam);
+		}
+		else if($this->input->post('role') == "D")
+		{
+			$tableParam = array(
+				'parameterId' => $this->input->post('idD'),
+				'parameterName' => $this->input->post('parameterName'),
+				'unit' => $this->input->post('unit'),
+				'reference' => $this->input->post('reference'),
+				'method' => $this->input->post('method'),
+				'parameterCost' => $this->input->post('parameterCost'),
+				'packageId' => $this->input->post('role')
+			);
+			$this->manager_model->inputData('parameter', $tableParam);
 		}
 
 		$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil disimpan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-        redirect('manager/staff');
+        redirect('manager/parameter');
 	}
 
-	function edit($empId)
-	{
-		$data['viewEmp'] = $this->manager_model->getEmp($empId)->result();
-		$data['viewRoles'] = $this->manager_model->getRoles()->result();
+	function edit($parameterId)
+	{	
+		$data['viewParam'] = $this->manager_model->getParam($parameterId)->result();
 		$data['viewPackages'] = $this->manager_model->getPackages()->result();
-		$data['viewLab'] = $this->manager_model->getLab($empId)->result();
+		$data['idA'] = $this->manager_model->getLastIdA()->result();
+		$data['idB'] = $this->manager_model->getLastIdB()->result();
+		$data['idC'] = $this->manager_model->getLastIdC()->result();
+		$data['idD'] = $this->manager_model->getLastIdD()->result();
 
 		$this->load->view('templates/header');
         $this->load->view('manager/sidebar');
-        $this->load->view('manager/editStaff', $data);
+        $this->load->view('manager/editParameter', $data);
 	}
 
-	function editStaff($empId)
+	function editParameter($parameterId)
 	{
-		$empId = $this->input->post('empId');
-        $where = array('empId' => $empId);
-        $tableEmp = array(
-            'empName' => $this->input->post('empName'),
-            'username' => $this->input->post('username'),
-            'password' => $this->input->post('password'),
-            'roleId' => $this->input->post('role')
+		$parameterId = $this->input->post('parameterId');
+        $where = array('parameterId' => $parameterId);
+        $tableParam = array(
+            'parameterName' => $this->input->post('parameterName'),
+            'unit' => $this->input->post('unit'),
+            'reference' => $this->input->post('reference'),
+            'method' => $this->input->post('method'),
+            'parameterCost' => $this->input->post('role'),
+            'packageId' => $this->input->post('role')
         );
-        $this->manager_model->updateData($where, 'employee', $tableEmp);
-
-		$query = $this->db->query("SELECT * FROM lab WHERE empId = '{$empId}'");
-        $result = $query->result_array();
-        $count = count($result);
-
-		if($this->input->post('role') == 5)
-		{
-            if(empty($count))
-            {
-                $tableLab = array(
-					'empId' => $empId,
-					'packageId' => $this->input->post('lab')
-				);
-				$this->manager_model->inputData('lab', $tableLab);
-            }
-            else if($count == 1)
-            {
-                $where = array('empId' => $empId);
-                $this->manager_model->updateData($where, 'lab', array
-                (
-                    'empId' => $empId,
-                    'packageId' => $this->input->post('lab')
-                ));
-            }
-		}
-		else
-		{
-			if($count > 0)
-			{
-				$this->db->delete('lab', array('empId' => $empId));
-			}
-		}
+        $this->manager_model->updateData($where, 'parameter', $tableParam);
 
 		$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-        redirect('manager/staff');
+        redirect('manager/parameter');
 	}
 
-	function delete($empId)
+	function delete($parameterId)
 	{
-		$query = $this->db->query("SELECT * FROM lab WHERE empId = '{$empId}'");
-        $result = $query->result_array();
-        $count = count($result);
-
-		if($count > 0)
-        {
-			$this->db->delete('lab', array('empId' => $empId));
-		}
-
-		$where = array('empId' => $empId);
-        $this->manager_model->deleteData($where, 'employee');
+		$where = array('parameterId' => $parameterId);
+        $this->manager_model->deleteData($where, 'parameter');
 
 		$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil dihapus!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-        redirect('manager/staff');
+        redirect('manager/parameter');
 	}
 	
 }

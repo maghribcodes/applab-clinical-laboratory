@@ -113,4 +113,58 @@
 		{
 			return $this->db->count_all('employee');
 		}
+
+		function getLastIdA()
+		{
+			$this->db->select('*');
+			$this->db->from('parameter');
+			$this->db->like('parameterId', 'A');
+
+            return $this->db->get();
+		}
+
+		function getLastIdB()
+		{
+			$this->db->select('*');
+			$this->db->from('parameter');
+			$this->db->like('parameterId', 'B');
+
+            return $this->db->get();
+		}
+
+		function getLastIdC()
+		{
+			$this->db->select('*');
+			$this->db->from('parameter');
+			$this->db->like('parameterId', 'C');
+
+            return $this->db->get();
+		}
+
+		function getLastIdD()
+		{
+			$this->db->select('*');
+			$this->db->from('parameter');
+			$this->db->like('parameterId', 'D');
+
+            return $this->db->get();
+		}
+
+		function getParam($parameterId)
+		{
+			$this->db->select('*');
+			$this->db->from('parameter');
+			$this->db->where('parameterId', $parameterId);
+
+			return $this->db->get();
+		}
+
+		function getPack($packageId)
+		{
+			$this->db->select('*');
+			$this->db->from('package');
+			$this->db->where('packageId', $packageId);
+
+			return $this->db->get();
+		}
     }

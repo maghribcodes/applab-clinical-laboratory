@@ -42,6 +42,7 @@
                                             <tr>
                                                 <th style="text-align: center; vertical-align: middle;">No.</th>
                                                 <th style="text-align: center; vertical-align: middle;">Nama Parameter</th>
+                                                <th style="text-align: center; vertical-align: middle;">Kode Parameter</th>
                                                 <th style="text-align: center; vertical-align: middle;">Satuan</th>
                                                 <th style="text-align: center; vertical-align: middle;">Nilai Rujukan</th>
                                                 <th style="text-align: center; vertical-align: middle;">Metoda</th>
@@ -65,6 +66,7 @@
                                                     <tr>
                                                         <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?php echo $vp->parameterName ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?php echo $vp->parameterId ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?php echo $vp->unit ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?php echo $vp->reference ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?php echo $vp->method ?></td>

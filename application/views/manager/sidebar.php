@@ -35,14 +35,14 @@
                     <span>Data Hasil Uji</span></a>
             </li>
 
-            <!-- Divider -->
+            <!-- Divider 
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo base_url('manager/package') ?>">
+                <a class="nav-link" href="<?php //echo base_url('manager/package') ?>">
                     <i class="fas fa-folder fa-cog"></i>
                     <span>Data Paket</span></a>
-            </li>
+            </li> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
