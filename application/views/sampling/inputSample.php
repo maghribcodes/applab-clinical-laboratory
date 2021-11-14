@@ -56,7 +56,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1"><?php echo $noSample ?></span>
                                                     </div>
-                                                    <input type="text" name="type[]" class="form-control" value="<?php echo set_value('type[]', $sampleType); ?>" placeholder="Tipe sampel..." aria-label="Username" aria-describedby="basic-addon1">
+                                                    <input type="text" name="type[]" class="form-control" value="<?php echo set_value('type[]', $sampleType); ?>" placeholder="Tipe sampel..." aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
                                                 </div>
                                             <?php endforeach;?>
                                             <?php echo form_error('type[]', '<div class="text-danger small">','</div>') ?>
@@ -81,7 +81,7 @@
                                                 <div class="col-sm-6">
                                                     <?php foreach($combined3 as $parameterName => $reference): ?>
                                                         <br>
-                                                        <input type="text" name="reference[]" value="<?php echo set_value('reference[]', $reference); ?>" placeholder="Nilai rujukan..." class="form-control">
+                                                        <input type="text" name="reference[]" value="<?php echo set_value('reference[]', $reference); ?>" placeholder="Nilai rujukan..." class="form-control" autocomplete="off">
                                                         <br>
                                                     <?php endforeach; ?>
                                                 </div>

@@ -90,7 +90,7 @@
                                                                 <div class="card-body">
                                                                 <?php foreach($combined2 as $parameterName => $method): ?>
                                                                     <div>
-                                                                        <input type="text" name="method[]" value="<?php echo set_value('method[]', $method); ?>"class="form-control">
+                                                                        <input type="text" name="method[]" value="<?php echo set_value('method[]', $method); ?>" class="form-control" autocomplete="off">
                                                                         <br>
                                                                     </div>
                                                                 <?php endforeach; ?>
@@ -107,7 +107,7 @@
                                                                 <div class="card-body">
                                                                 <?php foreach($combined3 as $parameterName => $result): ?>
                                                                     <div>   
-                                                                        <input type="text" name="result[]" value="<?php echo set_value('result[]', $result); ?>"class="form-control">
+                                                                        <input type="text" name="result[]" value="<?php echo set_value('result[]', $result); ?>" class="form-control" autocomplete="off">
                                                                         <br>
                                                                     </div>
                                                                 <?php endforeach; ?>

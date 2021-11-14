@@ -30,7 +30,7 @@
                         <input type="hidden" name="orderId" value="<?php echo $uc->orderId ?>">
                         <label for="inputEmail3" class="col-sm-2 col-form-label">No. Sampel</label>
                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                <input type="text" name="noSample" class="form-control" value="<?php echo set_value('noSample'); ?>">
+                                <input type="text" name="noSample" class="form-control" value="<?php echo set_value('noSample'); ?>" autocomplete="off">
                                 <?php echo form_error('noSample', '<div class="text-danger small">','</div>') ?>
                             </div>
                     </div>

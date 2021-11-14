@@ -10,7 +10,7 @@
 
                     <br>
 
-                    <div class="card mb-4 px-5">
+                    <div class="card mb-4 px-2">
 
                         <div class="card-body">
 
@@ -110,7 +110,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php ?>
+                    
                     <!-- Content Row -->
 
                     <div class="row">

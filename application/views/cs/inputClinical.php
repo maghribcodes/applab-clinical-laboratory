@@ -23,7 +23,7 @@
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Pasien</label>
                         <div class="col-sm-4">
-                            <input type="text" name="custName" class="form-control" value="<?php echo set_value('custName'); ?>">
+                            <input type="text" name="custName" class="form-control" value="<?php echo set_value('custName'); ?>" autocomplete="off">
                             <?php echo form_error('custName', '<div class="text-danger small">','</div>') ?>
                         </div>
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Tanggal Lahir</label>
@@ -36,12 +36,12 @@
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Kontak</label>
                         <div class="col-sm-4">
-                            <input type="name" name="contact" class="form-control" id="inputEmail3" value="<?php echo set_value('contact'); ?>">
+                            <input type="name" name="contact" class="form-control" id="inputEmail3" value="<?php echo set_value('contact'); ?>" autocomplete="off">
                             <?php echo form_error('contact', '<div class="text-danger small">','</div>') ?>
                         </div>
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Alamat</label>
                         <div class="col-sm-4">
-                            <input type="name" name="address" class="form-control" id="inputEmail3" value="<?php echo set_value('address'); ?>">
+                            <input type="name" name="address" class="form-control" id="inputEmail3" value="<?php echo set_value('address'); ?>" autocomplete="off">
                             <?php echo form_error('address', '<div class="text-danger small">','</div>') ?>
                         </div>
                 </div>

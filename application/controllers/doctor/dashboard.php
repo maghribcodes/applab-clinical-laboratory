@@ -121,11 +121,6 @@ class Dashboard extends CI_Controller
 
 	function _rules()
     {
-        $this->form_validation->set_rules('custName','Nama Pasien','required',['required'=>'Data harus diisi']);
-        $this->form_validation->set_rules('birthDate','Tanggal Lahir','required',['required'=>'Data harus diisi']);
-        $this->form_validation->set_rules('contact','Kontak','required',['required'=>'Data harus diisi']);
-        $this->form_validation->set_rules('gender','Jenis Kelamin','required',['required'=>'Data harus diisi']);
-        $this->form_validation->set_rules('address','Alamat','required',['required'=>'Data harus diisi']);
         $this->form_validation->set_rules('parameterId[]','Parameter','callback_checkParameters');
     }
 
@@ -141,18 +136,27 @@ class Dashboard extends CI_Controller
             $samples = explode(', ', $str);
             foreach($samples as $s)
             {
-                $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$s}'");
-                $result = $query->result_array();
-                $count = count($result);
-
-                if($count > 0)
+                $length = strlen($s);
+                if($length == 5)
                 {
-                    $this->form_validation->set_message('checkSamples', 'Nomor sampel sudah terdaftar');
-                    return FALSE;
+                    $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$s}'");
+                    $result = $query->result_array();
+                    $count = count($result);
+
+                    if($count > 0)
+                    {
+                        $this->form_validation->set_message('checkSamples', 'Nomor sampel sudah terdaftar');
+                        return FALSE;
+                    }
+                    else
+                    {
+                        return TRUE;
+                    }
                 }
                 else
                 {
-                    return TRUE;
+                    $this->form_validation->set_message('checkSamples', 'Penulisan Nomor sampel tidak sesuai');
+                    return FALSE;
                 }
             }
         }

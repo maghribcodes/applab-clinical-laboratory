@@ -19,6 +19,22 @@
 			return $this->db->get()->result();
         }
 
+		function getAllParameters($limit, $start, $keyword = null)
+		{
+			if($keyword)
+			{
+				$this->db->like('parameter.parameterName', $keyword);
+			}
+
+			$this->db->select('*');
+			$this->db->from('parameter');
+			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
+            $this->db->order_by('parameter.parameterName', 'asc');
+			$this->db->limit($limit, $start);
+
+			return $this->db->get()->result();
+		}
+
 		function getAllTestResult($limit, $start, $keyword = null)
         {
             if($keyword)

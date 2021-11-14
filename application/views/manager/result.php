@@ -27,12 +27,12 @@
                                 </div>
                             </div>
                         </div>
-
+                            
                                 <div class="card-body">
                                     <?php
                                         if(empty($viewResult))
                                         { ?>
-                                            <div class="alert alert-primary" role="alert">
+                                            <div class="alert alert-dark" role="alert">
                                                 Data tidak ditemukan.
                                             </div>
                                         <?php

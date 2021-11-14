@@ -26,7 +26,7 @@
 				<div class="form-group row">
 					<label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
 						<div class="col-sm-4 mb-3 mb-sm-0">
-							<input type="text" name="email" class="form-control" value="<?php echo set_value('email', $vo->email); ?>">
+							<input type="text" name="email" class="form-control" value="<?php echo set_value('email', $vo->email); ?>" autocomplete="off">
                             <?php echo form_error('email', '<div class="text-danger small">','</div>') ?>
                         </div>
 				</div>

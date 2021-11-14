@@ -22,8 +22,12 @@ class Dashboard extends CI_Controller
 					'empName'=>$data->empName,
 					'roleName'=>$data->roleName
 				);
-		
+			
 		$data['countEmp'] = $this->manager_model->getCountEmployees();
+		$data['viewCountVisitors'] = $this->user_model->getCountVisitors();
+		$data['viewCountSamples'] = $this->user_model->getCountSamples();
+		$data['viewCountLhus'] = $this->user_model->getCountLhus();
+		$data['viewCountLhu'] = $this->user_model->getCountLhu();
 
         $this->load->view('templates/header');
         $this->load->view('manager/sidebar');
