@@ -42,7 +42,6 @@
                                             <tr>
                                                 <th style="text-align: center; vertical-align: middle;">No.</th>
                                                 <th style="text-align: center; vertical-align: middle;">Nama Parameter</th>
-                                                <th style="text-align: center; vertical-align: middle;">Kode Parameter</th>
                                                 <th style="text-align: center; vertical-align: middle;">Satuan</th>
                                                 <th style="text-align: center; vertical-align: middle;">Nilai Rujukan</th>
                                                 <th style="text-align: center; vertical-align: middle;">Metoda</th>
@@ -66,9 +65,8 @@
                                                     <tr>
                                                         <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?php echo $vp->parameterName ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?php echo $vp->parameterId ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?php echo $vp->unit ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?php echo $vp->reference ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?php echo $vp->referenceValue ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?php echo $vp->method ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?php echo $vp->packageName ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
@@ -77,24 +75,24 @@
                                                             ?>
                                                         </td>
                                                         <td width="20px"><?php echo anchor('manager/parameter/edit/'.$vp->parameterId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
-                                                        <td width="20px"><div class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></div></td>
-
-                                                            <!-- Delete Modal-->
-                                                            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                                aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-body">Apa anda yakin untuk menghapus data ini?</div>
-                                                                        <div class="modal-footer">
-                                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                                                            <?php echo anchor('manager/parameter/delete/'.$vp->parameterId,'<div class="btn btn-dark">Hapus</div>') ?>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
+                                                        <td width="20px"><div class="btn btn-sm btn-danger" data-toggle="modal" onclick="confirm_modal('<?php echo site_url("manager/parameter/delete/".$vp->parameterId);?>','Title');" data-target="#deleteModal"><i class="fa fa-trash"></i></div></td>
                                                     </tr>
                                                 <?php endforeach; ?>
+
+                                                <!-- Delete Modal-->
+                                                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body">Apa anda yakin untuk menghapus data ini?</div>
+                                                                <div class="modal-footer">
+                                                                    <button class="btn btn-secondary" type="button" id="delete_cancel_link" data-dismiss="modal">Batal</button>
+                                                                    <a class="btn btn-danger" id="delete_link_m_n" href="">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                         </thead>
                                     </table>
                                 
@@ -104,3 +102,13 @@
                             </div>
                     <!--    </div>
                     </div> -->
+
+                <script>	
+                    function confirm_modal(delete_url,title)
+                    {
+                        jQuery('#modal_delete_m_n').modal('show', {backdrop: 'static',keyboard :false});
+                        jQuery("#modal_delete_m_n .grt").text(title);
+                        document.getElementById('delete_link_m_n').setAttribute("href" , delete_url );
+                        document.getElementById('delete_link_m_n').focus();
+                    }
+                </script>

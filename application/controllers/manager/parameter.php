@@ -31,7 +31,7 @@ class Parameter extends CI_Controller
 			
 		$config['base_url'] = 'http://localhost/talab/manager/parameter/index';
 		$config['total_rows'] = $this->db->count_all_results();
-		$config['per_page'] = 4;
+		$config['per_page'] = 10;
 			
 		$this->pagination->initialize($config);
 			
@@ -47,10 +47,6 @@ class Parameter extends CI_Controller
 	function add()
 	{
 		$data['viewPackages'] = $this->manager_model->getPackages()->result();
-		$data['idA'] = $this->manager_model->getLastIdA()->result();
-		$data['idB'] = $this->manager_model->getLastIdB()->result();
-		$data['idC'] = $this->manager_model->getLastIdC()->result();
-		$data['idD'] = $this->manager_model->getLastIdD()->result();
 
 		$this->load->view('templates/header');
         $this->load->view('manager/sidebar');
@@ -60,60 +56,17 @@ class Parameter extends CI_Controller
 
 	function addParameter()
 	{
-		if($this->input->post('role') == "A")
-		{
-			$tableParam = array(
-				'parameterId' => $this->input->post('idA'),
-				'parameterName' => $this->input->post('parameterName'),
-				'unit' => $this->input->post('unit'),
-				'reference' => $this->input->post('reference'),
-				'method' => $this->input->post('method'),
-				'parameterCost' => $this->input->post('parameterCost'),
-				'packageId' => $this->input->post('role')
-			);
-			$this->manager_model->inputData('parameter', $tableParam);
-		}
-		else if($this->input->post('role') == "B")
-		{
-			$tableParam = array(
-				'parameterId' => $this->input->post('idB'),
-				'parameterName' => $this->input->post('parameterName'),
-				'unit' => $this->input->post('unit'),
-				'reference' => $this->input->post('reference'),
-				'method' => $this->input->post('method'),
-				'parameterCost' => $this->input->post('parameterCost'),
-				'packageId' => $this->input->post('role')
-			);
-			$this->manager_model->inputData('parameter', $tableParam);
-		}
-		else if($this->input->post('role') == "C")
-		{
-			$tableParam = array(
-				'parameterId' => $this->input->post('idC'),
-				'parameterName' => $this->input->post('parameterName'),
-				'unit' => $this->input->post('unit'),
-				'reference' => $this->input->post('reference'),
-				'method' => $this->input->post('method'),
-				'parameterCost' => $this->input->post('parameterCost'),
-				'packageId' => $this->input->post('role')
-			);
-			$this->manager_model->inputData('parameter', $tableParam);
-		}
-		else if($this->input->post('role') == "D")
-		{
-			$tableParam = array(
-				'parameterId' => $this->input->post('idD'),
-				'parameterName' => $this->input->post('parameterName'),
-				'unit' => $this->input->post('unit'),
-				'reference' => $this->input->post('reference'),
-				'method' => $this->input->post('method'),
-				'parameterCost' => $this->input->post('parameterCost'),
-				'packageId' => $this->input->post('role')
-			);
-			$this->manager_model->inputData('parameter', $tableParam);
-		}
+		$tableParam = array(
+			'parameterName' => $this->input->post('parameterName'),
+			'unit' => $this->input->post('unit'),
+			'referenceValue' => $this->input->post('referenceValue'),
+			'method' => $this->input->post('method'),
+			'parameterCost' => $this->input->post('parameterCost'),
+			'packageId' => $this->input->post('packageId')
+		);
+		$this->manager_model->inputData('parameter', $tableParam);
 
-		$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil disimpan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+		$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil ditambahkan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         redirect('manager/parameter');
 	}
 
@@ -121,14 +74,11 @@ class Parameter extends CI_Controller
 	{	
 		$data['viewParam'] = $this->manager_model->getParam($parameterId)->result();
 		$data['viewPackages'] = $this->manager_model->getPackages()->result();
-		$data['idA'] = $this->manager_model->getLastIdA()->result();
-		$data['idB'] = $this->manager_model->getLastIdB()->result();
-		$data['idC'] = $this->manager_model->getLastIdC()->result();
-		$data['idD'] = $this->manager_model->getLastIdD()->result();
 
 		$this->load->view('templates/header');
         $this->load->view('manager/sidebar');
         $this->load->view('manager/editParameter', $data);
+		$this->load->view('templates/footer');
 	}
 
 	function editParameter($parameterId)
@@ -138,10 +88,10 @@ class Parameter extends CI_Controller
         $tableParam = array(
             'parameterName' => $this->input->post('parameterName'),
             'unit' => $this->input->post('unit'),
-            'reference' => $this->input->post('reference'),
+            'referenceValue' => $this->input->post('referenceValue'),
             'method' => $this->input->post('method'),
-            'parameterCost' => $this->input->post('role'),
-            'packageId' => $this->input->post('role')
+            'parameterCost' => $this->input->post('parameterCost'),
+            'packageId' => $this->input->post('packageId')
         );
         $this->manager_model->updateData($where, 'parameter', $tableParam);
 

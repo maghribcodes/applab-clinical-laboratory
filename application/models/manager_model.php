@@ -29,7 +29,7 @@
 			$this->db->select('*');
 			$this->db->from('parameter');
 			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
-            $this->db->order_by('parameter.parameterName', 'asc');
+            $this->db->order_by('parameter.parameterId', 'asc');
 			$this->db->limit($limit, $start);
 
 			return $this->db->get()->result();
@@ -46,7 +46,7 @@
 			$this->db->from('orderdetail');
 			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
-			$this->db->join('testresult', 'testresult.noSample=orderdetail.noSample', 'left');
+			$this->db->join('sample', 'sample.noSample=orderdetail.noSample', 'left');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
             $this->db->group_by('order.orderId');

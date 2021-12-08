@@ -14,25 +14,18 @@
 
 		function getCountVisitors()
 		{
-			return $this->db->count_all('order');
+			return $this->db->count_all('customer');
 		}
 
 		function getCountSamples()
 		{
-			return $this->db->count_all('testresult');
+			return $this->db->count_all('sample');
 		}
 
 		function getCountLhus()
 		{
-			$this->db->like('statusId', '0');
-			$this->db->from('testresult');
-			return $this->db->count_all_results();
-		}
-
-		function getCountLhu()
-		{
-			$this->db->like('statusId', '1');
-			$this->db->from('testresult');
+			$this->db->like('statusId', '2');
+			$this->db->from('order');
 			return $this->db->count_all_results();
 		}
 
