@@ -73,11 +73,11 @@
                                                             <td style="text-align: center; vertical-align: middle;"><?php echo $vr->sender ?></td>
                                                             <td style="text-align: center; vertical-align: middle;">
                                                                 <?php 
-                                                                    if($vr->statusId == 0)
+                                                                    if($vr->statusId == 1 || $vr->statusId == 2)
                                                                     {
                                                                         ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
                                                                     }
-                                                                    else if($vr->statusId == 1)
+                                                                    else if($vr->statusId == 3)
                                                                     {
                                                                         ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
                                                                     }
@@ -89,13 +89,13 @@
                                                             </td>
 
                                                             <?php 
-                                                            if($vr->statusId == 0)
+                                                            if($vr->statusId == 1 || $vr->statusId == 2)
                                                             {
                                                                 ?> 
                                                                     <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
                                                                 <?php
                                                             }
-                                                            else if($vr->statusId == 1)
+                                                            else if($vr->statusId == 3)
                                                             {
                                                                 ?> 
                                                                     <td width="20px"><?php echo anchor('doctor/result/verification/'.$vr->orderId, '<div class="btn btn-sm btn-primary"><i class="far fa-check-square"></i></div>') ?></td>

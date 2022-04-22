@@ -40,7 +40,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Pasien</div>
+                                                Jumlah Pasien</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php echo $viewCountVisitors ?></div>
                                             </div>
@@ -59,7 +59,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Total Sampel</div>
+                                                Jumlah Sampel</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $viewCountSamples ?></div>
                                         </div>
                                         <div class="col-auto">
@@ -76,7 +76,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Lembar Hasil Uji Sementara
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Jumlah Laporan Hasil Uji yang Belum Diverifikasi
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -99,8 +99,8 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Lembar Hasil Uji</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $viewCountLhu ?></div>
+                                                Jumlah Laporan Hasil Uji yang Sudah Diverifikasi</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $viewCountLhus ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>

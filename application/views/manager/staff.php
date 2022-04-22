@@ -90,21 +90,7 @@
                                                             ?>
                                                         </td>
                                                         <td width="20px"><?php echo anchor('manager/staff/edit/'.$vs->empId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
-                                                        <td width="20px"><div class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i></div></td>
-
-                                                            <!-- Delete Modal-->
-                                                            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                                aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-body">Apa anda yakin untuk menghapus data ini?</div>
-                                                                        <div class="modal-footer">
-                                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
-                                                                            <?php echo anchor('manager/staff/delete/'.$vs->empId,'<div class="btn btn-dark">Hapus</div>') ?>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                        <td width="20px"><div class="btn btn-sm btn-danger" data-toggle="modal" onclick="confirm_modal('<?php echo site_url("manager/staff/delete/".$vs->empId);?>');" data-target="#deleteModal"><i class="fa fa-trash"></i></div></td>
                                                             
                                                     </tr>
                                                 <?php endforeach; ?>
@@ -117,3 +103,26 @@
                             </div>
                     <!--    </div>
                     </div> -->
+
+                    <!-- Delete Modal-->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">Apa anda yakin untuk menghapus data ini?</div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                                    <a class="btn btn-danger" id="deleteLink" href="">Hapus</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>	
+                        function confirm_modal(delete_url)
+                        {
+                            jQuery('#deleteModal').modal('show', {backdrop: 'static', keyboard :false});
+                            document.getElementById('deleteLink').setAttribute("href", delete_url);
+                            document.getElementById('deleteLink').focus();
+                        }
+                    </script>

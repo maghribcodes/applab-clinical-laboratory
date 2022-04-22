@@ -13,7 +13,7 @@
 			$this->db->from('orderdetail');
 			$this->db->join('order', 'orderdetail.orderId=order.orderId');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
-            $this->db->join('testresult', 'orderdetail.noSample=testresult.noSample', 'left');
+            $this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
 			$this->db->group_by('order.orderId');
@@ -29,7 +29,7 @@
 			$this->db->from('orderdetail');
 			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
-			$this->db->join('testresult', 'testresult.noSample=orderdetail.noSample', 'left');
+			$this->db->join('sample', 'sample.noSample=orderdetail.noSample', 'left');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->where('order.orderId', $orderId);
 			
@@ -50,7 +50,7 @@
 		function getCountLhu()
 		{
 			$this->db->like('statusId', '2');
-			$this->db->from('testresult');
+			$this->db->from('sample');
 			return $this->db->count_all_results();
 		}
     }

@@ -75,23 +75,9 @@
                                                             ?>
                                                         </td>
                                                         <td width="20px"><?php echo anchor('manager/parameter/edit/'.$vp->parameterId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
-                                                        <td width="20px"><div class="btn btn-sm btn-danger" data-toggle="modal" onclick="confirm_modal('<?php echo site_url("manager/parameter/delete/".$vp->parameterId);?>','Title');" data-target="#deleteModal"><i class="fa fa-trash"></i></div></td>
+                                                        <td width="20px"><div class="btn btn-sm btn-danger" data-toggle="modal" onclick="confirm_modal('<?php echo site_url("manager/parameter/delete/".$vp->parameterId);?>');" data-target="#deleteModal"><i class="fa fa-trash"></i></div></td>
                                                     </tr>
                                                 <?php endforeach; ?>
-
-                                                <!-- Delete Modal-->
-                                                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-body">Apa anda yakin untuk menghapus data ini?</div>
-                                                                <div class="modal-footer">
-                                                                    <button class="btn btn-secondary" type="button" id="delete_cancel_link" data-dismiss="modal">Batal</button>
-                                                                    <a class="btn btn-danger" id="delete_link_m_n" href="">Delete</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
 
                                         </thead>
                                     </table>
@@ -103,12 +89,25 @@
                     <!--    </div>
                     </div> -->
 
-                <script>	
-                    function confirm_modal(delete_url,title)
-                    {
-                        jQuery('#modal_delete_m_n').modal('show', {backdrop: 'static',keyboard :false});
-                        jQuery("#modal_delete_m_n .grt").text(title);
-                        document.getElementById('delete_link_m_n').setAttribute("href" , delete_url );
-                        document.getElementById('delete_link_m_n').focus();
-                    }
-                </script>
+                    <!-- Delete Modal-->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">Apa anda yakin untuk menghapus data ini?</div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                                    <a class="btn btn-danger" id="deleteLink" href="">Hapus</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>	
+                        function confirm_modal(delete_url)
+                        {
+                            jQuery('#deleteModal').modal('show', {backdrop: 'static', keyboard :false});
+                            document.getElementById('deleteLink').setAttribute("href", delete_url);
+                            document.getElementById('deleteLink').focus();
+                        }
+                    </script>

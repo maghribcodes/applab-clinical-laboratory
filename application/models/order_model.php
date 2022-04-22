@@ -47,8 +47,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->where('packageId', 'A');
-			$this->db->order_by('parameterName', 'asc');
+			$this->db->where('packageId', '1');
 
 			return $this->db->get();
 		}
@@ -57,7 +56,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->where('packageId', 'B');
+			$this->db->where('packageId', '2');
 			$this->db->order_by('parameterName', 'asc');
 
 			return $this->db->get();
@@ -67,7 +66,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->where('packageId', 'C');
+			$this->db->where('packageId', '3');
 			$this->db->order_by('parameterName', 'asc');
 
 			return $this->db->get();
@@ -77,7 +76,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->where('packageId', 'D');
+			$this->db->where('packageId', '4');
 			$this->db->order_by('parameterName', 'asc');
 
 			return $this->db->get();

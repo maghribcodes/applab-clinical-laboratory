@@ -11,8 +11,7 @@
 				$this->db->or_like('order.sender', $keyword);
 			}
 
-			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR "-") as Samples,
-                                    GROUP_CONCAT(DISTINCT sampleType SEPARATOR ", ") as Types');
+			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR "-") as Samples');
 			$this->db->from('orderdetail');
 			$this->db->join('order', 'orderdetail.orderId=order.orderId');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
@@ -40,8 +39,8 @@
 		function getCountSamples()
 		{
 			$this->db->where('sampleType', '');
-			$this->db->from('orderdetail');
-			$this->db->group_by('noSample');
+			$this->db->from('sample');
+			//$this->db->group_by('noSample');
 
 			return $this->db->count_all_results();
 		}

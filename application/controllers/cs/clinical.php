@@ -77,7 +77,8 @@
 
                 $tableOrder = array(
                     'custId' => $input1,
-                    'empId' => $employess
+                    'empId' => $employess,
+                    'statusId' => 1
                 );
                 $input2 = $this->clinical_model->inputDataClinical('order', $tableOrder);
 
@@ -115,8 +116,6 @@
             }
             else
             {
-                $employess = $this->session->userdata('empId');
-
                 $custId = $this->input->post('custId');
                 $where = array('custId' => $custId);
                 $tableCust = array(

@@ -36,7 +36,7 @@ class Dashboard extends CI_Controller
 	function input($orderId)
 	{
 		$data['updateClinical'] = $this->doctor_model->getDataClinical($orderId)->result();
-		$data['lastSample'] = $this->db->query("SELECT noSample FROM testresult ORDER BY noSample DESC LIMIT 1")->result();
+		$data['lastSample'] = $this->db->query("SELECT noSample FROM sample ORDER BY noSample DESC LIMIT 1")->result();
         
         $data['viewParameterA'] = $this->order_model->getParameterA()->result();
         $data['viewParameterB'] = $this->order_model->getParameterB()->result();
@@ -98,7 +98,7 @@ class Dashboard extends CI_Controller
         
             foreach($sample as $samp)
             {
-                $this->order_model->inputDataOrder('testresult', array
+                $this->order_model->inputDataOrder('sample', array
                 (
                     'noSample' => $samp,
                     'empId' => $empId
@@ -110,11 +110,12 @@ class Dashboard extends CI_Controller
                     (
                         'orderId' => $this->input->post('orderId'),
                         'noSample'=> $samp,
-                        'parameterId'=> $param
+                        'parameterId'=> $param,
+                        'empId' => $empId
                     ));
                 }
             }
-            $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data klinisi sudah diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data klinisi Berhasil Disimpan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             redirect('doctor/dashboard');
 		}
 	}
@@ -137,9 +138,9 @@ class Dashboard extends CI_Controller
             foreach($samples as $s)
             {
                 $length = strlen($s);
-                if($length == 5)
+                if($length == 6)
                 {
-                    $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$s}'");
+                    $query = $this->db->query("SELECT * FROM sample WHERE noSample = '{$s}'");
                     $result = $query->result_array();
                     $count = count($result);
 
