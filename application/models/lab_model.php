@@ -21,10 +21,10 @@
 			$this->db->select('*');
 			$this->db->from('orderdetail');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
-            $this->db->join('testresult', 'orderdetail.noSample=testresult.noSample', 'left');
+			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
+            $this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
 			$this->db->group_by('orderdetail.noSample');
-			$this->db->where('package.packageId', 'A');
+			$this->db->where('lab.labId', '2');
             $this->db->order_by('orderdetail.noSample', 'desc');
 			$this->db->limit($limit, $start);
 
@@ -41,10 +41,10 @@
 			$this->db->select('*');
 			$this->db->from('orderdetail');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
-            $this->db->join('testresult', 'orderdetail.noSample=testresult.noSample', 'left');
+			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
+            $this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
 			$this->db->group_by('orderdetail.noSample');
-			$this->db->where('package.packageId', 'B');
+			$this->db->where('lab.labId', '3');
             $this->db->order_by('orderdetail.noSample', 'desc');
 			$this->db->limit($limit, $start);
 
@@ -61,10 +61,10 @@
 			$this->db->select('*');
 			$this->db->from('orderdetail');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
-            $this->db->join('testresult', 'orderdetail.noSample=testresult.noSample', 'left');
+			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
+            $this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
 			$this->db->group_by('orderdetail.noSample');
-			$this->db->where('package.packageId', 'C');
+			$this->db->where('lab.labId', '4');
             $this->db->order_by('orderdetail.noSample', 'desc');
 			$this->db->limit($limit, $start);
 
@@ -81,10 +81,10 @@
 			$this->db->select('*');
 			$this->db->from('orderdetail');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
-            $this->db->join('testresult', 'orderdetail.noSample=testresult.noSample', 'left');
+			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
+            $this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
 			$this->db->group_by('orderdetail.noSample');
-			$this->db->where('package.packageId', 'D');
+			$this->db->where('lab.labId', '5');
             $this->db->order_by('orderdetail.noSample', 'desc');
 			$this->db->limit($limit, $start);
 
@@ -96,8 +96,8 @@
             $this->db->select('*');
 			$this->db->from('orderdetail');
             $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
-			$this->db->where('package.packageId', 'A');
+			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
+			$this->db->where('lab.labId', '2');
             $this->db->where('orderdetail.orderId', $orderId);
 			$this->db->where('orderdetail.noSample', $noSample);
 
@@ -109,8 +109,8 @@
             $this->db->select('*');
 			$this->db->from('orderdetail');
             $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
-			$this->db->where('package.packageId', 'B');
+			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
+			$this->db->where('lab.labId', '3');
             $this->db->where('orderdetail.orderId', $orderId);
 			$this->db->where('orderdetail.noSample', $noSample);
 
@@ -122,8 +122,8 @@
             $this->db->select('*');
 			$this->db->from('orderdetail');
             $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
-			$this->db->where('package.packageId', 'C');
+			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
+			$this->db->where('lab.labId', '4');
             $this->db->where('orderdetail.orderId', $orderId);
 			$this->db->where('orderdetail.noSample', $noSample);
 
@@ -135,8 +135,8 @@
             $this->db->select('*');
 			$this->db->from('orderdetail');
             $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
-			$this->db->where('package.packageId', 'D');
+			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
+			$this->db->where('lab.labId', '5');
             $this->db->where('orderdetail.orderId', $orderId);
 			$this->db->where('orderdetail.noSample', $noSample);
 
@@ -147,7 +147,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('orderdetail');
-			$this->db->like('parameterId', 'A');
+			$this->db->like('parameterId', '2');
 			$this->db->where('result', '');
 			$this->db->group_by('noSample');
 
@@ -158,7 +158,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('orderdetail');
-			$this->db->like('parameterId', 'B');
+			$this->db->like('parameterId', '3');
 			$this->db->where('result', '');
 			$this->db->group_by('noSample');
 
@@ -169,7 +169,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('orderdetail');
-			$this->db->like('parameterId', 'C');
+			$this->db->like('parameterId', '4');
 			$this->db->where('result', '');
 			$this->db->group_by('noSample');
 
@@ -180,7 +180,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('orderdetail');
-			$this->db->like('parameterId', 'D');
+			$this->db->like('parameterId', '5');
 			$this->db->where('result', '');
 			$this->db->group_by('noSample');
 
@@ -190,7 +190,7 @@
         function getCountLhus()
 		{
 			$this->db->like('statusId', '1');
-			$this->db->from('testresult');
+			$this->db->from('sample');
 
 			return $this->db->count_all_results();
 		}

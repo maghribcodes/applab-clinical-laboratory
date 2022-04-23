@@ -16,7 +16,7 @@
 			$this->db->join('order', 'orderdetail.orderId=order.orderId');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
+			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
 			$this->db->group_by('order.orderId');
 			$this->db->order_by('GROUP_CONCAT(DISTINCT noSample)', 'desc');
 			$this->db->limit($limit, $start);

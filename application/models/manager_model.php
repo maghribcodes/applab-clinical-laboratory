@@ -28,7 +28,7 @@
 
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
+			$this->db->join('package', 'parameter.labId=lab.labId', 'left');
             $this->db->order_by('parameter.parameterId', 'asc');
 			$this->db->limit($limit, $start);
 
@@ -48,7 +48,7 @@
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
 			$this->db->join('sample', 'sample.noSample=orderdetail.noSample', 'left');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-			$this->db->join('package', 'parameter.packageId=package.packageId', 'left');
+			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
             $this->db->group_by('order.orderId');
 			$this->db->order_by('order.orderId', 'desc');
 			$this->db->limit($limit, $start);
@@ -76,19 +76,19 @@
 		function getPackages()
 		{
 			$this->db->select('*');
-            $this->db->from('package');
+            $this->db->from('lab');
 
             return $this->db->get();
 		}
 
 		function getLab($empId)
 		{
-			$this->db->select('*');
+			/*$this->db->select('*');
 			$this->db->from('lab');
 			$this->db->join('package', 'lab.packageId=package.packageId', 'left');
 			$this->db->where('lab.empId', $empId);
 
-			return $this->db->get();
+			return $this->db->get();*/
 		}
         
         function inputData($table, $data)
@@ -118,7 +118,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->like('parameterId', 'A');
+			$this->db->like('parameterId', '2');
 
             return $this->db->get();
 		}
@@ -127,7 +127,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->like('parameterId', 'B');
+			$this->db->like('parameterId', '3');
 
             return $this->db->get();
 		}
@@ -136,7 +136,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->like('parameterId', 'C');
+			$this->db->like('parameterId', '4');
 
             return $this->db->get();
 		}
@@ -145,7 +145,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->like('parameterId', 'D');
+			$this->db->like('parameterId', '5');
 
             return $this->db->get();
 		}
@@ -162,8 +162,8 @@
 		function getPack($packageId)
 		{
 			$this->db->select('*');
-			$this->db->from('package');
-			$this->db->where('packageId', $packageId);
+			$this->db->from('lab');
+			$this->db->where('labId', $packageId);
 
 			return $this->db->get();
 		}

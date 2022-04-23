@@ -14,6 +14,7 @@
 			$this->db->select('*');
 			$this->db->from('order');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
+			//$this->db->where('order.statusId', 1);
 			$this->db->order_by('order.orderId', 'desc');
 			$this->db->limit($limit, $start);
 

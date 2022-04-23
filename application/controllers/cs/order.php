@@ -112,13 +112,14 @@
                     'sender' => $this->input->post('sender'),
                     'clinicalNotes' => $this->input->post('clinicalNotes'),
                     'totalCost' => $total,
-                    'empId' => $employess
+                    'empId' => $employess,
+                    'statusId' => 2
                 );
                 $input2 = $this->order_model->inputDataOrder('order', $tableOrder);
         
                 foreach($sample as $samp)
                 {
-                    $this->order_model->inputDataOrder('testresult', array
+                    $this->order_model->inputDataOrder('sample', array
                     (
                         'noSample' => $samp,
                         'empId' => $employess
@@ -130,7 +131,8 @@
                         (
                             'orderId' => $input2,
                             'noSample'=> $samp,
-                            'parameterId'=> $param
+                            'parameterId'=> $param,
+                            'empId' => $employess
                         ));
                     }
                 }
@@ -162,27 +164,35 @@
                 $samples = explode(', ', $str);
                 foreach($samples as $s)
                 {
-                    $length = strlen($s);
-                    if($length == 5)
-                    {
-                        $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$s}'");
-                        $result = $query->result_array();
-                        $count = count($result);
-
-                        if($count > 0)
-                        {
-                            $this->form_validation->set_message('checkSamples', 'Nomor sampel sudah terdaftar');
-                            return FALSE;
-                        }
-                        else
-                        {
-                            return TRUE;
-                        }
-                    }
-                    else
+                    if(!preg_match("/^([K]{1}[.]{1}[0-9]{4})+$/i", $s))
                     {
                         $this->form_validation->set_message('checkSamples', 'Penulisan Nomor sampel tidak sesuai');
                         return FALSE;
+                    }
+                    else
+                    {
+                        $length = strlen($s);
+                        if($length == 6)
+                        {
+                            $query = $this->db->query("SELECT * FROM sample WHERE noSample = '{$s}'");
+                            $result = $query->result_array();
+                            $count = count($result);
+
+                            if($count > 0)
+                            {
+                                $this->form_validation->set_message('checkSamples', 'Nomor sampel sudah terdaftar');
+                                return FALSE;
+                            }
+                            else
+                            {
+                                return TRUE;
+                            }
+                        }
+                        else
+                        {
+                            $this->form_validation->set_message('checkSamples', 'Penulisan Nomor sampel tidak sesuai');
+                            return FALSE;
+                        }
                     }
                 }
             }
@@ -212,7 +222,7 @@
         function update($orderId)
         {
             $data['updateOrder'] = $this->order_model->getDataOrder($orderId)->result();
-            $data['lastSample'] = $this->db->query("SELECT noSample FROM testresult ORDER BY noSample DESC LIMIT 1")->result();
+            $data['lastSample'] = $this->db->query("SELECT noSample FROM sample ORDER BY noSample DESC LIMIT 1")->result();
         
             $data['viewParameterA'] = $this->order_model->getParameterA()->result();
             $data['viewParameterB'] = $this->order_model->getParameterB()->result();
@@ -288,13 +298,13 @@
 
                 foreach($updatedSamplesExplode as $y)
                 {
-                    $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$y}'");
+                    $query = $this->db->query("SELECT * FROM sample WHERE noSample = '{$y}'");
                     $result = $query->result_array();
                     $count = count($result);
 
                     if(empty($count))
                     {
-                        $this->order_model->inputDataOrder('testresult', array
+                        $this->order_model->inputDataOrder('sample', array
                         (
                             'noSample' => $y,
                             'empId' => $employess
@@ -303,7 +313,7 @@
                     else if($count == 1)
                     {
                         $where = array('noSample' => $y);
-                        $this->order_model->updateDataOrder($where, 'testresult', array
+                        $this->order_model->updateDataOrder($where, 'sample', array
                         (
                             'noSample' => $y,
                             'empId' => $employess
@@ -324,7 +334,7 @@
                 $diff = array_diff($samplesExplode, $updatedSamplesExplode);
                 foreach($diff as $d)
                 {
-                    $this->db->delete('testresult', array('noSample' => $d));
+                    $this->db->delete('sample', array('noSample' => $d));
                 }
 
                 $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
@@ -348,7 +358,7 @@
             foreach($samplesExplode as $se)
             {
                 $where = array('noSample' => $se);
-                $this->order_model->deleteDataOrder($where, 'testresult');
+                $this->order_model->deleteDataOrder($where, 'sample');
             }
 
             $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Dihapus!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
@@ -371,7 +381,7 @@
 
                 foreach($validate as $v)
                 {
-                    $query = $this->db->query("SELECT * FROM testresult WHERE noSample = '{$v}'");
+                    $query = $this->db->query("SELECT * FROM sample WHERE noSample = '{$v}'");
                     $result = $query->result_array();
                     $count = count($result);
 

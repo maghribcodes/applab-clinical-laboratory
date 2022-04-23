@@ -29,7 +29,7 @@
 			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
 			$this->db->join('employee', 'order.empId=employee.empId', 'left');
-			$this->db->join('testresult', 'testresult.noSample=orderdetail.noSample', 'left');
+			$this->db->join('sample', 'sample.noSample=orderdetail.noSample', 'left');
 			$this->db->where('order.orderId', $orderId);
 			
 			return $this->db->get();
@@ -47,7 +47,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->where('packageId', '1');
+			$this->db->where('labId', '2');
 
 			return $this->db->get();
 		}
@@ -56,7 +56,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->where('packageId', '2');
+			$this->db->where('labId', '3');
 			$this->db->order_by('parameterName', 'asc');
 
 			return $this->db->get();
@@ -66,7 +66,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->where('packageId', '3');
+			$this->db->where('labId', '4');
 			$this->db->order_by('parameterName', 'asc');
 
 			return $this->db->get();
@@ -76,7 +76,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->where('packageId', '4');
+			$this->db->where('labId', '5');
 			$this->db->order_by('parameterName', 'asc');
 
 			return $this->db->get();
