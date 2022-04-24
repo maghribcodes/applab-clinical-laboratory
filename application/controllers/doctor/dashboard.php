@@ -92,7 +92,8 @@ class Dashboard extends CI_Controller
 				'sender' => $empName,
 				'totalCost' => $total,
                 'clinicalNotes' => $this->input->post('clinicalNotes'),
-				'empId' => $empId
+				'empId' => $empId,
+                'statusId' => 2
 			);
 			$this->order_model->updateDataOrder($where, 'order', $tableOrder);
         
@@ -137,27 +138,35 @@ class Dashboard extends CI_Controller
             $samples = explode(', ', $str);
             foreach($samples as $s)
             {
-                $length = strlen($s);
-                if($length == 6)
-                {
-                    $query = $this->db->query("SELECT * FROM sample WHERE noSample = '{$s}'");
-                    $result = $query->result_array();
-                    $count = count($result);
-
-                    if($count > 0)
-                    {
-                        $this->form_validation->set_message('checkSamples', 'Nomor sampel sudah terdaftar');
-                        return FALSE;
-                    }
-                    else
-                    {
-                        return TRUE;
-                    }
-                }
-                else
+                if(!preg_match("/^([K]{1}[.]{1}[0-9]{4})+$/i", $s))
                 {
                     $this->form_validation->set_message('checkSamples', 'Penulisan Nomor sampel tidak sesuai');
                     return FALSE;
+                }
+                else
+                {
+                    $length = strlen($s);
+                    if($length == 6)
+                    {
+                        $query = $this->db->query("SELECT * FROM sample WHERE noSample = '{$s}'");
+                        $result = $query->result_array();
+                        $count = count($result);
+
+                        if($count > 0)
+                        {
+                            $this->form_validation->set_message('checkSamples', 'Nomor sampel sudah terdaftar');
+                            return FALSE;
+                        }
+                        else
+                        {
+                            return TRUE;
+                        }
+                    }
+                    else
+                    {
+                        $this->form_validation->set_message('checkSamples', 'Penulisan Nomor sampel tidak sesuai');
+                        return FALSE;
+                    }
                 }
             }
         }

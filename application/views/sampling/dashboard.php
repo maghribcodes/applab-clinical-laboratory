@@ -1,4 +1,4 @@
-                <!-- Begin Page Content -->
+<!-- Begin Page Content -->
                 <div class="container-fluid" style="height:245px; background-color: rgba(246, 194, 62, 1);">
 
                     <!-- Page Heading -->
@@ -52,7 +52,7 @@
                                 <div class="col-sm-12 col-md-4">
                                     <form method="post" action="<?php echo base_url('sampling/dashboard') ?>">
                                         <div class="input-group">
-                                            <input type="text" name="keyword" class="form-control" placeholder="Cari nomor sampel..." autocomplete="off">
+                                            <input type="text" name="keyword" class="form-control" placeholder="Cari pasien..." autocomplete="off">
                                             <div class="input-group-append">
                                                 <input class="btn btn-warning" type="submit" name="submit" value="Submit">
                                             </div>
@@ -70,9 +70,9 @@
                                             <th style="text-align: center; vertical-align: middle;">No.</th>
                                             <th style="text-align: center; vertical-align: middle;">Nomor Sampel</th>
                                             <th style="text-align: center; vertical-align: middle;">Tanggal Penerimaan</th>
-                                            <th style="text-align: center; vertical-align: middle;">Tipe Sampel</th>
+                                            <th style="text-align: center; vertical-align: middle;">Status Sampel</th>
                                             <th style="text-align: center; vertical-align: middle;">Nama Pasien</th>
-                                            <th style="text-align: center; vertical-align: middle;">Lab Terkait</th>
+                                            <!--<th style="text-align: center; vertical-align: middle;">Lab Terkait</th>-->
                                             <th style="text-align: center; vertical-align: middle;">Kiriman</th>
                                             <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
                                         </tr>
@@ -104,11 +104,11 @@
                                                             echo $vo->Types;
                                                         }
                                                         else{
-                                                            ?> <span class="badge badge-pill badge-danger">Belum ada</span> <?php
+                                                            ?> <span class="badge badge-pill badge-danger">Belum diambil</span> <?php
                                                         } ?>
                                                     </td>
                                                     <td style="text-align: center; vertical-align: middle;"><?php echo $vo->custName ?></td>
-                                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vo->packageName ?></td>
+                                                    <!--<td style="text-align: center; vertical-align: middle;"><?php //echo $vo->labName ?></td>-->
                                                     <td style="text-align: center; vertical-align: middle;"><?php echo $vo->sender ?></td>
                                                     <td width="20px"><?php echo anchor('sampling/dashboard/input/'.$vo->orderId, '<div class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></div>') ?></td>
                                                 </tr>

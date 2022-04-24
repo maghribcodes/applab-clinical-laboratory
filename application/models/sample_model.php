@@ -15,8 +15,8 @@
 			$this->db->from('orderdetail');
 			$this->db->join('order', 'orderdetail.orderId=order.orderId');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
-			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
+			//$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
+			//$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
 			$this->db->group_by('order.orderId');
 			$this->db->order_by('GROUP_CONCAT(DISTINCT noSample)', 'desc');
 			$this->db->limit($limit, $start);
@@ -31,6 +31,8 @@
 			$this->db->join('order', 'orderdetail.orderId=order.orderId');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
             $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
+			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
+			$this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
             $this->db->where('order.orderId', $orderId);
 
 			return $this->db->get();

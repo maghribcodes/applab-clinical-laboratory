@@ -86,8 +86,16 @@
                                 ?>
                             </td>
 							<td width="20px"><?php echo anchor('cs/clinical/update/'.$vc->custId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
-							<td width="20px"><div class="btn btn-sm btn-danger" data-toggle="modal" onclick="confirm_modal('<?php echo site_url("cs/clinical/delete/".$vc->orderId.'/'.$vc->custId);?>','Title');" data-target="#myModal"><i class="fa fa-trash"></i></div></td>
-
+							<?php 
+								if($vc->statusId == 1)
+								{
+									?><td width="20px"><div class="btn btn-sm btn-danger" data-toggle="modal" onclick="confirm_modal('<?php echo site_url("cs/clinical/delete/".$vc->orderId.'/'.$vc->custId);?>','Title');" data-target="#myModal"><i class="fa fa-trash"></i></div></td><?php
+								}
+								else
+								{
+									?><td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fa fa-trash"></i></div></td><?php
+								}
+							?>
 						</tr>
 						<?php endforeach; ?>
 					</thead>

@@ -381,18 +381,35 @@
 
                 foreach($validate as $v)
                 {
-                    $query = $this->db->query("SELECT * FROM sample WHERE noSample = '{$v}'");
-                    $result = $query->result_array();
-                    $count = count($result);
-
-                    if($count > 0)
+                    if(!preg_match("/^([K]{1}[.]{1}[0-9]{4})+$/i", $v))
                     {
-                        $this->form_validation->set_message('checkUpdatedSamples', 'Nomor sampel sudah terdaftar');
+                        $this->form_validation->set_message('checkUpdatedSamples', 'Penulisan Nomor sampel tidak sesuai');
                         return FALSE;
                     }
                     else
                     {
-                        return TRUE;
+                        $length = strlen($v);
+                        if($length == 6)
+                        {
+                            $query = $this->db->query("SELECT * FROM sample WHERE noSample = '{$v}'");
+                            $result = $query->result_array();
+                            $count = count($result);
+
+                            if($count > 0)
+                            {
+                                $this->form_validation->set_message('checkUpdatedSamples', 'Nomor sampel sudah terdaftar');
+                                return FALSE;
+                            }
+                            else
+                            {
+                                return TRUE;
+                            }
+                        }
+                        else
+                        {
+                            $this->form_validation->set_message('checkUpdatedSamples', 'Penulisan Nomor sampel tidak sesuai');
+                            return FALSE;
+                        }
                     }
                 }
                 return TRUE;

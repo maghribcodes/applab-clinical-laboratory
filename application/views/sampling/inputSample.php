@@ -24,7 +24,8 @@
                         $parameterIds[] = $vs->parameterId;
                         $parameterNames[] = $vs->parameterName;
                         $units[] = $vs->unit;
-                        $references[]= $vs->reference;
+                        $references[]= $vs->referenceValue;
+                        $labIds[] = $vs->labId;
 
                         $combined1 = array_combine($samples, $sampleTypes);
                         $combined2 = array_combine($parameterNames, $units);
@@ -32,12 +33,57 @@
 
                         $samp = array_unique($samples);
                         $param1 = array_unique($parameterIds);
-                    }?>
+                    }
+                    ?>
 
                 <form method="post" action="<?php echo base_url('sampling/dashboard/inputSample/'.$vs->orderId) ?>">
+                    
                     <div class="card mb-4">
                         
                         <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-secondary">LAB TERKAIT</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-3">
+                                                    <div class="card bg-danger text-white shadow">
+                                                        <div class="card-body">
+                                                            Hematologi
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="card bg-primary text-white shadow">
+                                                        <div class="card-body">
+                                                            Kimia Klinik
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="card bg-warning text-white shadow">
+                                                        <div class="card-body">
+                                                            Serologi
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3">
+                                                    <div class="card bg-success text-white shadow">
+                                                        <div class="card-body">
+                                                            Mikrobiologi
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
 
                             <!-- Content Row -->
                             <div class="row">
@@ -92,7 +138,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
 
                             <button type="submit" class="btn btn-warning btn-lg btn-block">SIMPAN</button>
