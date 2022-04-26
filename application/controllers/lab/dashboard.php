@@ -20,7 +20,8 @@ class Dashboard extends CI_Controller
 		$data = array
 				(
 					'empName'=>$data->empName,
-					'roleName'=>$data->roleName
+					'roleName'=>$data->roleName,
+					'labName' => $data->labName
 				);
 		
 		$data['countSampA'] = $this->lab_model->getCountSamplesA();
@@ -29,8 +30,6 @@ class Dashboard extends CI_Controller
 		$data['countSampD'] = $this->lab_model->getCountSamplesD();
 
 		//$data['countLhus'] = $this->lab_model->getCountTest();
-		
-		$data['viewLab'] = $this->lab_model->getLab();
 
 		if($this->input->post('submit'))
 		{
@@ -67,8 +66,11 @@ class Dashboard extends CI_Controller
 
 	function input($orderId, $noSample)
 	{
-		$data['empName'] = $this->session->userdata('empName');
-		$data['viewLab'] = $this->lab_model->getLab();
+		$data = $this->user_model->getDataUser($this->session->userdata['empId']);
+		$data = array
+				(
+					'labName' => $data->labName
+				);
 
 		$data['viewSampleA'] = $this->lab_model->getSampleA($orderId, $noSample)->result();
 		$data['viewSampleB'] = $this->lab_model->getSampleB($orderId, $noSample)->result();
@@ -136,7 +138,6 @@ class Dashboard extends CI_Controller
 
 	function _rules()
     {
-        $this->form_validation->set_rules('method[]','Metode','required',['required'=>'Metode harus diisi']);
 		$this->form_validation->set_rules('result[]','Hasil','required',['required'=>'Hasil harus diisi']);
     }
 

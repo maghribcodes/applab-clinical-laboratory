@@ -9,12 +9,9 @@
                     </div>
 
                     <br>
-
-                    <?php
-                        foreach($viewLab as $vl): 
-                            if($vl->empName == $empName)
-                            {
-                                if($vl->packageId == "A")
+                        <?php //var_dump($labName);?>
+                            <?php
+                                if($labName == "Hematologi")
                                 {
                                     $parameterIds=array();
                                     $parameterNames=array();
@@ -41,7 +38,7 @@
 
                                             <div class="card-body">
                                                 <div class="card shadow mb-4">
-                                                    <div class="card-header py-3">
+                                                    <div class="card-header py-2">
                                                         <h6 class="m-0 font-weight-bold text-info">DATA SAMPEL</h6>
                                                     </div>
                                                 <div class="card-body">
@@ -57,7 +54,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="card-header py-3">
+                                                <div class="card-header py-2">
                                                     <h6 class="m-0 font-weight-bold text-info">DATA HASIL UJI</h6>
                                                 </div>
 
@@ -67,8 +64,8 @@
 
                                                         <!-- First Column -->
                                                         <div class="col-lg-4">
-                                                            <div class="card shadow mb-4">
-                                                                <div class="card-header py-3">
+                                                            <div class="card shadow mb-3">
+                                                                <div class="card-header py-1">
                                                                     <h6 class="m-0 font-weight-bold text-info">Parameter</h6>
                                                                 </div>
                                                                 <div class="card-body">
@@ -84,24 +81,23 @@
 
                                                         <div class="col-lg-4">
                                                             <div class="card shadow mb-4">
-                                                                <div class="card-header py-3">
+                                                                <div class="card-header py-1">
                                                                     <h6 class="m-0 font-weight-bold text-info">Metode</h6>
                                                                 </div>
                                                                 <div class="card-body">
                                                                 <?php foreach($combined2 as $parameterName => $method): ?>
                                                                     <div>
-                                                                        <input type="text" name="method[]" value="<?php echo set_value('method[]', $method); ?>" class="form-control" autocomplete="off">
+                                                                        <fieldset disabled><input type="text" name="method[]" value="<?php echo set_value('method[]', $method); ?>" class="form-control"></fieldset>
                                                                         <br>
                                                                     </div>
                                                                 <?php endforeach; ?>
-                                                                <?php echo form_error('method[]', '<div class="text-danger small">','</div>') ?>
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-lg-4">
                                                             <div class="card shadow mb-4">
-                                                                <div class="card-header py-3">
+                                                                <div class="card-header py-1">
                                                                     <h6 class="m-0 font-weight-bold text-info">Hasil</h6>
                                                                 </div>
                                                                 <div class="card-body">
@@ -117,6 +113,24 @@
                                                         </div>
 
                                                     </div>
+                                                    
+                                                    <div class="row">
+                                                        <!-- First Column -->
+                                                        <div class="col-lg-4">
+                                                            <div class="card shadow mb-3">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Tanggal Pengujian</h6>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div>   
+                                                                        <input type="date" name="testTime" value="<?php echo set_value('testTime'); ?>" class="form-control" autocomplete="off">
+                                                                        <?php echo form_error('testTime', '<div class="text-danger small">','</div>') ?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
                                                 </div>
 
                                                 <button type="submit" class="btn btn-info btn-lg btn-block">SIMPAN</button>
@@ -126,7 +140,7 @@
                                         </div>
                                     </form> <?php
                                 }
-                                else if($vl->packageId == "B")
+                                else if($labName == "Kimia Klinik dan Urinalisa")
                                 {
                                     $parameterIds=array();
                                     $parameterNames=array();
@@ -238,7 +252,7 @@
                                         </div>
                                     </form> <?php
                                 }
-                                else if($vl->packageId == "C")
+                                else if($labName == "Serologi")
                                 {
                                     $parameterIds=array();
                                     $parameterNames=array();
@@ -350,7 +364,7 @@
                                         </div>
                                     </form> <?php
                                 }
-                                else if($vl->packageId == "D")
+                                else if($labName == "Mikrobiologi")
                                 {
                                     $parameterIds=array();
                                     $parameterNames=array();
@@ -462,6 +476,4 @@
                                         </div>
                                     </form> <?php
                                 }
-                            }
-                        endforeach;
-                    ?>
+                            ?>

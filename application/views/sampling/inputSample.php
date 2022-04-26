@@ -12,16 +12,15 @@
                     <?php
                     $samples=array();
                     $sampleTypes=array();
-                    $parameterIds=array();
                     $parameterNames=array();
                     $units=array();
                     $references=array();
+                    $labIds=array();
 
                     foreach($viewSample as $vs)
                     {
                         $samples[] = $vs->noSample;
                         $sampleTypes[] = $vs->sampleType;
-                        $parameterIds[] = $vs->parameterId;
                         $parameterNames[] = $vs->parameterName;
                         $units[] = $vs->unit;
                         $references[]= $vs->referenceValue;
@@ -32,7 +31,8 @@
                         $combined3 = array_combine($parameterNames, $references);
 
                         $samp = array_unique($samples);
-                        $param1 = array_unique($parameterIds);
+                        $lab = array_unique($labIds);
+                        $param = array_unique($parameterNames);
                     }
                     ?>
 
@@ -50,34 +50,44 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-lg-3">
-                                                    <div class="card bg-danger text-white shadow">
-                                                        <div class="card-body">
-                                                            Hematologi
+                                            <?php foreach($lab as $l) : 
+                                                if($l == 2)
+                                                { ?>
+                                                    <div class="col-lg-3">
+                                                        <div class="card bg-danger text-white shadow">
+                                                            <div class="card-body">
+                                                                Hematologi
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <div class="card bg-primary text-white shadow">
-                                                        <div class="card-body">
-                                                            Kimia Klinik
+                                                <?php }
+                                                elseif($l == 3){ ?>
+                                                    <div class="col-lg-3">
+                                                        <div class="card bg-primary text-white shadow">
+                                                            <div class="card-body">
+                                                                Kimia Klinik
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <div class="card bg-warning text-white shadow">
-                                                        <div class="card-body">
-                                                            Serologi
+                                                <?php }
+                                                elseif($l == 4){ ?>
+                                                    <div class="col-lg-3">
+                                                        <div class="card bg-warning text-white shadow">
+                                                            <div class="card-body">
+                                                                Serologi
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    <div class="card bg-success text-white shadow">
-                                                        <div class="card-body">
-                                                            Mikrobiologi
+                                                <?php }
+                                                elseif($l == 5){ ?>
+                                                    <div class="col-lg-3">
+                                                        <div class="card bg-success text-white shadow">
+                                                            <div class="card-body">
+                                                                Mikrobiologi
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                            <?php } endforeach; ?>
                                             </div>
                                         </div>
                                     
@@ -88,15 +98,47 @@
                             <!-- Content Row -->
                             <div class="row">
 
-                                <div class="col-xl-6 col-md-6 mb-4">
+                                <div class="col-xl-8 col-md-6 mb-4">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-secondary">DATA PARAMETER</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-5">
+                                                    <label class="m-0 font-weight-bold text-secondary">Nama Parameter</label>
+                                                    <?php foreach($param as $pn): ?>
+                                                        <br>
+                                                        <fieldset disabled><input type="text" value="<?php echo $pn; ?>" class="form-control"></fieldset>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label class="m-0 font-weight-bold text-secondary">Satuan</label>
+                                                    <?php foreach($combined2 as $parameterName => $unit): ?>
+                                                        <br>
+                                                        <fieldset disabled><input name="unit[]" value="<?php echo set_value('unit[]', $unit); ?>" class="form-control"></fieldset>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <label class="m-0 font-weight-bold text-secondary">Nilai Referensi</label>
+                                                    <?php foreach($combined3 as $parameterName => $reference): ?>
+                                                        <br>
+                                                        <fieldset disabled><input type="text" name="reference[]" value="<?php echo set_value('reference[]', $reference); ?>" class="form-control"></fieldset>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-md-6 mb-4">
                                     <div class="card shadow mb-4">
                                         <div class="card-header py-3">
                                             <h6 class="m-0 font-weight-bold text-secondary">DATA SAMPEL</h6>
                                         </div>
                                         <div class="card-body">
-                                            <input type="hidden" name="orderId" value="<?php echo $vs->orderId ?>">
+                                            <input type="hidden" name="orderId" value="<?php echo $vs->orderId; ?>">
                                             <input type="hidden" name="noSample" value="<?php echo implode(', ', $samp); ?>">
-                                            <input type="hidden" name="parameterId" value="<?php echo implode(', ', $param1); ?>">
                                             <?php foreach($combined1 as $noSample => $sampleType): ?>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
@@ -110,34 +152,6 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xl-6 col-md-6 mb-4">
-                                    <div class="card shadow mb-4">
-                                        <div class="card-header py-3">
-                                            <h6 class="m-0 font-weight-bold text-secondary">DATA PARAMETER</h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <?php foreach($combined2 as $parameterName => $unit): ?>
-                                                        <label class="m-0 font-weight-bold text-secondary"><?php echo $parameterName ?></label>
-                                                        <input type="text" name="unit[]" value="<?php echo set_value('unit[]', $unit); ?>" placeholder="Satuan..." class="form-control">
-                                                        <br>
-                                                    <?php endforeach; ?>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <?php foreach($combined3 as $parameterName => $reference): ?>
-                                                        <br>
-                                                        <input type="text" name="reference[]" value="<?php echo set_value('reference[]', $reference); ?>" placeholder="Nilai rujukan..." class="form-control" autocomplete="off">
-                                                        <br>
-                                                    <?php endforeach; ?>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <?php echo form_error('unit[]', '<div class="text-danger small">','</div>') ?>
-                                            <?php echo form_error('reference[]', '<div class="text-danger small">','</div>') ?>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
                             <button type="submit" class="btn btn-warning btn-lg btn-block">SIMPAN</button>

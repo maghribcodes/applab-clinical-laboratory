@@ -74,52 +74,35 @@ class Dashboard extends CI_Controller
         }
         else
         {
-			$orderId = $this->input->post('orderId');
+			$employess = $this->session->userdata('empId');
 			$noSamples = $this->input->post('noSample');
 			$noSample = explode(', ', $noSamples);
 
 			$sampleTypes = $this->input->post('type');
 
-			$parameterIds = $this->input->post('parameterId');
-			$parameterId = explode(', ', $parameterIds);
-
-			$units = $this->input->post('unit');
-			$references = $this->input->post('reference');
-
-			$combined1 = array_combine($noSample, $sampleTypes);
-			$combined2 = array_combine($parameterId, $units);
-			$combined3 = array_combine($parameterId, $references);
+			$combined = array_combine($noSample, $sampleTypes);
 
 			//$this->db->trans_start();
-			foreach($combined1 as $noSample => $sampleTypes)
+			foreach($combined as $noSample => $sampleTypes)
 			{
 				$this->db->set('sampleType', $sampleTypes);
-				$this->db->where('orderId', $orderId);
+				$this->db->set('empId', $employess);
 				$this->db->where('noSample', $noSample);
-				$this->db->update('orderdetail');
-				
-				foreach($combined2 as $parameterId => $units)
-				{
-					$this->db->set('unit', $units);
-					$this->db->where('orderId', $orderId);
-					$this->db->where('noSample', $noSample);
-					$this->db->where('parameterId', $parameterId);
-					$this->db->update('orderdetail');
-				}
+				$this->db->update('sample');
+			}
 
-				foreach($combined3 as $parameterId => $references)
-				{
-					$this->db->set('reference', $references);
-					$this->db->where('orderId', $orderId);
-					$this->db->where('noSample', $noSample);
-					$this->db->where('parameterId', $parameterId);
-					$this->db->update('orderdetail');
-				}
-			}	
+			$orderId = $this->input->post('orderId');
+            $where = array('orderId' => $orderId);
+
+			$tableOrder = array(
+				'statusId' => 3
+			);
+			$this->order_model->updateDataOrder($where, 'order', $tableOrder);
+
 			//$this->db->trans_complete();
 			//return $this->db->trans_status();
 			
-			$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil disimpan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 			redirect('sampling/dashboard');
 		}
 	}
@@ -127,7 +110,5 @@ class Dashboard extends CI_Controller
 	function _rules()
     {
         $this->form_validation->set_rules('type[]','Tipe sampel','required',['required'=>'Tipe sampel harus diisi']);
-		$this->form_validation->set_rules('unit[]','Satuan','required',['required'=>'Satuan harus diisi']);
-		$this->form_validation->set_rules('reference[]','Nilai rujukan','required',['required'=>'Nilai rujukan harus diisi']);
     }
 }

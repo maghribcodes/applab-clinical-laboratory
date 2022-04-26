@@ -7,6 +7,7 @@
 			$this->db->select('*');
 			$this->db->from('role');
 			$this->db->join('employee', 'role.roleId=employee.roleId');
+			$this->db->join('lab', 'employee.labId=lab.labId');
 		    $this->db->where('empId', $empId);
 
 		    return $this->db->get()->row();

@@ -2,15 +2,6 @@
 
     class Lab_model extends CI_Model
     {
-		function getLab()
-		{
-			$this->db->select('*');
-			$this->db->from('lab');
-			$this->db->join('employee', 'employee.empId=lab.empId', 'left');
-
-			return $this->db->get()->result();
-		}
-
         function getAllSamplesA($limit, $start, $keyword = null)
         {
             if($keyword)
@@ -18,14 +9,14 @@
 				$this->db->like('orderdetail.noSample', $keyword);
 			}
 
-			$this->db->select('*');
+			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR "-") as Samples');
 			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
-            $this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
-			$this->db->group_by('orderdetail.noSample');
-			$this->db->where('lab.labId', '2');
-            $this->db->order_by('orderdetail.noSample', 'desc');
+			$this->db->where('lab.labId', 2);
+			$this->db->group_by('order.orderId');
+			$this->db->order_by('GROUP_CONCAT(DISTINCT noSample)', 'desc');
 			$this->db->limit($limit, $start);
 
 			return $this->db->get()->result();
@@ -38,14 +29,14 @@
 				$this->db->like('orderdetail.noSample', $keyword);
 			}
 
-			$this->db->select('*');
+			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR "-") as Samples');
 			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
-            $this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
-			$this->db->group_by('orderdetail.noSample');
-			$this->db->where('lab.labId', '3');
-            $this->db->order_by('orderdetail.noSample', 'desc');
+			$this->db->where('lab.labId', 3);
+			$this->db->group_by('order.orderId');
+			$this->db->order_by('GROUP_CONCAT(DISTINCT noSample)', 'desc');
 			$this->db->limit($limit, $start);
 
 			return $this->db->get()->result();
@@ -58,14 +49,14 @@
 				$this->db->like('orderdetail.noSample', $keyword);
 			}
 
-			$this->db->select('*');
+			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR "-") as Samples');
 			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
-            $this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
-			$this->db->group_by('orderdetail.noSample');
-			$this->db->where('lab.labId', '4');
-            $this->db->order_by('orderdetail.noSample', 'desc');
+			$this->db->where('lab.labId', 4);
+			$this->db->group_by('order.orderId');
+			$this->db->order_by('GROUP_CONCAT(DISTINCT noSample)', 'desc');
 			$this->db->limit($limit, $start);
 
 			return $this->db->get()->result();
@@ -78,14 +69,14 @@
 				$this->db->like('orderdetail.noSample', $keyword);
 			}
 
-			$this->db->select('*');
+			$this->db->select('*, GROUP_CONCAT(DISTINCT noSample SEPARATOR "-") as Samples');
 			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
-            $this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
-			$this->db->group_by('orderdetail.noSample');
-			$this->db->where('lab.labId', '5');
-            $this->db->order_by('orderdetail.noSample', 'desc');
+			$this->db->where('lab.labId', 5);
+			$this->db->group_by('order.orderId');
+			$this->db->order_by('GROUP_CONCAT(DISTINCT noSample)', 'desc');
 			$this->db->limit($limit, $start);
 
 			return $this->db->get()->result();
@@ -97,7 +88,8 @@
 			$this->db->from('orderdetail');
             $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
-			$this->db->where('lab.labId', '2');
+			$this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
+			$this->db->where('lab.labId', 2);
             $this->db->where('orderdetail.orderId', $orderId);
 			$this->db->where('orderdetail.noSample', $noSample);
 
@@ -110,7 +102,8 @@
 			$this->db->from('orderdetail');
             $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
-			$this->db->where('lab.labId', '3');
+			$this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
+			$this->db->where('lab.labId', 3);
             $this->db->where('orderdetail.orderId', $orderId);
 			$this->db->where('orderdetail.noSample', $noSample);
 
@@ -123,7 +116,8 @@
 			$this->db->from('orderdetail');
             $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
-			$this->db->where('lab.labId', '4');
+			$this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
+			$this->db->where('lab.labId', 4);
             $this->db->where('orderdetail.orderId', $orderId);
 			$this->db->where('orderdetail.noSample', $noSample);
 
@@ -136,7 +130,8 @@
 			$this->db->from('orderdetail');
             $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
-			$this->db->where('lab.labId', '5');
+			$this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
+			$this->db->where('lab.labId', 5);
             $this->db->where('orderdetail.orderId', $orderId);
 			$this->db->where('orderdetail.noSample', $noSample);
 
@@ -147,9 +142,11 @@
 		{
 			$this->db->select('*');
 			$this->db->from('orderdetail');
-			$this->db->like('parameterId', '2');
-			$this->db->where('result', '');
-			$this->db->group_by('noSample');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId','left');
+			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId','left');
+			$this->db->join('lab', 'parameter.labId=lab.labId','left');
+			$this->db->like('lab.labId', 2);
+			$this->db->like('order.statusId', 3);
 
 			return $this->db->count_all_results();
 		}
@@ -158,9 +155,11 @@
 		{
 			$this->db->select('*');
 			$this->db->from('orderdetail');
-			$this->db->like('parameterId', '3');
-			$this->db->where('result', '');
-			$this->db->group_by('noSample');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId','left');
+			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId','left');
+			$this->db->join('lab', 'parameter.labId=lab.labId','left');
+			$this->db->like('lab.labId', 3);
+			$this->db->like('order.statusId', 3);
 
 			return $this->db->count_all_results();
 		}
@@ -169,9 +168,11 @@
 		{
 			$this->db->select('*');
 			$this->db->from('orderdetail');
-			$this->db->like('parameterId', '4');
-			$this->db->where('result', '');
-			$this->db->group_by('noSample');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId','left');
+			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId','left');
+			$this->db->join('lab', 'parameter.labId=lab.labId','left');
+			$this->db->like('lab.labId', 4);
+			$this->db->like('order.statusId', 3);
 
 			return $this->db->count_all_results();
 		}
@@ -180,9 +181,11 @@
 		{
 			$this->db->select('*');
 			$this->db->from('orderdetail');
-			$this->db->like('parameterId', '5');
-			$this->db->where('result', '');
-			$this->db->group_by('noSample');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId','left');
+			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId','left');
+			$this->db->join('lab', 'parameter.labId=lab.labId','left');
+			$this->db->like('lab.labId', 5);
+			$this->db->like('order.statusId', 3);
 
 			return $this->db->count_all_results();
 		}

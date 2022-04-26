@@ -27,7 +27,7 @@
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-dark mb-1">
-                                                        Data sampel yang belum diambil</div>
+                                                        Sampel yang belum diambil</div>
                                                     <div class="h6 mb-0 font-weight-bold text-gray-800"><?php echo $countSamp ?></div>
                                                 </div>
                                                 <div class="col-auto">
@@ -72,7 +72,6 @@
                                             <th style="text-align: center; vertical-align: middle;">Tanggal Penerimaan</th>
                                             <th style="text-align: center; vertical-align: middle;">Status Sampel</th>
                                             <th style="text-align: center; vertical-align: middle;">Nama Pasien</th>
-                                            <!--<th style="text-align: center; vertical-align: middle;">Lab Terkait</th>-->
                                             <th style="text-align: center; vertical-align: middle;">Kiriman</th>
                                             <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
                                         </tr>
@@ -99,18 +98,25 @@
                                                         ?>
                                                         </td>
                                                     <td style="text-align: center; vertical-align: middle;">
-                                                        <?php if(!empty($vo->Types))
+                                                        <?php if($vo->statusId == 2)
                                                         {
-                                                            echo $vo->Types;
+                                                            ?> <span class="badge badge-pill badge-danger">Belum diambil</span> <?php
                                                         }
                                                         else{
-                                                            ?> <span class="badge badge-pill badge-danger">Belum diambil</span> <?php
+                                                            ?> <span class="badge badge-pill badge-success">Sudah diambil</span> <?php
                                                         } ?>
                                                     </td>
                                                     <td style="text-align: center; vertical-align: middle;"><?php echo $vo->custName ?></td>
-                                                    <!--<td style="text-align: center; vertical-align: middle;"><?php //echo $vo->labName ?></td>-->
                                                     <td style="text-align: center; vertical-align: middle;"><?php echo $vo->sender ?></td>
-                                                    <td width="20px"><?php echo anchor('sampling/dashboard/input/'.$vo->orderId, '<div class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></div>') ?></td>
+                                                    <?php
+                                                        if($vo->statusId == 1 || $vo->statusId == 2)
+                                                        {
+                                                            ?> <td width="20px"><?php echo anchor('sampling/dashboard/input/'.$vo->orderId, '<div class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></div>') ?></td> <?php 
+                                                        }
+                                                        else
+                                                        {
+                                                            ?> <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fa fa-edit"></i></div></td> <?php
+                                                        } ?>
                                                 </tr>
                                                 <?php endforeach; ?>
                                         </thead>

@@ -19,7 +19,7 @@
                                     <div class="text-xs font-weight-bold mb-1 text-info"><h4><b>Selamat Datang!</b><h4></div>
                                     <div class="text-xs font-weight text-gray-800"><h6>Hello, 
                                         <span class="badge badge-info"><?php echo $empName; ?>.</span>
-                                         Anda login sebagai <span class="badge badge-info"><?php echo $roleName; ?>.</span><h6></div>
+                                         Anda login sebagai <span class="badge badge-info"><?php echo $roleName; ?> [<?php echo $labName; ?>].</span><h6></div>
                                 </div>
                                 <div class="col-auto">
                                     <div class="card border-left-info h-100">
@@ -29,28 +29,23 @@
                                                     <div class="text-xs font-weight-bold text-dark mb-1">
                                                         Data sampel yang belum diuji</div>
                                                     <div class="h6 mb-0 font-weight-bold text-gray-800">
-                                                        <?php
-                                                            foreach($viewLab as $vl): 
-                                                                if($vl->empName == $empName)
-                                                                {
-                                                                    if($vl->packageId == "A")
-                                                                    {
-                                                                        echo $countSampA;
-                                                                    }
-                                                                    if($vl->packageId == "B")
-                                                                    {
-                                                                        echo $countSampB;
-                                                                    }
-                                                                    if($vl->packageId == "C")
-                                                                    {
-                                                                        echo $countSampC;
-                                                                    }
-                                                                    if($vl->packageId == "D")
-                                                                    {
-                                                                        echo $countSampD;
-                                                                    }
-                                                                }
-                                                            endforeach;
+                                                        <?php 
+                                                            if($labName == "Hematologi")
+                                                            {
+                                                                echo $countSampA;
+                                                            }
+                                                            if($labName == "Kimia Klinik dan Urinalisa")
+                                                            {
+                                                                echo $countSampB;
+                                                            }
+                                                            if($labName == "Serologi")
+                                                            {
+                                                                echo $countSampC;
+                                                            }
+                                                            if($labName == "Mikrobiologi")
+                                                            {
+                                                                echo $countSampD;
+                                                            }
                                                         ?>
                                                     </div>
                                                 </div>
@@ -68,7 +63,7 @@
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-dark mb-1">
                                                         Hasil Uji yang belum diverifikasi</div>
-                                                    <div class="h6 mb-0 font-weight-bold text-gray-800"><?php echo $countLhus?></div>
+                                                    <div class="h6 mb-0 font-weight-bold text-gray-800"><?php //echo $countLhus?></div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-file-contract fa-2x text-gray-300"></i>
@@ -76,7 +71,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>-->
                             </div>
                             
                         </div>
@@ -103,11 +98,8 @@
                             </div>
                         </div>
 
-                        <?php
-                        foreach($viewLab as $vl): 
-                            if($vl->empName == $empName)
-                            {
-                                if($vl->packageId == "A")
+                            <?php
+                                if($labName == "Hematologi")
                                 { ?>
                                     <div class="card-body">
                                         <table class="table table-bordered" width="100%" cellspacing="0">
@@ -115,8 +107,6 @@
                                                 <tr>
                                                     <th style="text-align: center; vertical-align: middle;">No.</th>
                                                     <th style="text-align: center; vertical-align: middle;">Nomor Sampel</th>
-                                                    <th style="text-align: center; vertical-align: middle;">Tipe Sampel</th>
-                                                    <th style="text-align: center; vertical-align: middle;">Lab Terkait</th>
                                                     <th style="text-align: center; vertical-align: middle;">Status Sampel</th>
                                                     <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
                                                     <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
@@ -136,21 +126,14 @@
                                                         foreach ($viewOrdersA as $vo): ?>
                                                         <tr>
                                                             <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->noSample ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->Samples ?></td>
                                                             <td style="text-align: center; vertical-align: middle;">
-                                                                <?php if(!empty($vo->sampleType))
+                                                                <?php if($vo->statusId == 1 || $vo->statusId == 2)
                                                                 {
-                                                                    echo $vo->sampleType;
+                                                                    ?><span class="badge badge-pill badge-danger">Belum diambil</span><?php
                                                                 }
-                                                                else{
-                                                                    ?><span class="badge badge-pill badge-danger">Belum ada</span><?php
-                                                                } ?>
-                                                            </td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->packageName ?></td>
-                                                            <td style="text-align: center; vertical-align: middle;">
-                                                                <?php if($vo->result == '')
-                                                                {
-                                                                    ?><span class="badge badge-pill badge-danger">Belum diuji</span><?php
+                                                                else if($vo->statusId == 3){
+                                                                    ?><span class="badge badge-pill badge-success">Belum diuji</span><?php
                                                                 }
                                                                 else{
                                                                     ?><span class="badge badge-pill badge-success">Sudah diuji</span><?php
@@ -158,34 +141,34 @@
                                                             </td>
                                                             <td style="text-align: center; vertical-align: middle;">
                                                                 <?php 
-                                                                    if($vo->statusId == 0)
+                                                                    if($vo->statusId == 5)
                                                                     {
-                                                                        ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
+                                                                        ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
                                                                     }
-                                                                    else if($vo->statusId == 1)
+                                                                    else if($vo->statusId == 4)
                                                                     {
                                                                         ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
                                                                     }
                                                                     else
                                                                     {
-                                                                        ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
+                                                                        ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
                                                                     }
                                                                 ?>
                                                             </td>
                                                             <?php
-                                                                if($vo->statusId == 2  || $vo->statusId == 3)
+                                                                if($vo->statusId == 4  || $vo->statusId == 5)
                                                                 {
                                                                     ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
                                                                 }
                                                                 else
                                                                 {
-                                                                    if(!empty($vo->sampleType))
+                                                                    if($vo->statusId == 3)
                                                                     {
                                                                         ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
                                                                     }
                                                                     else
                                                                     {
-                                                                        ?> <td width="20px" style="text-align: center; vertical-align: middle;"> - </td> <?php
+                                                                        ?> <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fa fa-edit"></i></div></td> <?php
                                                                     }
                                                                 }
                                                             ?>
@@ -198,7 +181,7 @@
 
                                     </div> <?php
                                 }
-                                else if($vl->packageId == "B")
+                                else if($labName == "Kimia Klinik dan Urinalisa")
                                 { ?>
                                     <div class="card-body">
                                         <table class="table table-bordered" width="100%" cellspacing="0">
@@ -237,7 +220,7 @@
                                                                     ?><span class="badge badge-pill badge-danger">Belum ada</span><?php
                                                                 } ?>
                                                             </td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->packageName ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->labName ?></td>
                                                             <td style="text-align: center; vertical-align: middle;">
                                                                 <?php if($vo->result == '')
                                                                 {
@@ -289,7 +272,7 @@
 
                                     </div> <?php
                                 }
-                                else if($vl->packageId == "C")
+                                else if($labName == "Serologi")
                                 { ?>
                                     <div class="card-body">
                                         <table class="table table-bordered" width="100%" cellspacing="0">
@@ -328,7 +311,7 @@
                                                                     ?><span class="badge badge-pill badge-danger">Belum ada</span><?php
                                                                 } ?>
                                                             </td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->packageName ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->labName ?></td>
                                                             <td style="text-align: center; vertical-align: middle;">
                                                                 <?php if($vo->result == '')
                                                                 {
@@ -380,7 +363,7 @@
 
                                     </div> <?php
                                 }
-                                else if($vl->packageId == "D")
+                                else if($labName == "Mikrobiologi")
                                 { ?>
                                     <div class="card-body">
                                         <table class="table table-bordered" width="100%" cellspacing="0">
@@ -419,7 +402,7 @@
                                                                     ?><span class="badge badge-pill badge-danger">Belum ada</span><?php
                                                                 } ?>
                                                             </td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->packageName ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->labName ?></td>
                                                             <td style="text-align: center; vertical-align: middle;">
                                                                 <?php if($vo->result == '')
                                                                 {
@@ -471,9 +454,6 @@
 
                                     </div> <?php
                                 }
-                            }
-                        endforeach;
-                        ?>
-                            
-                        
+                            ?>
+                
                     </div>
