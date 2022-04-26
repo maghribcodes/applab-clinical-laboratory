@@ -38,9 +38,8 @@
 
 		function getCountSamples()
 		{
-			$this->db->where('sampleType', '');
-			$this->db->from('sample');
-			//$this->db->group_by('noSample');
+			$this->db->where('statusId', 2);
+			$this->db->from('order');
 
 			return $this->db->count_all_results();
 		}

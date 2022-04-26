@@ -56,14 +56,33 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--<div class="col-auto">
+                                <div class="col-auto">
                                     <div class="card border-left-info h-100">
                                         <div class="card-body">
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-dark mb-1">
-                                                        Hasil Uji yang belum diverifikasi</div>
-                                                    <div class="h6 mb-0 font-weight-bold text-gray-800"><?php //echo $countLhus?></div>
+                                                        LHU yang belum diverifikasi</div>
+                                                    <div class="h6 mb-0 font-weight-bold text-gray-800">
+                                                        <?php 
+                                                            if($labName == "Hematologi")
+                                                            {
+                                                                echo $countLhusA;
+                                                            }
+                                                            if($labName == "Kimia Klinik dan Urinalisa")
+                                                            {
+                                                                echo $countLhusB;
+                                                            }
+                                                            if($labName == "Serologi")
+                                                            {
+                                                                echo $countLhusC;
+                                                            }
+                                                            if($labName == "Mikrobiologi")
+                                                            {
+                                                                echo $countLhusD;
+                                                            }
+                                                        ?>
+                                                    </div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-file-contract fa-2x text-gray-300"></i>
@@ -71,7 +90,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>-->
+                                </div>
                             </div>
                             
                         </div>
@@ -133,7 +152,7 @@
                                                                     ?><span class="badge badge-pill badge-danger">Belum diambil</span><?php
                                                                 }
                                                                 else if($vo->statusId == 3){
-                                                                    ?><span class="badge badge-pill badge-success">Belum diuji</span><?php
+                                                                    ?><span class="badge badge-pill badge-warning">Belum diuji</span><?php
                                                                 }
                                                                 else{
                                                                     ?><span class="badge badge-pill badge-success">Sudah diuji</span><?php
@@ -141,7 +160,7 @@
                                                             </td>
                                                             <td style="text-align: center; vertical-align: middle;">
                                                                 <?php 
-                                                                    if($vo->statusId == 5)
+                                                                    if($vo->statusId == 5 || $vo->statusId == 6)
                                                                     {
                                                                         ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
                                                                     }
@@ -156,20 +175,13 @@
                                                                 ?>
                                                             </td>
                                                             <?php
-                                                                if($vo->statusId == 4  || $vo->statusId == 5)
+                                                                if($vo->statusId == 3 || $vo->statusId == 4)
                                                                 {
-                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
                                                                 }
                                                                 else
                                                                 {
-                                                                    if($vo->statusId == 3)
-                                                                    {
-                                                                        ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        ?> <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fa fa-edit"></i></div></td> <?php
-                                                                    }
+                                                                    ?> <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fa fa-edit"></i></div></td> <?php
                                                                 }
                                                             ?>
                                                         </tr>
@@ -189,8 +201,6 @@
                                                 <tr>
                                                     <th style="text-align: center; vertical-align: middle;">No.</th>
                                                     <th style="text-align: center; vertical-align: middle;">Nomor Sampel</th>
-                                                    <th style="text-align: center; vertical-align: middle;">Tipe Sampel</th>
-                                                    <th style="text-align: center; vertical-align: middle;">Lab Terkait</th>
                                                     <th style="text-align: center; vertical-align: middle;">Status Sampel</th>
                                                     <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
                                                     <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
@@ -210,21 +220,14 @@
                                                         foreach ($viewOrdersB as $vo): ?>
                                                         <tr>
                                                             <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->noSample ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->Samples ?></td>
                                                             <td style="text-align: center; vertical-align: middle;">
-                                                                <?php if(!empty($vo->sampleType))
+                                                                <?php if($vo->statusId == 1 || $vo->statusId == 2)
                                                                 {
-                                                                    echo $vo->sampleType;
+                                                                    ?><span class="badge badge-pill badge-danger">Belum diambil</span><?php
                                                                 }
-                                                                else{
-                                                                    ?><span class="badge badge-pill badge-danger">Belum ada</span><?php
-                                                                } ?>
-                                                            </td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->labName ?></td>
-                                                            <td style="text-align: center; vertical-align: middle;">
-                                                                <?php if($vo->result == '')
-                                                                {
-                                                                    ?><span class="badge badge-pill badge-danger">Belum diuji</span><?php
+                                                                else if($vo->statusId == 3){
+                                                                    ?><span class="badge badge-pill badge-warning">Belum diuji</span><?php
                                                                 }
                                                                 else{
                                                                     ?><span class="badge badge-pill badge-success">Sudah diuji</span><?php
@@ -232,35 +235,28 @@
                                                             </td>
                                                             <td style="text-align: center; vertical-align: middle;">
                                                                 <?php 
-                                                                    if($vo->statusId == 0)
+                                                                    if($vo->statusId == 5 || $vo->statusId == 6)
                                                                     {
-                                                                        ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
+                                                                        ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
                                                                     }
-                                                                    else if($vo->statusId == 1)
+                                                                    else if($vo->statusId == 4)
                                                                     {
                                                                         ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
                                                                     }
                                                                     else
                                                                     {
-                                                                        ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
+                                                                        ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
                                                                     }
                                                                 ?>
                                                             </td>
                                                             <?php
-                                                                if($vo->statusId == 2  || $vo->statusId == 3)
+                                                                if($vo->statusId == 3 || $vo->statusId == 4)
                                                                 {
-                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
                                                                 }
                                                                 else
                                                                 {
-                                                                    if(!empty($vo->sampleType))
-                                                                    {
-                                                                        ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        ?> <td width="20px" style="text-align: center; vertical-align: middle;"> - </td> <?php
-                                                                    }
+                                                                    ?> <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fa fa-edit"></i></div></td> <?php
                                                                 }
                                                             ?>
                                                         </tr>
@@ -280,8 +276,6 @@
                                                 <tr>
                                                     <th style="text-align: center; vertical-align: middle;">No.</th>
                                                     <th style="text-align: center; vertical-align: middle;">Nomor Sampel</th>
-                                                    <th style="text-align: center; vertical-align: middle;">Tipe Sampel</th>
-                                                    <th style="text-align: center; vertical-align: middle;">Lab Terkait</th>
                                                     <th style="text-align: center; vertical-align: middle;">Status Sampel</th>
                                                     <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
                                                     <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
@@ -301,21 +295,14 @@
                                                         foreach ($viewOrdersC as $vo): ?>
                                                         <tr>
                                                             <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->noSample ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->Samples ?></td>
                                                             <td style="text-align: center; vertical-align: middle;">
-                                                                <?php if(!empty($vo->sampleType))
+                                                                <?php if($vo->statusId == 1 || $vo->statusId == 2)
                                                                 {
-                                                                    echo $vo->sampleType;
+                                                                    ?><span class="badge badge-pill badge-danger">Belum diambil</span><?php
                                                                 }
-                                                                else{
-                                                                    ?><span class="badge badge-pill badge-danger">Belum ada</span><?php
-                                                                } ?>
-                                                            </td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->labName ?></td>
-                                                            <td style="text-align: center; vertical-align: middle;">
-                                                                <?php if($vo->result == '')
-                                                                {
-                                                                    ?><span class="badge badge-pill badge-danger">Belum diuji</span><?php
+                                                                else if($vo->statusId == 3){
+                                                                    ?><span class="badge badge-pill badge-warning">Belum diuji</span><?php
                                                                 }
                                                                 else{
                                                                     ?><span class="badge badge-pill badge-success">Sudah diuji</span><?php
@@ -323,35 +310,28 @@
                                                             </td>
                                                             <td style="text-align: center; vertical-align: middle;">
                                                                 <?php 
-                                                                    if($vo->statusId == 0)
+                                                                    if($vo->statusId == 5 || $vo->statusId == 6)
                                                                     {
-                                                                        ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
+                                                                        ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
                                                                     }
-                                                                    else if($vo->statusId == 1)
+                                                                    else if($vo->statusId == 4)
                                                                     {
                                                                         ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
                                                                     }
                                                                     else
                                                                     {
-                                                                        ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
+                                                                        ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
                                                                     }
                                                                 ?>
                                                             </td>
                                                             <?php
-                                                                if($vo->statusId == 2  || $vo->statusId == 3)
+                                                                if($vo->statusId == 3 || $vo->statusId == 4)
                                                                 {
-                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
                                                                 }
                                                                 else
                                                                 {
-                                                                    if(!empty($vo->sampleType))
-                                                                    {
-                                                                        ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        ?> <td width="20px" style="text-align: center; vertical-align: middle;"> - </td> <?php
-                                                                    }
+                                                                    ?> <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fa fa-edit"></i></div></td> <?php
                                                                 }
                                                             ?>
                                                         </tr>
@@ -371,8 +351,6 @@
                                                 <tr>
                                                     <th style="text-align: center; vertical-align: middle;">No.</th>
                                                     <th style="text-align: center; vertical-align: middle;">Nomor Sampel</th>
-                                                    <th style="text-align: center; vertical-align: middle;">Tipe Sampel</th>
-                                                    <th style="text-align: center; vertical-align: middle;">Lab Terkait</th>
                                                     <th style="text-align: center; vertical-align: middle;">Status Sampel</th>
                                                     <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
                                                     <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
@@ -392,21 +370,14 @@
                                                         foreach ($viewOrdersD as $vo): ?>
                                                         <tr>
                                                             <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->noSample ?></td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->Samples ?></td>
                                                             <td style="text-align: center; vertical-align: middle;">
-                                                                <?php if(!empty($vo->sampleType))
+                                                                <?php if($vo->statusId == 1 || $vo->statusId == 2)
                                                                 {
-                                                                    echo $vo->sampleType;
+                                                                    ?><span class="badge badge-pill badge-danger">Belum diambil</span><?php
                                                                 }
-                                                                else{
-                                                                    ?><span class="badge badge-pill badge-danger">Belum ada</span><?php
-                                                                } ?>
-                                                            </td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vo->labName ?></td>
-                                                            <td style="text-align: center; vertical-align: middle;">
-                                                                <?php if($vo->result == '')
-                                                                {
-                                                                    ?><span class="badge badge-pill badge-danger">Belum diuji</span><?php
+                                                                else if($vo->statusId == 3){
+                                                                    ?><span class="badge badge-pill badge-warning">Belum diuji</span><?php
                                                                 }
                                                                 else{
                                                                     ?><span class="badge badge-pill badge-success">Sudah diuji</span><?php
@@ -414,35 +385,28 @@
                                                             </td>
                                                             <td style="text-align: center; vertical-align: middle;">
                                                                 <?php 
-                                                                    if($vo->statusId == 0)
+                                                                    if($vo->statusId == 5 || $vo->statusId == 6)
                                                                     {
-                                                                        ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
+                                                                        ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
                                                                     }
-                                                                    else if($vo->statusId == 1)
+                                                                    else if($vo->statusId == 4)
                                                                     {
                                                                         ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
                                                                     }
                                                                     else
                                                                     {
-                                                                        ?><span class="badge badge-pill badge-success">Sudah diverifikasi</span><?php
+                                                                        ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
                                                                     }
                                                                 ?>
                                                             </td>
                                                             <?php
-                                                                if($vo->statusId == 2  || $vo->statusId == 3)
+                                                                if($vo->statusId == 3 || $vo->statusId == 4)
                                                                 {
-                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/detail/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fas fa-eye"></i></div>') ?></td><?php
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
                                                                 }
                                                                 else
                                                                 {
-                                                                    if(!empty($vo->sampleType))
-                                                                    {
-                                                                        ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        ?> <td width="20px" style="text-align: center; vertical-align: middle;"> - </td> <?php
-                                                                    }
+                                                                    ?> <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fa fa-edit"></i></div></td> <?php
                                                                 }
                                                             ?>
                                                         </tr>

@@ -82,118 +82,170 @@
 			return $this->db->get()->result();
         }
 
-        function getSampleA($orderId, $noSample)
+        function getSampleA($orderId)
         {
             $this->db->select('*');
 			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
             $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
 			$this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
 			$this->db->where('lab.labId', 2);
             $this->db->where('orderdetail.orderId', $orderId);
-			$this->db->where('orderdetail.noSample', $noSample);
 
 			return $this->db->get();
         }
 
-		function getSampleB($orderId, $noSample)
+		function getSampleB($orderId)
         {
             $this->db->select('*');
 			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
             $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
 			$this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
 			$this->db->where('lab.labId', 3);
             $this->db->where('orderdetail.orderId', $orderId);
-			$this->db->where('orderdetail.noSample', $noSample);
 
 			return $this->db->get();
         }
 
-		function getSampleC($orderId, $noSample)
+		function getSampleC($orderId)
         {
             $this->db->select('*');
 			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
             $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
 			$this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
 			$this->db->where('lab.labId', 4);
             $this->db->where('orderdetail.orderId', $orderId);
-			$this->db->where('orderdetail.noSample', $noSample);
 
 			return $this->db->get();
         }
 
-		function getSampleD($orderId, $noSample)
+		function getSampleD($orderId)
         {
             $this->db->select('*');
 			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
             $this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
 			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
 			$this->db->join('sample', 'orderdetail.noSample=sample.noSample', 'left');
 			$this->db->where('lab.labId', 5);
             $this->db->where('orderdetail.orderId', $orderId);
-			$this->db->where('orderdetail.noSample', $noSample);
 
 			return $this->db->get();
         }
 
         function getCountSamplesA()
 		{
-			$this->db->select('*');
+			$this->db->select('orderdetail.orderId, orderdetail.parameterId');
 			$this->db->from('orderdetail');
-			$this->db->join('order', 'orderdetail.orderId=order.orderId','left');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId','left');
 			$this->db->join('lab', 'parameter.labId=lab.labId','left');
-			$this->db->like('lab.labId', 2);
-			$this->db->like('order.statusId', 3);
+			$this->db->where('lab.labId', 2);
+			$this->db->where('order.statusId', 3);
+			$this->db->group_by('orderdetail.orderId');
 
 			return $this->db->count_all_results();
 		}
 
 		function getCountSamplesB()
 		{
-			$this->db->select('*');
+			$this->db->select('orderdetail.orderId, orderdetail.parameterId');
 			$this->db->from('orderdetail');
 			$this->db->join('order', 'orderdetail.orderId=order.orderId','left');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId','left');
 			$this->db->join('lab', 'parameter.labId=lab.labId','left');
-			$this->db->like('lab.labId', 3);
-			$this->db->like('order.statusId', 3);
+			$this->db->where('lab.labId', 3);
+			$this->db->where('order.statusId', 3);
+			$this->db->group_by('orderdetail.orderId');
 
 			return $this->db->count_all_results();
 		}
 
 		function getCountSamplesC()
 		{
-			$this->db->select('*');
+			$this->db->select('orderdetail.orderId, orderdetail.parameterId');
 			$this->db->from('orderdetail');
 			$this->db->join('order', 'orderdetail.orderId=order.orderId','left');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId','left');
 			$this->db->join('lab', 'parameter.labId=lab.labId','left');
-			$this->db->like('lab.labId', 4);
-			$this->db->like('order.statusId', 3);
+			$this->db->where('lab.labId', 4);
+			$this->db->where('order.statusId', 3);
+			$this->db->group_by('orderdetail.orderId');
 
 			return $this->db->count_all_results();
 		}
 
 		function getCountSamplesD()
 		{
-			$this->db->select('*');
+			$this->db->select('orderdetail.orderId, orderdetail.parameterId');
 			$this->db->from('orderdetail');
 			$this->db->join('order', 'orderdetail.orderId=order.orderId','left');
 			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId','left');
 			$this->db->join('lab', 'parameter.labId=lab.labId','left');
-			$this->db->like('lab.labId', 5);
-			$this->db->like('order.statusId', 3);
+			$this->db->where('lab.labId', 5);
+			$this->db->where('order.statusId', 3);
+			$this->db->group_by('orderdetail.orderId');
 
 			return $this->db->count_all_results();
 		}
 
-        function getCountLhus()
+        function getCountLhusA()
 		{
-			$this->db->like('statusId', '1');
-			$this->db->from('sample');
+			$this->db->select('orderdetail.orderId, orderdetail.parameterId');
+			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId','left');
+			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId','left');
+			$this->db->join('lab', 'parameter.labId=lab.labId','left');
+			$this->db->where('lab.labId', 2);
+			$this->db->where('order.statusId', 4);
+			$this->db->group_by('orderdetail.orderId');
+
+			return $this->db->count_all_results();
+		}
+
+		function getCountLhusB()
+		{
+			$this->db->select('orderdetail.orderId, orderdetail.parameterId');
+			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId','left');
+			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId','left');
+			$this->db->join('lab', 'parameter.labId=lab.labId','left');
+			$this->db->where('lab.labId', 3);
+			$this->db->where('order.statusId', 4);
+			$this->db->group_by('orderdetail.orderId');
+
+			return $this->db->count_all_results();
+		}
+
+		function getCountLhusC()
+		{
+			$this->db->select('orderdetail.orderId, orderdetail.parameterId');
+			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId','left');
+			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId','left');
+			$this->db->join('lab', 'parameter.labId=lab.labId','left');
+			$this->db->where('lab.labId', 4);
+			$this->db->where('order.statusId', 4);
+			$this->db->group_by('orderdetail.orderId');
+
+			return $this->db->count_all_results();
+		}
+
+		function getCountLhusD()
+		{
+			$this->db->select('orderdetail.orderId, orderdetail.parameterId');
+			$this->db->from('orderdetail');
+			$this->db->join('order', 'orderdetail.orderId=order.orderId','left');
+			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId','left');
+			$this->db->join('lab', 'parameter.labId=lab.labId','left');
+			$this->db->where('lab.labId', 5);
+			$this->db->where('order.statusId', 4);
+			$this->db->group_by('orderdetail.orderId');
 
 			return $this->db->count_all_results();
 		}

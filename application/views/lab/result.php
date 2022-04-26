@@ -9,49 +9,83 @@
                     </div>
 
                     <br>
-                        <?php //var_dump($labName);?>
+                        <?php
+                            $samples=array();
+                            $sampleTypes=array();
+                            $parameterIds=array();
+                            $parameterNames=array();
+                            $units=array();
+                            $references=array();
+                            $results=array();
+                            $methods=array();
+                        ?>
                             <?php
                                 if($labName == "Hematologi")
                                 {
-                                    $parameterIds=array();
-                                    $parameterNames=array();
-                                    $results=array();
-                                    $methods=array();
-
                                     foreach($viewSampleA as $vs)
                                     {
+                                        $samples[] = $vs->noSample;
+                                        $sampleTypes[] = $vs->sampleType;
                                         $parameterIds[] = $vs->parameterId;
                                         $parameterNames[] = $vs->parameterName;
+                                        $units[] = $vs->unit;
+                                        $references[]= $vs->referenceValue;
                                         $results[] = $vs->result;
                                         $methods[]= $vs->method;
 
-                                        $combined2 = array_combine($parameterNames, $methods);
-                                        $combined3 = array_combine($parameterNames, $results);
-                                    } ?>
+                                        $combined1 = array_combine($samples, $sampleTypes);
+                                        $combined2 = array_combine($parameterNames, $units);
+                                        $combined3 = array_combine($parameterNames, $references);
+                                        $combined4 = array_combine($parameterNames, $methods);
+                                        $combined5 = array_combine($parameterNames, $results);
 
-                                    <form method="post" action="<?php echo base_url('lab/dashboard/inputResult/'.$vs->orderId.'/'.$vs->noSample) ?>">
+                                        $samp = array_unique($samples);
+                                        $pid = array_unique($parameterIds);
+                                        $param = array_unique($parameterNames);
+                                    } ?>
+                                    
+                                    <form method="post" action="<?php echo base_url('lab/dashboard/inputResult/'.$vs->orderId) ?>">
                                         <div class="card shadow mb-4">
 
                                             <input type="hidden" name="orderId" value="<?php echo $vs->orderId ?>">
-                                            <input type="hidden" name="noSample" value="<?php echo $vs->noSample ?>">
-                                            <input type="hidden" name="parameterId" value="<?php echo implode(', ', $parameterIds); ?>">
+                                            <input type="hidden" name="noSample" value="<?php echo implode(', ', $samp); ?>">
+                                            <input type="hidden" name="parameterId" value="<?php echo implode(', ', $pid); ?>">
 
                                             <div class="card-body">
-                                                <div class="card shadow mb-4">
+                                                <div class="card mb-4">
                                                     <div class="card-header py-2">
                                                         <h6 class="m-0 font-weight-bold text-info">DATA SAMPEL</h6>
                                                     </div>
                                                 <div class="card-body">
-                                                    <div class="form-group row">
-                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Sampel</label>
+                                                    <?php foreach($combined1 as $noSample => $sampleType): ?>
+                                                        <div class="form-group row">
+                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Sampel</label>
                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                <span class="input-group-text" id="basic-addon1"><?php echo $vs->noSample ?></span>
+                                                                <span class="input-group-text" id="basic-addon1"><?php echo $noSample ?></span>
                                                             </div>
-                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Tipe Sampel</label>
+                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Tipe Sampel</label>
                                                             <div class="col-sm-4">
-                                                                <span class="input-group-text" id="basic-addon1"><?php echo $vs->sampleType ?></span>
+                                                                <span class="input-group-text" id="basic-addon1"><?php echo $sampleType ?></span>
                                                             </div>
-                                                    </div>
+                                                        </div>
+                                                    <?php endforeach;?>
+                                                        <div class="form-group row">
+                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Keterangan Klinisi</label>
+                                                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                    <span class="input-group-text" id="basic-addon1">
+                                                                        <?php 
+                                                                        if($vs->clinicalNotes == NULL)
+                                                                        {
+                                                                            echo "-";
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            echo $vs->clinicalNotes;
+                                                                        }
+                                                                        ?>
+                                                                    </span>
+                                                                </div>
+                                                        </div>
                                                 </div>
 
                                                 <div class="card-header py-2">
@@ -63,31 +97,31 @@
                                                     <div class="row">
 
                                                         <!-- First Column -->
-                                                        <div class="col-lg-4">
-                                                            <div class="card shadow mb-3">
+                                                        <div class="col-sm-3">
+                                                            <div class="card mb-3">
                                                                 <div class="card-header py-1">
                                                                     <h6 class="m-0 font-weight-bold text-info">Parameter</h6>
                                                                 </div>
-                                                                <div class="card-body">
-                                                                    <?php foreach($parameterNames as $pn): ?>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                    <?php $no=1; foreach($param as $pn): ?>
                                                                     <div>
-                                                                        <span class="input-group-text m-0 font-weight-bold text-secondary"><?php echo $pn ?></span>
-                                                                    <br>
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $no++; ?>. <?php echo $pn ?></small></span>
+                                                                        <br>
                                                                     </div>
                                                                     <?php endforeach; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        <div class="col-lg-4">
-                                                            <div class="card shadow mb-4">
+                                                        
+                                                        <div class="col-sm-2">
+                                                            <div class="card mb-4">
                                                                 <div class="card-header py-1">
-                                                                    <h6 class="m-0 font-weight-bold text-info">Metode</h6>
+                                                                    <h6 class="m-0 font-weight-bold text-info">Satuan</h6>
                                                                 </div>
-                                                                <div class="card-body">
-                                                                <?php foreach($combined2 as $parameterName => $method): ?>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined2 as $parameterName => $unit): ?>
                                                                     <div>
-                                                                        <fieldset disabled><input type="text" name="method[]" value="<?php echo set_value('method[]', $method); ?>" class="form-control"></fieldset>
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $unit ?></small></span>
                                                                         <br>
                                                                     </div>
                                                                 <?php endforeach; ?>
@@ -95,14 +129,46 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-lg-4">
-                                                            <div class="card shadow mb-4">
+                                                        <div class="col-sm-3">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Nilai Referensi</h6>
+                                                                </div>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined3 as $parameterName => $ref): ?>
+                                                                    <div>
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $ref ?></small></span>
+                                                                        <br>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-2">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Metode</h6>
+                                                                </div>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined4 as $parameterName => $method): ?>
+                                                                    <div>
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $method ?></small></span>
+                                                                        <br>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-2">
+                                                            <div class="card mb-4">
                                                                 <div class="card-header py-1">
                                                                     <h6 class="m-0 font-weight-bold text-info">Hasil</h6>
                                                                 </div>
-                                                                <div class="card-body">
-                                                                <?php foreach($combined3 as $parameterName => $result): ?>
-                                                                    <div>   
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined5 as $parameterName => $result): ?>
+                                                                    <div class=small>  
                                                                         <input type="text" name="result[]" value="<?php echo set_value('result[]', $result); ?>" class="form-control" autocomplete="off">
                                                                         <br>
                                                                     </div>
@@ -116,14 +182,14 @@
                                                     
                                                     <div class="row">
                                                         <!-- First Column -->
-                                                        <div class="col-lg-4">
-                                                            <div class="card shadow mb-3">
+                                                        <div class="col-lg-3">
+                                                            <div class="card mb-3">
                                                                 <div class="card-header py-1">
                                                                     <h6 class="m-0 font-weight-bold text-info">Tanggal Pengujian</h6>
                                                                 </div>
                                                                 <div class="card-body">
                                                                     <div>   
-                                                                        <input type="date" name="testTime" value="<?php echo set_value('testTime'); ?>" class="form-control" autocomplete="off">
+                                                                        <input type="date" name="testTime" value="<?php echo set_value('testTime', $vs->testTime); ?>" class="form-control" autocomplete="off">
                                                                         <?php echo form_error('testTime', '<div class="text-danger small">','</div>') ?>
                                                                     </div>
                                                                 </div>
@@ -142,48 +208,56 @@
                                 }
                                 else if($labName == "Kimia Klinik dan Urinalisa")
                                 {
-                                    $parameterIds=array();
-                                    $parameterNames=array();
-                                    $results=array();
-                                    $methods=array();
-
                                     foreach($viewSampleB as $vs)
                                     {
+                                        $samples[] = $vs->noSample;
+                                        $sampleTypes[] = $vs->sampleType;
                                         $parameterIds[] = $vs->parameterId;
                                         $parameterNames[] = $vs->parameterName;
+                                        $units[] = $vs->unit;
+                                        $references[]= $vs->referenceValue;
                                         $results[] = $vs->result;
                                         $methods[]= $vs->method;
 
-                                        $combined2 = array_combine($parameterNames, $methods);
-                                        $combined3 = array_combine($parameterNames, $results);
-                                    } ?>
+                                        $combined1 = array_combine($samples, $sampleTypes);
+                                        $combined2 = array_combine($parameterNames, $units);
+                                        $combined3 = array_combine($parameterNames, $references);
+                                        $combined4 = array_combine($parameterNames, $methods);
+                                        $combined5 = array_combine($parameterNames, $results);
 
-                                    <form method="post" action="<?php echo base_url('lab/dashboard/inputResult/'.$vs->orderId.'/'.$vs->noSample) ?>">
+                                        $samp = array_unique($samples);
+                                        $pid = array_unique($parameterIds);
+                                        $param = array_unique($parameterNames);
+                                    } ?>
+                                    
+                                    <form method="post" action="<?php echo base_url('lab/dashboard/inputResult/'.$vs->orderId) ?>">
                                         <div class="card shadow mb-4">
 
                                             <input type="hidden" name="orderId" value="<?php echo $vs->orderId ?>">
-                                            <input type="hidden" name="noSample" value="<?php echo $vs->noSample ?>">
-                                            <input type="hidden" name="parameterId" value="<?php echo implode(', ', $parameterIds); ?>">
+                                            <input type="hidden" name="noSample" value="<?php echo implode(', ', $samp); ?>">
+                                            <input type="hidden" name="parameterId" value="<?php echo implode(', ', $pid); ?>">
 
                                             <div class="card-body">
-                                                <div class="card shadow mb-4">
-                                                    <div class="card-header py-3">
+                                                <div class="card mb-4">
+                                                    <div class="card-header py-2">
                                                         <h6 class="m-0 font-weight-bold text-info">DATA SAMPEL</h6>
                                                     </div>
                                                 <div class="card-body">
-                                                    <div class="form-group row">
-                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Sampel</label>
+                                                    <?php foreach($combined1 as $noSample => $sampleType): ?>
+                                                        <div class="form-group row">
+                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Sampel</label>
                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                <span class="input-group-text" id="basic-addon1"><?php echo $vs->noSample ?></span>
+                                                                <span class="input-group-text" id="basic-addon1"><?php echo $noSample ?></span>
                                                             </div>
-                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Tipe Sampel</label>
+                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Tipe Sampel</label>
                                                             <div class="col-sm-4">
-                                                                <span class="input-group-text" id="basic-addon1"><?php echo $vs->sampleType ?></span>
+                                                                <span class="input-group-text" id="basic-addon1"><?php echo $sampleType ?></span>
                                                             </div>
-                                                    </div>
+                                                        </div>
+                                                    <?php endforeach;?>
                                                 </div>
 
-                                                <div class="card-header py-3">
+                                                <div class="card-header py-2">
                                                     <h6 class="m-0 font-weight-bold text-info">DATA HASIL UJI</h6>
                                                 </div>
 
@@ -192,48 +266,79 @@
                                                     <div class="row">
 
                                                         <!-- First Column -->
-                                                        <div class="col-lg-4">
-                                                            <div class="card shadow mb-4">
-                                                                <div class="card-header py-3">
+                                                        <div class="col-sm-3">
+                                                            <div class="card mb-3">
+                                                                <div class="card-header py-1">
                                                                     <h6 class="m-0 font-weight-bold text-info">Parameter</h6>
                                                                 </div>
-                                                                <div class="card-body">
-                                                                    <?php foreach($parameterNames as $pn): ?>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                    <?php $no=1; foreach($param as $pn): ?>
                                                                     <div>
-                                                                        <span class="input-group-text m-0 font-weight-bold text-secondary"><?php echo $pn ?></span>
-                                                                    <br>
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $no++; ?>. <?php echo $pn ?></small></span>
+                                                                        <br>
                                                                     </div>
                                                                     <?php endforeach; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        <div class="col-lg-4">
-                                                            <div class="card shadow mb-4">
-                                                                <div class="card-header py-3">
-                                                                    <h6 class="m-0 font-weight-bold text-info">Metode</h6>
+                                                        
+                                                        <div class="col-sm-2">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Satuan</h6>
                                                                 </div>
-                                                                <div class="card-body">
-                                                                <?php foreach($combined2 as $parameterName => $method): ?>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined2 as $parameterName => $unit): ?>
                                                                     <div>
-                                                                        <input type="text" name="method[]" value="<?php echo set_value('method[]', $method); ?>"class="form-control">
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $unit ?></small></span>
                                                                         <br>
                                                                     </div>
                                                                 <?php endforeach; ?>
-                                                                <?php echo form_error('method[]', '<div class="text-danger small">','</div>') ?>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-lg-4">
-                                                            <div class="card shadow mb-4">
-                                                                <div class="card-header py-3">
+                                                        <div class="col-sm-3">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Nilai Referensi</h6>
+                                                                </div>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined3 as $parameterName => $ref): ?>
+                                                                    <div>
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $ref ?></small></span>
+                                                                        <br>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-2">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Metode</h6>
+                                                                </div>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined4 as $parameterName => $method): ?>
+                                                                    <div>
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $method ?></small></span>
+                                                                        <br>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-2">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
                                                                     <h6 class="m-0 font-weight-bold text-info">Hasil</h6>
                                                                 </div>
-                                                                <div class="card-body">
-                                                                <?php foreach($combined3 as $parameterName => $result): ?>
-                                                                    <div>   
-                                                                        <input type="text" name="result[]" value="<?php echo set_value('result[]', $result); ?>"class="form-control">
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined5 as $parameterName => $result): ?>
+                                                                    <div class=small>  
+                                                                        <input type="text" name="result[]" value="<?php echo set_value('result[]', $result); ?>" class="form-control" autocomplete="off">
                                                                         <br>
                                                                     </div>
                                                                 <?php endforeach; ?>
@@ -243,6 +348,24 @@
                                                         </div>
 
                                                     </div>
+                                                    
+                                                    <div class="row">
+                                                        <!-- First Column -->
+                                                        <div class="col-lg-3">
+                                                            <div class="card mb-3">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Tanggal Pengujian</h6>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div>   
+                                                                        <input type="date" name="testTime" value="<?php echo set_value('testTime', $vs->testTime); ?>" class="form-control" autocomplete="off">
+                                                                        <?php echo form_error('testTime', '<div class="text-danger small">','</div>') ?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
                                                 </div>
 
                                                 <button type="submit" class="btn btn-info btn-lg btn-block">SIMPAN</button>
@@ -254,48 +377,56 @@
                                 }
                                 else if($labName == "Serologi")
                                 {
-                                    $parameterIds=array();
-                                    $parameterNames=array();
-                                    $results=array();
-                                    $methods=array();
-
                                     foreach($viewSampleC as $vs)
                                     {
+                                        $samples[] = $vs->noSample;
+                                        $sampleTypes[] = $vs->sampleType;
                                         $parameterIds[] = $vs->parameterId;
                                         $parameterNames[] = $vs->parameterName;
+                                        $units[] = $vs->unit;
+                                        $references[]= $vs->referenceValue;
                                         $results[] = $vs->result;
                                         $methods[]= $vs->method;
 
-                                        $combined2 = array_combine($parameterNames, $methods);
-                                        $combined3 = array_combine($parameterNames, $results);
-                                    } ?>
+                                        $combined1 = array_combine($samples, $sampleTypes);
+                                        $combined2 = array_combine($parameterNames, $units);
+                                        $combined3 = array_combine($parameterNames, $references);
+                                        $combined4 = array_combine($parameterNames, $methods);
+                                        $combined5 = array_combine($parameterNames, $results);
 
-                                    <form method="post" action="<?php echo base_url('lab/dashboard/inputResult/'.$vs->orderId.'/'.$vs->noSample) ?>">
+                                        $samp = array_unique($samples);
+                                        $pid = array_unique($parameterIds);
+                                        $param = array_unique($parameterNames);
+                                    } ?>
+                                    
+                                    <form method="post" action="<?php echo base_url('lab/dashboard/inputResult/'.$vs->orderId) ?>">
                                         <div class="card shadow mb-4">
 
                                             <input type="hidden" name="orderId" value="<?php echo $vs->orderId ?>">
-                                            <input type="hidden" name="noSample" value="<?php echo $vs->noSample ?>">
-                                            <input type="hidden" name="parameterId" value="<?php echo implode(', ', $parameterIds); ?>">
+                                            <input type="hidden" name="noSample" value="<?php echo implode(', ', $samp); ?>">
+                                            <input type="hidden" name="parameterId" value="<?php echo implode(', ', $pid); ?>">
 
                                             <div class="card-body">
-                                                <div class="card shadow mb-4">
-                                                    <div class="card-header py-3">
+                                                <div class="card mb-4">
+                                                    <div class="card-header py-2">
                                                         <h6 class="m-0 font-weight-bold text-info">DATA SAMPEL</h6>
                                                     </div>
                                                 <div class="card-body">
-                                                    <div class="form-group row">
-                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Sampel</label>
+                                                    <?php foreach($combined1 as $noSample => $sampleType): ?>
+                                                        <div class="form-group row">
+                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Sampel</label>
                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                <span class="input-group-text" id="basic-addon1"><?php echo $vs->noSample ?></span>
+                                                                <span class="input-group-text" id="basic-addon1"><?php echo $noSample ?></span>
                                                             </div>
-                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Tipe Sampel</label>
+                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Tipe Sampel</label>
                                                             <div class="col-sm-4">
-                                                                <span class="input-group-text" id="basic-addon1"><?php echo $vs->sampleType ?></span>
+                                                                <span class="input-group-text" id="basic-addon1"><?php echo $sampleType ?></span>
                                                             </div>
-                                                    </div>
+                                                        </div>
+                                                    <?php endforeach;?>
                                                 </div>
 
-                                                <div class="card-header py-3">
+                                                <div class="card-header py-2">
                                                     <h6 class="m-0 font-weight-bold text-info">DATA HASIL UJI</h6>
                                                 </div>
 
@@ -304,48 +435,79 @@
                                                     <div class="row">
 
                                                         <!-- First Column -->
-                                                        <div class="col-lg-4">
-                                                            <div class="card shadow mb-4">
-                                                                <div class="card-header py-3">
+                                                        <div class="col-sm-3">
+                                                            <div class="card mb-3">
+                                                                <div class="card-header py-1">
                                                                     <h6 class="m-0 font-weight-bold text-info">Parameter</h6>
                                                                 </div>
-                                                                <div class="card-body">
-                                                                    <?php foreach($parameterNames as $pn): ?>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                    <?php $no=1; foreach($param as $pn): ?>
                                                                     <div>
-                                                                        <span class="input-group-text m-0 font-weight-bold text-secondary"><?php echo $pn ?></span>
-                                                                    <br>
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $no++; ?>. <?php echo $pn ?></small></span>
+                                                                        <br>
                                                                     </div>
                                                                     <?php endforeach; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        <div class="col-lg-4">
-                                                            <div class="card shadow mb-4">
-                                                                <div class="card-header py-3">
-                                                                    <h6 class="m-0 font-weight-bold text-info">Metode</h6>
+                                                        
+                                                        <div class="col-sm-2">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Satuan</h6>
                                                                 </div>
-                                                                <div class="card-body">
-                                                                <?php foreach($combined2 as $parameterName => $method): ?>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined2 as $parameterName => $unit): ?>
                                                                     <div>
-                                                                        <input type="text" name="method[]" value="<?php echo set_value('method[]', $method); ?>"class="form-control">
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $unit ?></small></span>
                                                                         <br>
                                                                     </div>
                                                                 <?php endforeach; ?>
-                                                                <?php echo form_error('method[]', '<div class="text-danger small">','</div>') ?>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-lg-4">
-                                                            <div class="card shadow mb-4">
-                                                                <div class="card-header py-3">
+                                                        <div class="col-sm-3">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Nilai Referensi</h6>
+                                                                </div>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined3 as $parameterName => $ref): ?>
+                                                                    <div>
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $ref ?></small></span>
+                                                                        <br>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-2">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Metode</h6>
+                                                                </div>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined4 as $parameterName => $method): ?>
+                                                                    <div>
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $method ?></small></span>
+                                                                        <br>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-2">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
                                                                     <h6 class="m-0 font-weight-bold text-info">Hasil</h6>
                                                                 </div>
-                                                                <div class="card-body">
-                                                                <?php foreach($combined3 as $parameterName => $result): ?>
-                                                                    <div>   
-                                                                        <input type="text" name="result[]" value="<?php echo set_value('result[]', $result); ?>"class="form-control">
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined5 as $parameterName => $result): ?>
+                                                                    <div class=small>  
+                                                                        <input type="text" name="result[]" value="<?php echo set_value('result[]', $result); ?>" class="form-control" autocomplete="off">
                                                                         <br>
                                                                     </div>
                                                                 <?php endforeach; ?>
@@ -355,6 +517,24 @@
                                                         </div>
 
                                                     </div>
+                                                    
+                                                    <div class="row">
+                                                        <!-- First Column -->
+                                                        <div class="col-lg-3">
+                                                            <div class="card mb-3">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Tanggal Pengujian</h6>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div>   
+                                                                        <input type="date" name="testTime" value="<?php echo set_value('testTime', $vs->testTime); ?>" class="form-control" autocomplete="off">
+                                                                        <?php echo form_error('testTime', '<div class="text-danger small">','</div>') ?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
                                                 </div>
 
                                                 <button type="submit" class="btn btn-info btn-lg btn-block">SIMPAN</button>
@@ -366,48 +546,56 @@
                                 }
                                 else if($labName == "Mikrobiologi")
                                 {
-                                    $parameterIds=array();
-                                    $parameterNames=array();
-                                    $results=array();
-                                    $methods=array();
-
                                     foreach($viewSampleD as $vs)
                                     {
+                                        $samples[] = $vs->noSample;
+                                        $sampleTypes[] = $vs->sampleType;
                                         $parameterIds[] = $vs->parameterId;
                                         $parameterNames[] = $vs->parameterName;
+                                        $units[] = $vs->unit;
+                                        $references[]= $vs->referenceValue;
                                         $results[] = $vs->result;
                                         $methods[]= $vs->method;
 
-                                        $combined2 = array_combine($parameterNames, $methods);
-                                        $combined3 = array_combine($parameterNames, $results);
-                                    } ?>
+                                        $combined1 = array_combine($samples, $sampleTypes);
+                                        $combined2 = array_combine($parameterNames, $units);
+                                        $combined3 = array_combine($parameterNames, $references);
+                                        $combined4 = array_combine($parameterNames, $methods);
+                                        $combined5 = array_combine($parameterNames, $results);
 
-                                    <form method="post" action="<?php echo base_url('lab/dashboard/inputResult/'.$vs->orderId.'/'.$vs->noSample) ?>">
+                                        $samp = array_unique($samples);
+                                        $pid = array_unique($parameterIds);
+                                        $param = array_unique($parameterNames);
+                                    } ?>
+                                    
+                                    <form method="post" action="<?php echo base_url('lab/dashboard/inputResult/'.$vs->orderId) ?>">
                                         <div class="card shadow mb-4">
 
                                             <input type="hidden" name="orderId" value="<?php echo $vs->orderId ?>">
-                                            <input type="hidden" name="noSample" value="<?php echo $vs->noSample ?>">
-                                            <input type="hidden" name="parameterId" value="<?php echo implode(', ', $parameterIds); ?>">
+                                            <input type="hidden" name="noSample" value="<?php echo implode(', ', $samp); ?>">
+                                            <input type="hidden" name="parameterId" value="<?php echo implode(', ', $pid); ?>">
 
                                             <div class="card-body">
-                                                <div class="card shadow mb-4">
-                                                    <div class="card-header py-3">
+                                                <div class="card mb-4">
+                                                    <div class="card-header py-2">
                                                         <h6 class="m-0 font-weight-bold text-info">DATA SAMPEL</h6>
                                                     </div>
                                                 <div class="card-body">
-                                                    <div class="form-group row">
-                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Sampel</label>
+                                                    <?php foreach($combined1 as $noSample => $sampleType): ?>
+                                                        <div class="form-group row">
+                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Sampel</label>
                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                <span class="input-group-text" id="basic-addon1"><?php echo $vs->noSample ?></span>
+                                                                <span class="input-group-text" id="basic-addon1"><?php echo $noSample ?></span>
                                                             </div>
-                                                        <label for="inputEmail3" class="col-sm-2 col-form-label">Tipe Sampel</label>
+                                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Tipe Sampel</label>
                                                             <div class="col-sm-4">
-                                                                <span class="input-group-text" id="basic-addon1"><?php echo $vs->sampleType ?></span>
+                                                                <span class="input-group-text" id="basic-addon1"><?php echo $sampleType ?></span>
                                                             </div>
-                                                    </div>
+                                                        </div>
+                                                    <?php endforeach;?>
                                                 </div>
 
-                                                <div class="card-header py-3">
+                                                <div class="card-header py-2">
                                                     <h6 class="m-0 font-weight-bold text-info">DATA HASIL UJI</h6>
                                                 </div>
 
@@ -416,48 +604,79 @@
                                                     <div class="row">
 
                                                         <!-- First Column -->
-                                                        <div class="col-lg-4">
-                                                            <div class="card shadow mb-4">
-                                                                <div class="card-header py-3">
+                                                        <div class="col-sm-3">
+                                                            <div class="card mb-3">
+                                                                <div class="card-header py-1">
                                                                     <h6 class="m-0 font-weight-bold text-info">Parameter</h6>
                                                                 </div>
-                                                                <div class="card-body">
-                                                                    <?php foreach($parameterNames as $pn): ?>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                    <?php $no=1; foreach($param as $pn): ?>
                                                                     <div>
-                                                                        <span class="input-group-text m-0 font-weight-bold text-secondary"><?php echo $pn ?></span>
-                                                                    <br>
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $no++; ?>. <?php echo $pn ?></small></span>
+                                                                        <br>
                                                                     </div>
                                                                     <?php endforeach; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
-
-                                                        <div class="col-lg-4">
-                                                            <div class="card shadow mb-4">
-                                                                <div class="card-header py-3">
-                                                                    <h6 class="m-0 font-weight-bold text-info">Metode</h6>
+                                                        
+                                                        <div class="col-sm-2">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Satuan</h6>
                                                                 </div>
-                                                                <div class="card-body">
-                                                                <?php foreach($combined2 as $parameterName => $method): ?>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined2 as $parameterName => $unit): ?>
                                                                     <div>
-                                                                        <input type="text" name="method[]" value="<?php echo set_value('method[]', $method); ?>"class="form-control">
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $unit ?></small></span>
                                                                         <br>
                                                                     </div>
                                                                 <?php endforeach; ?>
-                                                                <?php echo form_error('method[]', '<div class="text-danger small">','</div>') ?>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-lg-4">
-                                                            <div class="card shadow mb-4">
-                                                                <div class="card-header py-3">
+                                                        <div class="col-sm-3">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Nilai Referensi</h6>
+                                                                </div>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined3 as $parameterName => $ref): ?>
+                                                                    <div>
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $ref ?></small></span>
+                                                                        <br>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-2">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Metode</h6>
+                                                                </div>
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined4 as $parameterName => $method): ?>
+                                                                    <div>
+                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $method ?></small></span>
+                                                                        <br>
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-2">
+                                                            <div class="card mb-4">
+                                                                <div class="card-header py-1">
                                                                     <h6 class="m-0 font-weight-bold text-info">Hasil</h6>
                                                                 </div>
-                                                                <div class="card-body">
-                                                                <?php foreach($combined3 as $parameterName => $result): ?>
-                                                                    <div>   
-                                                                        <input type="text" name="result[]" value="<?php echo set_value('result[]', $result); ?>"class="form-control">
+                                                                <div class="card-body pl-2 pr-2 px-2">
+                                                                <?php foreach($combined5 as $parameterName => $result): ?>
+                                                                    <div class=small>  
+                                                                        <input type="text" name="result[]" value="<?php echo set_value('result[]', $result); ?>" class="form-control" autocomplete="off">
                                                                         <br>
                                                                     </div>
                                                                 <?php endforeach; ?>
@@ -467,6 +686,24 @@
                                                         </div>
 
                                                     </div>
+                                                    
+                                                    <div class="row">
+                                                        <!-- First Column -->
+                                                        <div class="col-lg-3">
+                                                            <div class="card mb-3">
+                                                                <div class="card-header py-1">
+                                                                    <h6 class="m-0 font-weight-bold text-info">Tanggal Pengujian</h6>
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div>   
+                                                                        <input type="date" name="testTime" value="<?php echo set_value('testTime', $vs->testTime); ?>" class="form-control" autocomplete="off">
+                                                                        <?php echo form_error('testTime', '<div class="text-danger small">','</div>') ?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                
                                                 </div>
 
                                                 <button type="submit" class="btn btn-info btn-lg btn-block">SIMPAN</button>

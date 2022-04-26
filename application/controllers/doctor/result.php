@@ -66,15 +66,13 @@
             }
             else
             {
-                $samples = $this->input->post('samples');
-                $noSample = explode(', ', $samples);
+                $orderId = $this->input->post('orderId');
+                $where = array('orderId' => $orderId);
 
-                foreach($noSample as $no)
-                {
-                    $this->db->set('statusId', 2);
-                    $this->db->where('noSample', $no);
-                    $this->db->update('testresult');
-                }
+                $tableOrder = array(
+                    'statusId' => 5
+                );
+                $this->order_model->updateDataOrder($where, 'order', $tableOrder);
 
                 $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diverifikasi!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 redirect('doctor/result');

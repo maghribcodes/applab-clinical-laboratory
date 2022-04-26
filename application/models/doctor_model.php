@@ -18,7 +18,6 @@
 			$this->db->select('*');
 			$this->db->from('order');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
-            //$this->db->where('order.sender', '');
 			$this->db->where('order.orderId', $orderId);
 			$this->db->order_by('order.orderId', 'asc');
 

@@ -29,7 +29,10 @@ class Dashboard extends CI_Controller
 		$data['countSampC'] = $this->lab_model->getCountSamplesC();
 		$data['countSampD'] = $this->lab_model->getCountSamplesD();
 
-		//$data['countLhus'] = $this->lab_model->getCountTest();
+		$data['countLhusA'] = $this->lab_model->getCountLhusA();
+		$data['countLhusB'] = $this->lab_model->getCountLhusB();
+		$data['countLhusC'] = $this->lab_model->getCountLhusC();
+		$data['countLhusD'] = $this->lab_model->getCountLhusD();
 
 		if($this->input->post('submit'))
 		{
@@ -64,7 +67,7 @@ class Dashboard extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-	function input($orderId, $noSample)
+	function input($orderId)
 	{
 		$data = $this->user_model->getDataUser($this->session->userdata['empId']);
 		$data = array
@@ -72,10 +75,10 @@ class Dashboard extends CI_Controller
 					'labName' => $data->labName
 				);
 
-		$data['viewSampleA'] = $this->lab_model->getSampleA($orderId, $noSample)->result();
-		$data['viewSampleB'] = $this->lab_model->getSampleB($orderId, $noSample)->result();
-		$data['viewSampleC'] = $this->lab_model->getSampleC($orderId, $noSample)->result();
-		$data['viewSampleD'] = $this->lab_model->getSampleD($orderId, $noSample)->result();
+		$data['viewSampleA'] = $this->lab_model->getSampleA($orderId)->result();
+		$data['viewSampleB'] = $this->lab_model->getSampleB($orderId)->result();
+		$data['viewSampleC'] = $this->lab_model->getSampleC($orderId)->result();
+		$data['viewSampleD'] = $this->lab_model->getSampleD($orderId)->result();
 
 		$this->load->view('templates/header');
         $this->load->view('lab/sidebar');
@@ -83,77 +86,62 @@ class Dashboard extends CI_Controller
         $this->load->view('templates/footer');
 	}
 
-	function inputResult($orderId, $noSample)
+	function inputResult($orderId)
 	{
 		$this->_rules();
 
         if($this->form_validation->run() == FALSE)
         {
-            $this->input($orderId, $noSample);
+            $this->input($orderId);
         }
         else
         {
+			$employess = $this->session->userdata('empId');
 			$orderId = $this->input->post('orderId');
-			$noSample = $this->input->post('noSample');
+			$noSamples = $this->input->post('noSample');
+			$noSample = explode(', ', $noSamples);
 			$parameterIds = $this->input->post('parameterId');
 			$parameterId = explode(', ', $parameterIds);
 
-			$methods = $this->input->post('method');
 			$results = $this->input->post('result');
+			$testTime = $this->input->post('testTime');
 
-			$combined2 = array_combine($parameterId, $methods);
-			$combined3 = array_combine($parameterId, $results);
+			$combined = array_combine($parameterId, $results);
 
 			//$this->db->trans_start();
 
-			foreach($combined2 as $parameterId => $methods)
+			foreach($noSample as $no)
 			{
-				$this->db->set('method', $methods);
-				$this->db->where('orderId', $orderId);
-				$this->db->where('noSample', $noSample);
-				$this->db->where('parameterId', $parameterId);
-				$this->db->update('orderdetail');
+				foreach($combined as $parameterId => $results)
+				{
+					$this->db->set('result', $results);
+					$this->db->set('testTime', $testTime);
+					$this->db->set('empId', $employess);
+					$this->db->where('orderId', $orderId);
+					$this->db->where('noSample', $no);
+					$this->db->where('parameterId', $parameterId);
+					$this->db->update('orderdetail');
+				}
 			}
 
-			foreach($combined3 as $parameterId => $results)
-			{
-				$this->db->set('result', $results);
-				$this->db->where('orderId', $orderId);
-				$this->db->where('noSample', $noSample);
-				$this->db->where('parameterId', $parameterId);
-				$this->db->update('orderdetail');
-			}
+            $where = array('orderId' => $orderId);
 
-			$this->db->set('statusId', 1);
-			$this->db->where('noSample', $noSample);
-			$this->db->update('testresult');
+			$tableOrder = array(
+				'statusId' => 4
+			);
+			$this->order_model->updateDataOrder($where, 'order', $tableOrder);
 			
 			//$this->db->trans_complete();
 			//return $this->db->trans_status();
 			
-			$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil disimpan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 			redirect('lab/dashboard');
 		}
 	}
 
 	function _rules()
     {
-		$this->form_validation->set_rules('result[]','Hasil','required',['required'=>'Hasil harus diisi']);
+		$this->form_validation->set_rules('result[]','Hasil','required',['required'=>'Data harus diisi']);
+		$this->form_validation->set_rules('testTime','Tanggal Uji','required',['required'=>'Data harus diisi']);
     }
-
-	function detail($orderId, $noSample)
-	{
-		$data['empName'] = $this->session->userdata('empName');
-		$data['viewLab'] = $this->lab_model->getLab();
-
-		$data['viewSampleA'] = $this->lab_model->getSampleA($orderId, $noSample)->result();
-		$data['viewSampleB'] = $this->lab_model->getSampleB($orderId, $noSample)->result();
-		$data['viewSampleC'] = $this->lab_model->getSampleC($orderId, $noSample)->result();
-		$data['viewSampleD'] = $this->lab_model->getSampleD($orderId, $noSample)->result();
-
-		$this->load->view('templates/header');
-        $this->load->view('lab/sidebar');
-        $this->load->view('lab/detail', $data);
-        $this->load->view('templates/footer');
-	}
 }

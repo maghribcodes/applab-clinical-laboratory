@@ -70,6 +70,7 @@
                                 </div>
 
                                 <div class="form-group row">
+                                    <input type="hidden" name="orderId" value="<?php echo $vr->orderId; ?>">
                                     <input type="hidden" name="samples" value="<?php echo implode(', ', $samp); ?>">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Nomor Sampel</label>
                                         <div class="col-sm-4 mb-3 mb-sm-0">
@@ -124,7 +125,7 @@
                                                 <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo $no++; ?></td>
                                                 <td style="text-align: center; vertical-align: middle;"><?php echo $vp->parameterName ?></td>
                                                 <td style="text-align: center; vertical-align: middle;"><?php echo $vp->unit ?></td>
-                                                <td style="text-align: center; vertical-align: middle;"><?php echo $vp->reference ?></td>
+                                                <td style="text-align: center; vertical-align: middle;"><?php echo $vp->referenceValue ?></td>
                                                 <td style="text-align: center; vertical-align: middle;"><?php echo $vp->result ?></td>
                                                 <td style="text-align: center; vertical-align: middle;"><?php echo $vp->method ?></td>
                                             </tr>
@@ -136,7 +137,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="statusId">
                                     <label class="form-check-label" for="defaultCheck1">
-                                        Data klinisi sudah sesuai dengan hasil uji lab.
+                                        Data hasil uji lab sudah lengkap dan sesuai.
                                     </label>
                                     <?php echo form_error('statusId', '<div class="text-danger small">','</div>') ?>
                                 </div>
