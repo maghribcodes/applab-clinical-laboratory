@@ -98,7 +98,7 @@
                                                         ?>
                                                         </td>
                                                     <td style="text-align: center; vertical-align: middle;">
-                                                        <?php if($vo->statusId == 2)
+                                                        <?php if($vo->statusId == 1 || $vo->statusId == 2)
                                                         {
                                                             ?> <span class="badge badge-pill badge-danger">Belum diambil</span> <?php
                                                         }

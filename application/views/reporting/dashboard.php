@@ -27,7 +27,7 @@
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-dark mb-1">
-                                                        Hasil Uji yang sudah diverifikasi</div>
+                                                        LHU yang sudah diverifikasi</div>
                                                     <div class="h6 mb-0 font-weight-bold text-gray-800"><?php echo $countLhu ?></div>
                                                 </div>
                                                 <div class="col-auto">
@@ -67,9 +67,11 @@
                                     <thead>
                                         <tr>
                                             <th style="text-align: center; vertical-align: middle;">No.</th>
+                                            <th style="text-align: center; vertical-align: middle;">Tanggal Order</th>
                                             <th style="text-align: center; vertical-align: middle;">Nama Pasien</th>
+                                            <th style="text-align: center; vertical-align: middle;">Jenis Kelamin</th>
+                                            <th style="text-align: center; vertical-align: middle;">Alamat</th>
                                             <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
-                                            <th style="text-align: center; vertical-align: middle;">Lab Terkait</th>
                                             <th style="text-align: center; vertical-align: middle;">Kiriman</th>
                                             <th colspan="3" style="text-align: center; vertical-align: middle;">Aksi</th>
                                         </tr>
@@ -88,14 +90,22 @@
                                                 foreach ($viewOrders as $vo): ?>
                                                 <tr>
                                                     <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
+                                                    <td style="text-align: center; vertical-align: middle;"><?php 
+                                                        $date = new DateTime($vo->orderTime);
+                                                        $date = $date->format('d F Y');
+                                                        echo $date;
+                                                    ?>
+                                                    </td>
                                                     <td style="text-align: center; vertical-align: middle;"><?php echo $vo->custName ?></td>
+                                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vo->gender ?></td>
+                                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vo->address ?></td>
                                                     <td style="text-align: center; vertical-align: middle;">
                                                         <?php 
-                                                            if($vo->statusId == 0)
+                                                            if($vo->statusId == 1 || $vo->statusId == 2 || $vo->statusId == 3)
                                                             {
                                                                 ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
                                                             }
-                                                            else if($vo->statusId == 1)
+                                                            else if($vo->statusId == 4)
                                                             {
                                                                 ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
                                                             }
@@ -105,30 +115,15 @@
                                                             }
                                                         ?>
                                                     </td>
-                                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vo->packageName ?></td>
                                                     <td style="text-align: center; vertical-align: middle;"><?php echo $vo->sender ?></td>
                                                     <?php 
-                                                            if($vo->statusId == 0)
-                                                            {
-                                                                ?> 
-                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
-                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
-                                                                <?php
-                                                            }
-                                                            if($vo->statusId == 1)
-                                                            {
-                                                                ?> 
-                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
-                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
-                                                                <?php
-                                                            }
-                                                            if($vo->statusId == 2  || $vo->statusId == 3)
+                                                            if($vo->statusId == 5 || $vo->statusId == 6)
                                                             {
                                                                 if($vo->email == NULL)
                                                                 {
                                                                     ?>
                                                                         <td width="20px"><?php echo anchor('reporting/dashboard/print/'.$vo->orderId, '<div class="btn btn-sm btn-success"><i class="fa fa-print"></i></div>') ?></td>
-                                                                        <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
+                                                                        <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fas fa-envelope-open-text"></i></div></td>
                                                                     <?php
                                                                 }
                                                                 else
@@ -138,6 +133,13 @@
                                                                         <td width="20px"><?php echo anchor('reporting/dashboard/mail/'.$vo->orderId, '<div class="btn btn-sm btn-success"><i class="fas fa-envelope-open-text"></i></div>') ?></td>
                                                                     <?php
                                                                 }
+                                                            }
+                                                            else
+                                                            {
+                                                                ?> 
+                                                                    <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fa fa-print"></i></div></td>
+                                                                    <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fas fa-envelope-open-text"></i></div></td>
+                                                                <?php
                                                             }
                                                             ?>
                                                 </tr>

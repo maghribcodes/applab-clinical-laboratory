@@ -44,12 +44,11 @@
                                                     <thead>
                                                         <tr>
                                                             <th style="text-align: center; vertical-align: middle;">No.</th>
-                                                            <th style="text-align: center; vertical-align: middle;">Nama Pasien</th>
                                                             <th style="text-align: center; vertical-align: middle;">Tanggal Order</th>
+                                                            <th style="text-align: center; vertical-align: middle;">Nama Pasien</th>
                                                             <th style="text-align: center; vertical-align: middle;">Kiriman</th>
-                                                            <th style="text-align: center; vertical-align: middle;">Lab Terkait</th>
                                                             <th style="text-align: center; vertical-align: middle;">Status Hasil Uji</th>
-                                                            <th style="text-align: center; vertical-align: middle;">Hasil Uji via Email</th>
+                                                            <th style="text-align: center; vertical-align: middle;">Kirim LHU via Email</th>
                                                             <th colspan="2" style="text-align: center; vertical-align: middle;">Aksi</th>
                                                         </tr>
 
@@ -57,7 +56,6 @@
                                                         foreach ($viewResult as $vr): ?>
                                                         <tr>
                                                             <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vr->custName ?></td>
                                                             <td style="text-align: center; vertical-align: middle;">
                                                                 <?php 
                                                                     $date = new DateTime($vr->orderTime);
@@ -65,15 +63,15 @@
                                                                     echo $date;
                                                                 ?>
                                                             </td>
+                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vr->custName ?></td>
                                                             <td style="text-align: center; vertical-align: middle;"><?php echo $vr->sender ?></td>
-                                                            <td style="text-align: center; vertical-align: middle;"><?php echo $vr->packageName ?></td>
                                                             <td style="text-align: center; vertical-align: middle;">
                                                                 <?php 
-                                                                    if($vr->statusId == 0)
+                                                                    if($vr->statusId == 1 || $vr->statusId == 2 || $vr->statusId == 3)
                                                                     {
                                                                         ?><span class="badge badge-pill badge-warning">Menunggu hasil lab</span><?php
                                                                     }
-                                                                    else if($vr->statusId == 1)
+                                                                    else if($vr->statusId == 4)
                                                                     {
                                                                         ?><span class="badge badge-pill badge-danger">Belum diverifikasi</span><?php
                                                                     }
@@ -91,7 +89,7 @@
                                                                     }
                                                                     else
                                                                     {
-                                                                        if($vr->statusId == 3)
+                                                                        if($vr->statusId == 6)
                                                                         {
                                                                             ?><span class="badge badge-pill badge-success">Sudah disetujui</span><?php
                                                                         }
@@ -102,43 +100,46 @@
                                                                     }
                                                                 ?>
                                                             </td>
-                                                            <?php 
-                                                            if($vr->statusId == 0)
+                                                            <?php
+                                                            if($vr->statusId == 6)
                                                             {
-                                                                ?> 
-                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
-                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
-                                                                <?php
-                                                            }
-                                                            else if($vr->statusId == 1)
-                                                            {
-                                                                ?> 
-                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
-                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
-                                                                <?php
-                                                            }
-                                                            else if($vr->statusId == 2)
-                                                            {
-                                                                if($vr->email == '')
+                                                                if($vr->email == NULL)
                                                                 {
                                                                     ?>
-                                                                        <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo anchor('reporting/dashboard/print/'.$vr->orderId, '<div class="btn btn-sm btn-dark"><i class="fas fa-eye"></i></div>') ?></td>
-                                                                        <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
+                                                                        <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo anchor('reporting/dashboard/print/'.$vr->orderId, '<div class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></div>') ?></td>
+                                                                        <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fas fa-user-check"></i></div></td>
                                                                     <?php
                                                                 }
                                                                 else
                                                                 {
                                                                     ?> 
-                                                                        <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo anchor('reporting/dashboard/print/'.$vr->orderId, '<div class="btn btn-sm btn-dark"><i class="fas fa-eye"></i></div>') ?></td>
-                                                                        <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo anchor('manager/approval/approval/'.$vr->orderId, '<div class="btn btn-sm btn-dark"><i class="fas fa-user-check"></i></div>') ?></td>
+                                                                        <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo anchor('reporting/dashboard/print/'.$vr->orderId, '<div class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></div>') ?></td>
+                                                                        <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fas fa-user-check"></i></div></td>
                                                                     <?php
                                                                 }
                                                             }
-                                                            else if($vr->statusId == 3)
+                                                            else if($vr->statusId == 5)
+                                                            {
+                                                                if($vr->email == NULL)
+                                                                {
+                                                                    ?>
+                                                                        <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo anchor('reporting/dashboard/print/'.$vr->orderId, '<div class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></div>') ?></td>
+                                                                        <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fas fa-user-check"></i></div></td>
+                                                                    <?php
+                                                                }
+                                                                else
+                                                                {
+                                                                    ?> 
+                                                                        <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo anchor('reporting/dashboard/print/'.$vr->orderId, '<div class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></div>') ?></td>
+                                                                        <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo anchor('manager/approval/approval/'.$vr->orderId, '<div class="btn btn-sm btn-primary"><i class="fas fa-user-check"></i></div>') ?></td>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            else
                                                             {
                                                                 ?> 
-                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo anchor('reporting/dashboard/print/'.$vr->orderId, '<div class="btn btn-sm btn-dark"><i class="fas fa-eye"></i></div>') ?></td>
-                                                                    <td width="20px" style="text-align: center; vertical-align: middle;"> - </td>
+                                                                    <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fas fa-eye"></i></div></td>
+                                                                    <td width="20px"><div class="btn btn-sm btn-secondary" disabled><i class="fas fa-user-check"></i></div></td>
                                                                 <?php
                                                             }
                                                             ?>

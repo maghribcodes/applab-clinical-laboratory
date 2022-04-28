@@ -12,40 +12,24 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <div class="row">
-                
-                <div class="col-lg-4">
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-success">Unduh Hasil Uji</h6>
-                        </div>  
-                        <div class="card-body">
-                            <?php
-                                if($vr->statusId == 3)
-                                {
-                                    echo anchor('reporting/dashboard/download/'.$vr->orderId, 
-                                        '<div class="btn btn-success col-lg-12">
-                                        <i class="fas fa-file-download"></i> PDF</div>')
-                                    ?> <?php
-                                }
-                                else
-                                {
-                                    ?>
-                                        <div class="alert alert-success" role="alert">
-                                            Anda harus mendapatkan persetujuan dari Manager.
-                                        </div>
-                                    <?php
-                                }
-                            ?>
-                            
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-8">
-                    <div class="card shadow mb-4">
+                <div class="col-lg-12">
+                    <div class="card shadow mb-2">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-success">Kirim Hasil Uji via email</h6>
                         </div>
+
+                        <?php 
+                            if($vr->statusId == 5)
+                            {
+                            ?>  <div class="card-body">
+                                    <div class="alert alert-success" role="alert">
+                                        Anda harus mendapatkan persetujuan dari Manager Teknik Lab. Klinik terlebih dahulu.
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            else
+                            {?>
                             <form method="post" action="<?php echo base_url('reporting/dashboard/sendMail') ?>" enctype="multipart/form-data">
                                 <div class="card-body">
                                     <div class="form-group row">
@@ -89,6 +73,7 @@
                                     </div>
                                 </div>
                             </form>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

@@ -164,6 +164,17 @@ $ot = $ot->format('d F Y');
 $st = new DateTime($pr->sampleTime);
 $st = $st->format('d F Y');
 
+if($pr->clinicalNotes == NULL)
+{
+    $cn = "-";
+}
+else
+{
+    $cn = $pr->clinicalNotes;
+}
+
+$name = $pr->custName;
+
 $pdf->Ln(15);
 
 $txt = <<<EOD
@@ -192,7 +203,7 @@ $txt = <<<EOD
             <label>: {$s}</label><br />
             <label>: {$ot}</label><br />
             <label>: {$st}</label><br />
-            <label>: {$pr->clinicalNotes}</label><br />
+            <label>: {$cn}</label><br />
         </td>
     </tr>
 </table>
@@ -214,7 +225,7 @@ $pdf->SetFont('times', '', 12);
 $pdf->Ln(6);
 $tbl = <<<EOD
 <table cellspacing="0" cellpadding="1" border="1">
-    <tr>
+    <tr style="background-color:#1cc88a;">
         <th width="30" align="center">No.</th>
         <th width="180" align="center">Parameter</th>
         <th width="60" align="center">Satuan</th>
@@ -235,7 +246,7 @@ $tbl .= <<<EOD
         <td width="30" align="center">{$nomor}</td>
         <td width="180" align="center">{$pr->parameterName}</td>
         <td width="60" align="center">{$pr->unit}</td>
-        <td width="160" align="center">{$pr->reference}</td>
+        <td width="160" align="center">{$pr->referenceValue}</td>
         <td width="60" align="center">{$pr->result}</td>
         <td width="150" align="center">{$pr->method}</td>
     </tr>
@@ -300,7 +311,8 @@ EOD;
 $pdf->Write(0, $txt, '', 0, 'C', false, 0, false, false, 0);
 
 //Close and output PDF document
-$pdf->Output('LHU.pdf', 'I');
+$filename = 'LHU '.$name.'.pdf';
+$pdf->Output($filename, 'I');
 
 //============================================================+
 // END OF FILE

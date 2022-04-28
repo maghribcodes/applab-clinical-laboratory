@@ -15,16 +15,12 @@
                             <h6 class="m-0 font-weight-bold text-dark">Kirim Laporan Hasil Uji via Email</h6>
                         </div>
                         <?php
-                            foreach($viewResult as $vr)
-                            {
-                                $samples[] = $vr->noSample;
-                                $samp = array_unique($samples);
-                            }
+                            foreach($viewResult as $vr){}
                         ?>
                         <form method="post" action="<?php echo base_url('manager/approval/approved/'.$vr->orderId) ?>">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <input type="hidden" name="samples" value="<?php echo implode(', ', $samp); ?>">
+                                    <input type="hidden" name="orderId" value="<?php echo $vr->orderId; ?>">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Pasien</label>
                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                             <span class="input-group-text" id="basic-addon1"><?php echo $vr->custName ?></span>

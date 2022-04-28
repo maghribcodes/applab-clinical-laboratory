@@ -24,7 +24,7 @@ class Dashboard extends CI_Controller
 					'roleName'=>$data->roleName
 				);
 		
-		//$data['countLhu'] = $this->reporting_model->getCountLhu();
+		$data['countLhu'] = $this->reporting_model->getCountLhu();
 		
 		if($this->input->post('submit'))
 		{
@@ -36,9 +36,8 @@ class Dashboard extends CI_Controller
 			$data['keyword'] = $this->session->userdata('keyword');
 		}
 			
-		$this->db->like('noSample', $data['keyword']);
-		$this->db->from('orderdetail');
-		$this->db->group_by('orderId');
+		$this->db->like('custName', $data['keyword']);
+		$this->db->from('customer');
 			
 		$config['base_url'] = 'http://localhost/talab/reporting/dashboard/index';
 		$config['total_rows'] = $this->db->count_all_results();
@@ -61,14 +60,6 @@ class Dashboard extends CI_Controller
 		$data['printParameter'] = $this->reporting_model->getParameters($orderId)->result();
 
         $this->load->view('reporting/print', $data);
-	}
-
-	function download($orderId)
-	{
-		$data['printResult'] = $this->reporting_model->getTestResult($orderId)->result();
-		$data['printParameter'] = $this->reporting_model->getParameters($orderId)->result();
-
-		$this->load->view('reporting/download', $data);
 	}
 
 	function mail($orderId)
