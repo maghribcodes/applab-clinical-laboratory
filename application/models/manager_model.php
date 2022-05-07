@@ -13,6 +13,7 @@
 			$this->db->select('*');
 			$this->db->from('employee');
 			$this->db->join('role', 'employee.roleId=role.roleId', 'left');
+			$this->db->join('lab', 'employee.labId=lab.labId', 'left');
             $this->db->order_by('employee.empId', 'desc');
 			$this->db->limit($limit, $start);
 
@@ -28,7 +29,7 @@
 
 			$this->db->select('*');
 			$this->db->from('parameter');
-			$this->db->join('package', 'parameter.labId=lab.labId', 'left');
+			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
             $this->db->order_by('parameter.parameterId', 'asc');
 			$this->db->limit($limit, $start);
 
@@ -73,22 +74,12 @@
 			return $this->db->get();
 		}
 
-		function getPackages()
+		function getLabs()
 		{
 			$this->db->select('*');
             $this->db->from('lab');
 
             return $this->db->get();
-		}
-
-		function getLab($empId)
-		{
-			/*$this->db->select('*');
-			$this->db->from('lab');
-			$this->db->join('package', 'lab.packageId=package.packageId', 'left');
-			$this->db->where('lab.empId', $empId);
-
-			return $this->db->get();*/
 		}
         
         function inputData($table, $data)

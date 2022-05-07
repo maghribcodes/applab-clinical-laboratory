@@ -59,18 +59,10 @@ class Staff extends CI_Controller
 			'empName' => $this->input->post('empName'),
 			'username' => $this->input->post('username'),
 			'password' => $this->input->post('password'),
-			'roleId' => $this->input->post('role')
+			'roleId' => $this->input->post('role'),
+			'labId' => $this->input->post('lab')
 		);
 		$empId = $this->manager_model->inputData('employee', $tableEmp);
-
-		if($this->input->post('role') == 5)
-		{
-			$tableLab = array(
-				'empId' => $empId,
-				'packageId' => $this->input->post('lab')
-			);
-			$this->manager_model->inputData('lab', $tableLab);
-		}
 
 		$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil disimpan!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         redirect('manager/staff');
@@ -80,8 +72,7 @@ class Staff extends CI_Controller
 	{
 		$data['viewEmp'] = $this->manager_model->getEmp($empId)->result();
 		$data['viewRoles'] = $this->manager_model->getRoles()->result();
-		$data['viewPackages'] = $this->manager_model->getPackages()->result();
-		$data['viewLab'] = $this->manager_model->getLab($empId)->result();
+		$data['viewLabs'] = $this->manager_model->getLabs()->result();
 
 		$this->load->view('templates/header');
         $this->load->view('manager/sidebar');
@@ -92,45 +83,15 @@ class Staff extends CI_Controller
 	{
 		$empId = $this->input->post('empId');
         $where = array('empId' => $empId);
-        $tableEmp = array(
-            'empName' => $this->input->post('empName'),
-            'username' => $this->input->post('username'),
-            'password' => $this->input->post('password'),
-            'roleId' => $this->input->post('role')
-        );
-        $this->manager_model->updateData($where, 'employee', $tableEmp);
 
-		$query = $this->db->query("SELECT * FROM lab WHERE empId = '{$empId}'");
-        $result = $query->result_array();
-        $count = count($result);
-
-		if($this->input->post('role') == 5)
-		{
-            if(empty($count))
-            {
-                $tableLab = array(
-					'empId' => $empId,
-					'packageId' => $this->input->post('lab')
-				);
-				$this->manager_model->inputData('lab', $tableLab);
-            }
-            else if($count == 1)
-            {
-                $where = array('empId' => $empId);
-                $this->manager_model->updateData($where, 'lab', array
-                (
-                    'empId' => $empId,
-                    'packageId' => $this->input->post('lab')
-                ));
-            }
-		}
-		else
-		{
-			if($count > 0)
-			{
-				$this->db->delete('lab', array('empId' => $empId));
-			}
-		}
+		$tableEmp = array(
+			'empName' => $this->input->post('empName'),
+			'username' => $this->input->post('username'),
+			'password' => $this->input->post('password'),
+			'roleId' => $this->input->post('role'),
+			'labId' => $this->input->post('lab')
+		);
+		$this->manager_model->updateData($where, 'employee', $tableEmp);
 
 		$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         redirect('manager/staff');
@@ -138,15 +99,6 @@ class Staff extends CI_Controller
 
 	function delete($empId)
 	{
-		$query = $this->db->query("SELECT * FROM lab WHERE empId = '{$empId}'");
-        $result = $query->result_array();
-        $count = count($result);
-
-		if($count > 0)
-        {
-			$this->db->delete('lab', array('empId' => $empId));
-		}
-
 		$where = array('empId' => $empId);
         $this->manager_model->deleteData($where, 'employee');
 

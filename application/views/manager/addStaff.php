@@ -85,27 +85,27 @@
 
 		if(role.value == 1)
         {
-			var optionArray = ["|Tidak Ada"];
+			var optionArray = ["1|Tidak Ada"];
 		}
         else if(role.value == 2)
         {
-			var optionArray = ["|Tidak Ada"];
+			var optionArray = ["1|Tidak Ada"];
 		}
         else if(role.value == 3)
         {
-			var optionArray = ["|Tidak Ada"];
+			var optionArray = ["1|Tidak Ada"];
         }
         else if(role.value == 4)
         {
-			var optionArray = ["|Tidak Ada"];
+			var optionArray = ["1|Tidak Ada"];
 		}
         else if(role.value == 5)
         {
-			var optionArray = ["A|Hematologi","B|Kimia Klinik","C|Serologi","D|Mikrobiologi"];
+			var optionArray = ["2|Hematologi","3|Kimia Klinik","4|Serologi","5|Mikrobiologi"];
 		}
         else if(role.value == 6)
         {
-			var optionArray = ["|Tidak Ada"];
+			var optionArray = ["1|Tidak Ada"];
 		}
 			
         for (var option in optionArray)

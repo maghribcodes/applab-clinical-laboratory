@@ -10,7 +10,6 @@
 
                     <br>
                     <?php foreach($viewEmp as $ve){} ?>
-                    <?php foreach($viewLab as $vl){} ?>
                     
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -55,21 +54,13 @@
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Laboratorium</label>
                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                             <select id="lab" name="lab" class="form-control">
-                                                <?php 
-                                                if($vl->packageId == NULL)
-                                                {
-                                                    ?> <option value="">Tidak Ada</option> <?php
-                                                }
-                                                else
-                                                {
-                                                    foreach($viewPackages as $vp) : ?>
-                                                        <option value="<?php echo $vp->packageId ?>"
-                                                            <?php if($vp->packageId == $vl->packageId): ?> selected <?php endif; ?>>
-                                                            <?php echo $vp->packageName ?>
+                                                <?php
+                                                    foreach($viewLabs as $vl) : ?>
+                                                        <option value="<?php echo $vl->labId ?>"
+                                                            <?php if($vl->labId == $ve->labId): ?> selected <?php endif; ?>>
+                                                            <?php echo $vl->labName ?>
                                                         </option>
-                                                <?php endforeach;
-                                                }
-                                                ?>
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
                                 </div>
@@ -104,27 +95,27 @@
 
 		if(role.value == 1)
         {
-			var optionArray = ["|Tidak Ada"];
+			var optionArray = ["1|Tidak Ada"];
 		}
         else if(role.value == 2)
         {
-			var optionArray = ["|Tidak Ada"];
+			var optionArray = ["1|Tidak Ada"];
 		}
         else if(role.value == 3)
         {
-			var optionArray = ["|Tidak Ada"];
+			var optionArray = ["1|Tidak Ada"];
         }
         else if(role.value == 4)
         {
-			var optionArray = ["|Tidak Ada"];
+			var optionArray = ["1|Tidak Ada"];
 		}
         else if(role.value == 5)
         {
-			var optionArray = ["A|Hematologi","B|Kimia Klinik","C|Serologi","D|Mikrobiologi"];
+			var optionArray = ["2|Hematologi","3|Kimia Klinik","4|Serologi","5|Mikrobiologi"];
 		}
         else if(role.value == 6)
         {
-			var optionArray = ["|Tidak Ada"];
+			var optionArray = ["1|Tidak Ada"];
 		}
 			
         for (var option in optionArray)

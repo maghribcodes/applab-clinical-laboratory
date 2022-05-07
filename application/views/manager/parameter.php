@@ -68,7 +68,7 @@
                                                         <td style="text-align: center; vertical-align: middle;"><?php echo $vp->unit ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?php echo $vp->referenceValue ?></td>
                                                         <td style="text-align: center; vertical-align: middle;"><?php echo $vp->method ?></td>
-                                                        <td style="text-align: center; vertical-align: middle;"><?php echo $vp->packageName ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?php echo $vp->labName ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
                                                             <?php 
                                                                 echo number_format($vp->parameterCost, 2, ',', '.'); 

@@ -43,6 +43,7 @@
                                                 <th style="text-align: center; vertical-align: middle;">No.</th>
                                                 <th style="text-align: center; vertical-align: middle;">Nama Staff</th>
                                                 <th style="text-align: center; vertical-align: middle;">Role</th>
+                                                <th style="text-align: center; vertical-align: middle;">Laboratorium</th>
                                                 <th colspan="2" style="text-align: center; vertical-align: middle;">Aksi</th>
                                             </tr>
 
@@ -60,7 +61,7 @@
                                                     foreach ($viewStaff as $vs): ?>
                                                     <tr>
                                                         <td width="20px" style="text-align: center; vertical-align: middle;"><?php echo ++$start ?></td>
-                                                        <td width="250px" style="text-align: center; vertical-align: middle;"><?php echo $vs->empName ?></td>
+                                                        <td style="text-align: center; vertical-align: middle;"><?php echo $vs->empName ?></td>
                                                         <td style="text-align: center; vertical-align: middle;">
                                                             <?php 
                                                                 if($vs->roleId == 1)
@@ -87,6 +88,17 @@
                                                                 {
                                                                     ?> <span class="badge badge-pill badge-success"><?php echo $vs->roleName ?></span> <?php
                                                                 }
+                                                            ?>
+                                                        </td>
+                                                        <td style="text-align: center; vertical-align: middle;">
+                                                            <?php if($vs->labId == 1)
+                                                                    {
+                                                                        echo " - ";
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        echo $vs->labName;
+                                                                    }
                                                             ?>
                                                         </td>
                                                         <td width="20px"><?php echo anchor('manager/staff/edit/'.$vs->empId, '<div class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></div>') ?></td>
