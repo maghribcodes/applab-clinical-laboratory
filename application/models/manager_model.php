@@ -30,32 +30,11 @@
 			$this->db->select('*');
 			$this->db->from('parameter');
 			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
-            $this->db->order_by('parameter.parameterId', 'asc');
+            $this->db->order_by('parameter.parameterId', 'desc');
 			$this->db->limit($limit, $start);
 
 			return $this->db->get()->result();
 		}
-
-		function getAllTestResult($limit, $start, $keyword = null)
-        {
-            if($keyword)
-			{
-				$this->db->like('customer.custName', $keyword);
-			}
-
-            $this->db->select('*');
-			$this->db->from('orderdetail');
-			$this->db->join('order', 'orderdetail.orderId=order.orderId', 'left');
-			$this->db->join('customer', 'order.custId=customer.custId', 'left');
-			$this->db->join('sample', 'sample.noSample=orderdetail.noSample', 'left');
-			$this->db->join('parameter', 'orderdetail.parameterId=parameter.parameterId', 'left');
-			$this->db->join('lab', 'parameter.labId=lab.labId', 'left');
-            $this->db->group_by('order.orderId');
-			$this->db->order_by('order.orderId', 'desc');
-			$this->db->limit($limit, $start);
-
-			return $this->db->get()->result();
-        }
 
         function getRoles()
         {
@@ -69,7 +48,7 @@
 		{
 			$this->db->select('*');
 			$this->db->from('employee');
-			$this->db->where('employee.empId', $empId);
+			$this->db->where('empId', $empId);
 
 			return $this->db->get();
 		}
@@ -105,42 +84,6 @@
 			return $this->db->count_all('employee');
 		}
 
-		function getLastIdA()
-		{
-			$this->db->select('*');
-			$this->db->from('parameter');
-			$this->db->like('parameterId', '2');
-
-            return $this->db->get();
-		}
-
-		function getLastIdB()
-		{
-			$this->db->select('*');
-			$this->db->from('parameter');
-			$this->db->like('parameterId', '3');
-
-            return $this->db->get();
-		}
-
-		function getLastIdC()
-		{
-			$this->db->select('*');
-			$this->db->from('parameter');
-			$this->db->like('parameterId', '4');
-
-            return $this->db->get();
-		}
-
-		function getLastIdD()
-		{
-			$this->db->select('*');
-			$this->db->from('parameter');
-			$this->db->like('parameterId', '5');
-
-            return $this->db->get();
-		}
-
 		function getParam($parameterId)
 		{
 			$this->db->select('*');
@@ -150,12 +93,12 @@
 			return $this->db->get();
 		}
 
-		function getPack($packageId)
+		function getPackages()
 		{
 			$this->db->select('*');
 			$this->db->from('lab');
-			$this->db->where('labId', $packageId);
+			$this->db->not_like('labId', '1');
 
-			return $this->db->get();
+            return $this->db->get();
 		}
     }

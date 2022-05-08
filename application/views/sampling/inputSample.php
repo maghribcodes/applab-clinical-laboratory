@@ -97,6 +97,35 @@
 
                             <!-- Content Row -->
                             <div class="row">
+                                
+                                <div class="col-xl-4 col-md-6 mb-4">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="m-0 font-weight-bold text-secondary">DATA SAMPEL</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <input type="hidden" name="orderId" value="<?php echo $vs->orderId; ?>">
+                                            <input type="hidden" name="noSample" value="<?php echo implode(', ', $samp); ?>">
+                                            <?php foreach($combined1 as $noSample => $sampleType): ?>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1"><?php echo $noSample ?></span>
+                                                    </div>
+                                                    <input type="text" name="type[]" class="form-control" value="<?php echo set_value('type[]', $sampleType); ?>" placeholder="Tipe sampel..." aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
+                                                </div>
+                                            <?php endforeach;?>
+                                            <?php echo form_error('type[]', '<div class="text-danger small">','</div>') ?>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="statusId">
+                                                <label class="form-check-label" for="defaultCheck1">
+                                                    Sampel telah diambil.
+                                                </label>
+                                                <?php echo form_error('statusId', '<div class="text-danger small">','</div>') ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="col-xl-8 col-md-6 mb-4">
                                     <div class="card shadow mb-4">
@@ -127,27 +156,6 @@
                                                     <?php endforeach; ?>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-4 col-md-6 mb-4">
-                                    <div class="card shadow mb-4">
-                                        <div class="card-header py-3">
-                                            <h6 class="m-0 font-weight-bold text-secondary">DATA SAMPEL</h6>
-                                        </div>
-                                        <div class="card-body">
-                                            <input type="hidden" name="orderId" value="<?php echo $vs->orderId; ?>">
-                                            <input type="hidden" name="noSample" value="<?php echo implode(', ', $samp); ?>">
-                                            <?php foreach($combined1 as $noSample => $sampleType): ?>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1"><?php echo $noSample ?></span>
-                                                    </div>
-                                                    <input type="text" name="type[]" class="form-control" value="<?php echo set_value('type[]', $sampleType); ?>" placeholder="Tipe sampel..." aria-label="Username" aria-describedby="basic-addon1" autocomplete="off">
-                                                </div>
-                                            <?php endforeach;?>
-                                            <?php echo form_error('type[]', '<div class="text-danger small">','</div>') ?>
                                         </div>
                                     </div>
                                 </div>

@@ -23,6 +23,11 @@
 			return $this->db->count_all('sample');
 		}
 
+		function getCountParameters()
+		{
+			return $this->db->count_all('parameter');
+		}
+
 		function getCountLhus()
 		{
 			$this->db->like('statusId', 2);

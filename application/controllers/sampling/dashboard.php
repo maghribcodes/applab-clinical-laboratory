@@ -110,5 +110,6 @@ class Dashboard extends CI_Controller
 	function _rules()
     {
         $this->form_validation->set_rules('type[]','Tipe sampel','required',['required'=>'Tipe sampel harus diisi']);
+		$this->form_validation->set_rules('statusId','Status','required',['required'=>'Beri tanda check terlebih dahulu']);
     }
 }

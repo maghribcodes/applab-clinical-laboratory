@@ -22,12 +22,12 @@
                                     <input type="hidden" name="parameterId" value="<?php echo $vpa->parameterId ?>">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Nama Paket</label>
                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                            <select id="packageId" name="packageId" class="form-control" required>
+                                            <select id="labId" name="labId" class="form-control" required>
                                                 <option value="">Pilih paket...</option>
                                                 <?php foreach($viewPackages as $vp) : ?>
-                                                    <option value="<?php echo $vp->packageId ?>"
-                                                        <?php if($vp->packageId == $vpa->packageId): ?> selected <?php endif; ?>>
-                                                        <?php echo $vp->packageName ?>
+                                                    <option value="<?php echo $vp->labId ?>"
+                                                        <?php if($vp->labId == $vpa->labId): ?> selected <?php endif; ?>>
+                                                        <?php echo $vp->labName ?>
                                                     </option>
                                                 <?php endforeach; ?>
                                             </select>
@@ -63,6 +63,27 @@
                                             <input type="text" name="parameterCost" value="<?php echo $vpa->parameterCost ?>" class="form-control" autocomplete="off" required>
                                         </div>
                                 </div>
+                                <fieldset class="form-group">
+                                    <div class="row">
+                                        <legend class="col-form-label col-sm-2 pt-0">Status Reagen</legend>
+                                            <div class="col-sm-10">
+                                                <div class="form-check">
+                                                    <input required class="form-check-input" type="radio" name="reagenId" id="gridRadios1" 
+                                                        value="1" <?php echo set_value('reagenId', $vpa->reagenId) == 1 ? "checked" : ""; ?>>
+                                                        <label class="form-check-label" for="gridRadios1">
+                                                            Tersedia
+                                                        </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="reagenId" id="gridRadios2" 
+                                                        value="2" <?php echo set_value('gender', $vpa->reagenId) == 2 ? "checked" : ""; ?>>
+                                                        <label class="form-check-label" for="gridRadios2">
+                                                            Tidak Tersedia
+                                                        </label>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </fieldset>
                                 <div>
                                     <button class="btn btn-dark" type="submit">Update</button>
                                 </div>
