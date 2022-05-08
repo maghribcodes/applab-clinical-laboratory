@@ -12,16 +12,17 @@
     <?php
         $samples=array();
         $parameters=array();
-        foreach($lastSample as $ls){}
 
         foreach($updateOrder as $uo)
         {
             $samples[] = $uo->noSample;
+            $sampleTypes[] = $uo->sampleType;
             $parameters[] = $uo->parameterId;
             $samp = array_unique($samples);
+            $type = array_unique($sampleTypes);
             $param = array_unique($parameters);
         }?>
-
+        
     <form method="post" action="<?php echo base_url('cs/order/updateOrder/'.$uo->orderId) ?>">
         <div class="card shadow mb-4">
 
@@ -31,17 +32,18 @@
 
             <div class="card-body">
                 <div class="alert alert-danger" role="alert">
-                    Nomor sampel terakhir: <?php echo $ls->noSample ?>
+                    Nomor sampel: <?php echo implode(', ', $samp); ?>
                 </div>
                 <form>
                     <div class="form-group row">
                         <input type="hidden" name="orderId" value="<?php echo $uo->orderId ?>">
                         <input type="hidden" name="custId" value="<?php echo $uo->custId ?>">
                         <input type="hidden" name="samples" value="<?php echo implode(', ', $samp); ?>">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">No. Sampel</label>
+                        <input type="hidden" name="types" value="<?php echo implode(', ', $type); ?>">
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Tipe Sampel</label>
                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                <input autocomplete="off" type="text" name="noSample" class="form-control" value="<?php echo set_value('noSample', implode(', ', $samp)); ?>">
-                                <?php echo form_error('noSample', '<div class="text-danger small">','</div>') ?>
+                                <input autocomplete="off" type="text" name="sampleType" class="form-control" value="<?php echo set_value('sampleType', implode(', ', $type)); ?>">
+                                <?php echo form_error('sampleType', '<div class="text-danger small">','</div>') ?>
                             </div>
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Pengirim</label>
                             <div class="col-sm-4">

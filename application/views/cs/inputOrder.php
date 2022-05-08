@@ -10,7 +10,6 @@
     <br>
 
     <?php echo $this->session->flashdata('message') ?>
-    <?php foreach($lastSample as $ls){} ?>
 
 <form method="post" action="<?php echo base_url('cs/order/inputOrder') ?>">
 
@@ -21,15 +20,12 @@
         </div>
 
         <div class="card-body">
-            <div class="alert alert-danger" role="alert">
-                Nomor sampel terakhir: <?php echo $ls->noSample ?>
-            </div>
             <form>
                 <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">No. Sampel</label>
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Sampel</label>
                         <div class="col-sm-4 mb-3 mb-sm-0">
-                            <input autocomplete="off" type="text" name="noSample" class="form-control" value="<?php echo set_value('noSample'); ?>">
-                            <?php echo form_error('noSample', '<div class="text-danger small">','</div>') ?>
+                            <input autocomplete="off" type="text" name="sampleType" class="form-control" value="<?php echo set_value('sampleType'); ?>">
+                            <?php echo form_error('sampleType', '<div class="text-danger small">','</div>') ?>
                         </div>
                         <label for="inputEmail3" class="col-sm-2 col-form-label">Pengirim</label>
                         <div class="col-sm-4">

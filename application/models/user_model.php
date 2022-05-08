@@ -23,19 +23,19 @@
 			return $this->db->count_all('sample');
 		}
 
-		function getCountLhu()
-		{
-			$this->db->like('statusId', 5);
-			$this->db->or_like('statusId', 6);
-			$this->db->from('order');
-			return $this->db->count_all_results();
-		}
-
 		function getCountLhus()
 		{
 			$this->db->like('statusId', 2);
 			$this->db->or_like('statusId', 3);
 			$this->db->or_like('statusId', 4);
+			$this->db->from('order');
+			return $this->db->count_all_results();
+		}
+
+		function getCountLhu()
+		{
+			$this->db->like('statusId', 5);
+			$this->db->or_like('statusId', 6);
 			$this->db->from('order');
 			return $this->db->count_all_results();
 		}

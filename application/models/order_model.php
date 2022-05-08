@@ -82,6 +82,38 @@
 			return $this->db->get();
 		}
 
+		public function get_idmax()
+		{
+			$this->db->select_max('noSample');
+			$this->db->from('sample');
+			$query = $this->db->get();
+			
+			return $query;   
+		}
+
+		public function get_newid($auto_id, $prefix)
+		{
+			$newId = substr($auto_id, 2, 4);
+			$tambah = (int)$newId + 1;
+			if(strlen($tambah) == 1)
+			{
+			   $noSample = $prefix."000" .$tambah;
+			}
+			else if(strlen($tambah) == 2)
+			{
+			   $noSample = $prefix."00" .$tambah;
+			}
+			else if(strlen($tambah) == 3)
+			{
+			   $noSample = $prefix."0".$tambah;   
+			}
+			else if(strlen($tambah) == 4)
+			{
+			   $noSample = $prefix.$tambah;   
+			}
+			return $noSample;
+		}
+
 		function inputDataOrder($table, $data)
 		{
 			$query=$this->db->insert($table, $data);

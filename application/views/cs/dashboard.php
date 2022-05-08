@@ -2,15 +2,12 @@
                 <div class="container-fluid" style="height:245px; background-color: rgba(255,74,59,1);">
 
                     <!-- Page Heading -->
-                    <div>
-                        <br>
-                        <h2 class="m-0 font-weight text-light"><b>Dashboard</h2>
+                    <div class="py-2 mb-0">
+                        <h3 class="m-0 font-weight text-light"><b>Dashboard</h3>
                         <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
                     </div>
 
-                    <br>
-
-                    <div class="card mb-4 px-2">
+                    <div class="card mb-2 px-2">
 
                         <div class="card-body">
 
@@ -23,7 +20,7 @@
                                 </div>
 
                                 <div class="col-auto">
-                                    <img class="img-fluid px-5 px-sm-4 mt-3 mb-4" src="<?php echo base_url() ?>assets/img/cs.jpg" width=270px height=280px>
+                                    <img class="img-fluid px-5 px-sm-4 mt-0 mb-0" src="<?php echo base_url() ?>assets/img/cs.jpg" width=270px height=280px>
                                 </div>
                             </div>
                             
@@ -34,14 +31,14 @@
                     <div class="row">
 
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="col-xl-3 col-md-6 mb-2">
+                            <div class="card border-left-danger py-0">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                                 Jumlah Pasien</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            <div class="h6 mb-0 font-weight-bold text-gray-800">
                                                 <?php echo $viewCountVisitors ?></div>
                                             </div>
                                         <div class="col-auto">
@@ -53,14 +50,14 @@
                         </div>
 
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="col-xl-3 col-md-6 mb-2">
+                            <div class="card border-left-danger py-0">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                                 Jumlah Sampel</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $viewCountSamples ?></div>
+                                            <div class="h6 mb-0 font-weight-bold text-gray-800"><?php echo $viewCountSamples ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-vials fa-2x text-gray-300"></i>
@@ -71,16 +68,16 @@
                         </div>
 
                         <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="col-xl-3 col-md-6 mb-2">
+                            <div class="card border-left-danger py-0">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Jumlah Laporan Hasil Uji yang Belum Diverifikasi
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Jumlah LHUS
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $viewCountLhus ?></div>
+                                                    <div class="h6 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $viewCountLhus ?></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -93,14 +90,14 @@
                         </div>
 
                         <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="col-xl-3 col-md-6 mb-2">
+                            <div class="card border-left-danger py-0">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Jumlah Laporan Hasil Uji yang Sudah Diverifikasi</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $viewCountLhus ?></div>
+                                                Jumlah LHU</div>
+                                            <div class="h6 mb-0 font-weight-bold text-gray-800"><?php echo $viewCountLhu ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -117,10 +114,10 @@
 
                         <!-- Area Chart -->
                         <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
+                            <div class="card mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    class="card-header py-1 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-danger">Total Order</h6>
                                 </div>
                                 <!-- Card Body -->
@@ -134,10 +131,10 @@
 
                         <!-- Pie Chart -->
                         <div class="col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
+                            <div class="card mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    class="card-header py-1 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-danger">Ratio Pasien</h6>
                                 </div>
                                 <!-- Card Body -->

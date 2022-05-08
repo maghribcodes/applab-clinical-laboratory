@@ -50,9 +50,10 @@ $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+//$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+$pdf->SetMargins(10, 10, 10);
+//$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+//$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
 // set auto page breaks
 $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
@@ -69,14 +70,14 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 // ---------------------------------------------------------
 
 // set font
-$pdf->SetFont('helvetica', 'B', 20);
+//$pdf->SetFont('helvetica', 'B', 20);
 
 // add a page
-$pdf->AddPage();
+$pdf->AddPage('P', 'A5');
 
 //$pdf->Write(0, 'Example of HTML tables', '', 0, 'L', true, 0, false, false, 0);
 
-$pdf->SetFont('times', '', 12);
+$pdf->SetFont('times', '', 8);
 
 // -----------------------------------------------------------------------------
 
@@ -89,6 +90,32 @@ foreach($printNota as $pn)
     $parameters[] = $pn->parameterId;
     $samp = array_unique($samples);
     $param = array_unique($parameters);
+}
+
+$nom = $pn->orderId;
+if(strlen($nom) == 1)
+{
+	$nom = "00000".$nom;
+}
+else if(strlen($nom) == 2)
+{
+	$nom = "0000".$nom;
+}
+else if(strlen($nom) == 3)
+{
+	$nom = "000".$nom;   
+}
+else if(strlen($nom) == 4)
+{
+    $nom = "00".$nom;   
+}
+else if(strlen($nom) == 5)
+{
+    $nom = "0".$nom;
+}
+else
+{
+    $nom;
 }
 
 $birth = new DateTime($pn->birthDate);
@@ -104,9 +131,9 @@ $s= implode(', ', $samp);
 $tbl = <<<EOD
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
-        <td align="center">PEMERINTAH PROVINSI<br />SUMATERA BARAT<br />UPTD LAB. KES PADANG</td>
-        <td align="center">SURAT KETETAPAN RETRIBUSI DAERAH (SKRD)<br />PELAYANAN KESEHATAN (YANKES)</td>
-        <td align="center" vertical-align="middle"><br /><br />NT{$pn->orderId}</td>
+        <td align="center" vertical-align="middle">PEMERINTAH PROVINSI<br />SUMATERA BARAT<br /><br />UPTD LAB. KES PADANG</td>
+        <td align="center" vertical-align="middle">SURAT KETETAPAN RETRIBUSI DAERAH (SKRD)<br />PELAYANAN KESEHATAN (YANKES)</td>
+        <td align="center" vertical-align="middle"><br /><br />No. {$nom}</td>
     </tr>
 </table>
 <table cellspacing="0" cellpadding="1" border="1">
@@ -116,8 +143,7 @@ $tbl = <<<EOD
     </tr>
 </table>
 <br />
-<br />
-<table cellpadding="5">
+<table cellspacing="0" cellpadding="1" border="1">
     <tr>
         <td><div> - Nama</div>
             <div> - Jenis Kelamin</div>
@@ -145,9 +171,9 @@ $tbl = <<<EOD
         <td colspan="3"> B. NOTA PERHITUNGAN</td>
     </tr>
     <tr>
-        <td width="30" align="center">No.</td>
-        <td width="408" align="center">Jenis Pemeriksaan</td>
-        <td width="200" align="center">Tarif (Rp.)</td>
+        <td width="20" align="center">No.</td>
+        <td width="330" align="center">Jenis Pemeriksaan</td>
+        <td width="103" align="center">Tarif (Rp.)</td>
     </tr>
 </table>
 EOD;
@@ -165,9 +191,9 @@ foreach($printCost as $pc)
 $tbl .= <<<EOD
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
-        <td width="30" align="center">{$nomor}</td>
-        <td width="408"> {$pc->parameterName}</td>
-        <td width="200" align="center">{$format1}</td>
+        <td width="20" align="center">{$nomor}</td>
+        <td width="330"> {$pc->parameterName}</td>
+        <td width="103" align="center">{$format1}</td>
     </tr>
 </table>
 EOD;
@@ -178,8 +204,8 @@ $format2 = number_format($total, 2, ',', '.');
 $tbl.=<<<EOD
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
-        <td width="438" align="center" colspan="2">JUMLAH YANG DIBAYAR</td>
-        <td width="200" align="center">{$format2}</td>
+        <td width="350" align="center" colspan="2">JUMLAH YANG DIBAYAR</td>
+        <td width="103" align="center">{$format2}</td>
     </tr>
 </table>
 EOD;
@@ -201,8 +227,8 @@ $tbl = <<<EOD
         <td colspan="2"> C. LEGALISASI PEMBAYARAN</td>
     </tr>
     <tr>
-        <td align="center">Yang menerima<br />BENDAHARA KHUSUS PENERIMA<br /><br /><br />{$pn->empName}</td>
-        <td align="center">Yang membayar<br />WAJIB RETRIBUSI / KUASA<br /><br /><br />{$pn->custName}</td>
+        <td align="center">Yang menerima<br />BENDAHARA KHUSUS PENERIMA<br /><br /><br /><br /></td>
+        <td align="center">Yang membayar<br />WAJIB RETRIBUSI / KUASA<br /><br /><br /><br /></td>
     </tr>
 </table>
 EOD;

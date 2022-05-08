@@ -49,8 +49,6 @@
 
         function input()
         {
-            $data['lastSample'] = $this->db->query("SELECT noSample FROM sample ORDER BY noSample DESC LIMIT 1")->result();
-            
             $data['viewParameterA'] = $this->order_model->getParameterA()->result();
             $data['viewParameterB'] = $this->order_model->getParameterB()->result();
             $data['viewParameterC'] = $this->order_model->getParameterC()->result();
@@ -64,7 +62,7 @@
 
         function inputOrder()
         {   
-            $this->form_validation->set_rules('noSample','Nomor Sampel','callback_checkSamples');
+            $this->form_validation->set_rules('sampleType','Tipe Sampel','callback_checkSamples');
             $this->_rules();
 
             if($this->form_validation->run() == FALSE)
@@ -75,8 +73,8 @@
             {
                 $employess = $this->session->userdata('empId');
 
-                $samples = $this->input->post('noSample');
-                $sample = explode(', ', $samples);
+                $sampleTypes = $this->input->post('sampleType');
+                $sampleType = explode(', ', $sampleTypes);
 
                 $parameters = $this->input->post('parameterId');
 
@@ -116,12 +114,23 @@
                     'statusId' => 2
                 );
                 $input2 = $this->order_model->inputDataOrder('order', $tableOrder);
-        
-                foreach($sample as $samp)
+
+                foreach($sampleType as $st)
                 {
+                    $new_id =  $this->order_model->get_idmax()->result();
+
+                    if($new_id > 0) 
+                    {
+                        foreach ($new_id as $key) 
+                        {
+                            $auto_id = $key->noSample;              
+                        }
+                    }
+
                     $this->order_model->inputDataOrder('sample', array
                     (
-                        'noSample' => $samp,
+                        'noSample' => $noSample = $this->order_model->get_newid($auto_id,'K.'),
+                        'sampleType' => $st,
                         'empId' => $employess
                     ));
         
@@ -130,7 +139,7 @@
                         $this->order_model->inputDataOrder('orderdetail', array
                         (
                             'orderId' => $input2,
-                            'noSample'=> $samp,
+                            'noSample'=> $noSample = $this->order_model->get_newid($auto_id,'K.'),
                             'parameterId'=> $param,
                             'empId' => $employess
                         ));
@@ -161,40 +170,7 @@
             }
             else
             {
-                $samples = explode(', ', $str);
-                foreach($samples as $s)
-                {
-                    if(!preg_match("/^([K]{1}[.]{1}[0-9]{4})+$/i", $s))
-                    {
-                        $this->form_validation->set_message('checkSamples', 'Penulisan Nomor sampel tidak sesuai');
-                        return FALSE;
-                    }
-                    else
-                    {
-                        $length = strlen($s);
-                        if($length == 6)
-                        {
-                            $query = $this->db->query("SELECT * FROM sample WHERE noSample = '{$s}'");
-                            $result = $query->result_array();
-                            $count = count($result);
-
-                            if($count > 0)
-                            {
-                                $this->form_validation->set_message('checkSamples', 'Nomor sampel sudah terdaftar');
-                                return FALSE;
-                            }
-                            else
-                            {
-                                return TRUE;
-                            }
-                        }
-                        else
-                        {
-                            $this->form_validation->set_message('checkSamples', 'Penulisan Nomor sampel tidak sesuai');
-                            return FALSE;
-                        }
-                    }
-                }
+                return TRUE;
             }
         }
 
@@ -222,8 +198,7 @@
         function update($orderId)
         {
             $data['updateOrder'] = $this->order_model->getDataOrder($orderId)->result();
-            $data['lastSample'] = $this->db->query("SELECT noSample FROM sample ORDER BY noSample DESC LIMIT 1")->result();
-        
+
             $data['viewParameterA'] = $this->order_model->getParameterA()->result();
             $data['viewParameterB'] = $this->order_model->getParameterB()->result();
             $data['viewParameterC'] = $this->order_model->getParameterC()->result();
@@ -237,7 +212,7 @@
 
         function updateOrder($orderId)
         {
-            $this->form_validation->set_rules('noSample','Nomor Sampel','callback_checkUpdatedSamples');
+            $this->form_validation->set_rules('sampleType','Tipe Sampel','callback_checkUpdatedSamples');
             $this->_rules();
 
             if($this->form_validation->run() == FALSE)
@@ -265,7 +240,7 @@
                 $updatedParameters = $this->input->post('parameterId');
 
                 $getAllCost = $this->order_model->getAllParameters()->result();
-                    $cost = array();
+                $cost = array();
                     foreach($getAllCost as $gac)
                     {
                         if($updatedParameters != NULL)
@@ -281,6 +256,7 @@
                             $total = 0;
                         }
                     }
+
                 $tableOrder = array(
                     'sender' => $this->input->post('sender'),
                     'clinicalNotes' => $this->input->post('clinicalNotes'),
@@ -291,50 +267,30 @@
                 $samples = $this->input->post('samples');
                 $samplesExplode = explode(', ', $samples);
 
-                $updatedSamples = $this->input->post('noSample');
-                $updatedSamplesExplode = explode(', ', $updatedSamples);
+                $updatedTypes = $this->input->post('sampleType');
+                $updatedTypesExplode = explode(', ', $updatedTypes);
 
                 $this->db->delete('orderdetail', array('orderId' => $orderId));
+                
+                $combined = array_combine($samplesExplode, $updatedTypesExplode);
 
-                foreach($updatedSamplesExplode as $y)
+                foreach($combined as $noSample => $sampleType)
                 {
-                    $query = $this->db->query("SELECT * FROM sample WHERE noSample = '{$y}'");
-                    $result = $query->result_array();
-                    $count = count($result);
-
-                    if(empty($count))
-                    {
-                        $this->order_model->inputDataOrder('sample', array
-                        (
-                            'noSample' => $y,
-                            'empId' => $employess
-                        ));
-                    }
-                    else if($count == 1)
-                    {
-                        $where = array('noSample' => $y);
-                        $this->order_model->updateDataOrder($where, 'sample', array
-                        (
-                            'noSample' => $y,
-                            'empId' => $employess
-                        ));
-                    }
+                    $this->db->set('sampleType', $sampleType);
+                    $this->db->set('empId', $employess);
+                    $this->db->where('noSample', $noSample);
+                    $this->db->update('sample');
 
                     foreach($updatedParameters as $param)
                     {
                         $this->order_model->inputDataOrder('orderdetail', array
                         (
                             'orderId' => $orderId,
-                            'noSample' => $y,
-                            'parameterId' => $param
+                            'noSample' => $noSample,
+                            'parameterId' => $param,
+                            'empId' => $employess
                         ));
                     }
-                }
-
-                $diff = array_diff($samplesExplode, $updatedSamplesExplode);
-                foreach($diff as $d)
-                {
-                    $this->db->delete('sample', array('noSample' => $d));
                 }
 
                 $this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data Berhasil Diperbaharui!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
@@ -374,43 +330,22 @@
             }
             else
             {
-                $oriSamples = $this->input->post('samples');
+                $oriSamples = $this->input->post('types');
                 $oriSample = explode(', ', $oriSamples);
                 $newSample = explode(', ', $str);
                 $validate = array_diff($newSample, $oriSample);
 
-                foreach($validate as $v)
-                {
-                    if(!preg_match("/^([K]{1}[.]{1}[0-9]{4})+$/i", $v))
-                    {
-                        $this->form_validation->set_message('checkUpdatedSamples', 'Penulisan Nomor sampel tidak sesuai');
-                        return FALSE;
-                    }
-                    else
-                    {
-                        $length = strlen($v);
-                        if($length == 6)
-                        {
-                            $query = $this->db->query("SELECT * FROM sample WHERE noSample = '{$v}'");
-                            $result = $query->result_array();
-                            $count = count($result);
+                $count1 = count($oriSample);
+                $count2 = count($newSample);
 
-                            if($count > 0)
-                            {
-                                $this->form_validation->set_message('checkUpdatedSamples', 'Nomor sampel sudah terdaftar');
-                                return FALSE;
-                            }
-                            else
-                            {
-                                return TRUE;
-                            }
-                        }
-                        else
-                        {
-                            $this->form_validation->set_message('checkUpdatedSamples', 'Penulisan Nomor sampel tidak sesuai');
-                            return FALSE;
-                        }
-                    }
+                if($count1 == $count2)
+                {
+                    return TRUE;
+                }
+                else
+                {
+                    $this->form_validation->set_message('checkUpdatedSamples', 'Jumlah sampel tidak sesuai');
+                    return FALSE;
                 }
                 return TRUE;
             }
