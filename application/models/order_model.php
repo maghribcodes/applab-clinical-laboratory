@@ -48,6 +48,7 @@
 			$this->db->select('*');
 			$this->db->from('parameter');
 			$this->db->where('labId', '2');
+			$this->db->order_by('parameterName', 'asc');
 
 			return $this->db->get();
 		}

@@ -115,7 +115,17 @@
                                                             }
                                                         ?>
                                                     </td>
-                                                    <td style="text-align: center; vertical-align: middle;"><?php echo $vo->sender ?></td>
+                                                    <td style="text-align: center; vertical-align: middle;">
+                                                        <?php if($vo->sender == NULL)
+                                                                {
+                                                                    ?> - <?php
+                                                                }
+                                                                else
+                                                                {
+                                                                    echo $vo->sender;
+                                                                }
+                                                                ?>
+                                                    </td>
                                                     <?php 
                                                             if($vo->statusId == 5 || $vo->statusId == 6)
                                                             {

@@ -30,7 +30,8 @@
 
 		function getCountLhus()
 		{
-			$this->db->like('statusId', 2);
+			$this->db->like('statusId', 1);
+			$this->db->or_like('statusId', 2);
 			$this->db->or_like('statusId', 3);
 			$this->db->or_like('statusId', 4);
 			$this->db->from('order');

@@ -36,7 +36,6 @@ class Dashboard extends CI_Controller
 	function input($orderId)
 	{
 		$data['updateClinical'] = $this->doctor_model->getDataClinical($orderId)->result();
-		$data['lastSample'] = $this->db->query("SELECT noSample FROM sample ORDER BY noSample DESC LIMIT 1")->result();
         
         $data['viewParameterA'] = $this->order_model->getParameterA()->result();
         $data['viewParameterB'] = $this->order_model->getParameterB()->result();
@@ -51,7 +50,7 @@ class Dashboard extends CI_Controller
 
 	function inputClinical($orderId)
 	{
-		$this->form_validation->set_rules('noSample','Nomor Sampel','callback_checkSamples');
+		$this->form_validation->set_rules('sampleType','Tipe Sampel','callback_checkSamples');
         $this->_rules();
 
         if($this->form_validation->run() == FALSE)
@@ -63,8 +62,8 @@ class Dashboard extends CI_Controller
 			$empId = $this->session->userdata('empId');
             $empName = $this->session->userdata('empName');
 
-            $samples = $this->input->post('noSample');
-            $sample = explode(', ', $samples);
+            $sampleTypes = $this->input->post('sampleType');
+            $sampleType = explode(', ', $sampleTypes);
 
             $parameters = $this->input->post('parameterId');
         
@@ -97,22 +96,33 @@ class Dashboard extends CI_Controller
 			);
 			$this->order_model->updateDataOrder($where, 'order', $tableOrder);
         
-            foreach($sample as $samp)
+            foreach($sampleType as $st)
             {
+                $new_id =  $this->order_model->get_idmax()->result();
+
+                if($new_id > 0) 
+                {
+                    foreach ($new_id as $key) 
+                    {
+                        $auto_id = $key->noSample;              
+                    }
+                }
+
                 $this->order_model->inputDataOrder('sample', array
                 (
-                    'noSample' => $samp,
-                    'empId' => $empId
+                    'noSample' => $noSample = $this->order_model->get_newid($auto_id,'K.'),
+                    'sampleType' => $st,
+                    'empId' => $employess
                 ));
         
                 foreach($parameters as $param)
                 {
                     $this->order_model->inputDataOrder('orderdetail', array
                     (
-                        'orderId' => $this->input->post('orderId'),
-                        'noSample'=> $samp,
+                        'orderId' => $input2,
+                        'noSample'=> $noSample = $this->order_model->get_newid($auto_id,'K.'),
                         'parameterId'=> $param,
-                        'empId' => $empId
+                        'empId' => $employess
                     ));
                 }
             }
@@ -135,40 +145,7 @@ class Dashboard extends CI_Controller
         }
         else
         {
-            $samples = explode(', ', $str);
-            foreach($samples as $s)
-            {
-                if(!preg_match("/^([K]{1}[.]{1}[0-9]{4})+$/i", $s))
-                {
-                    $this->form_validation->set_message('checkSamples', 'Penulisan Nomor sampel tidak sesuai');
-                    return FALSE;
-                }
-                else
-                {
-                    $length = strlen($s);
-                    if($length == 6)
-                    {
-                        $query = $this->db->query("SELECT * FROM sample WHERE noSample = '{$s}'");
-                        $result = $query->result_array();
-                        $count = count($result);
-
-                        if($count > 0)
-                        {
-                            $this->form_validation->set_message('checkSamples', 'Nomor sampel sudah terdaftar');
-                            return FALSE;
-                        }
-                        else
-                        {
-                            return TRUE;
-                        }
-                    }
-                    else
-                    {
-                        $this->form_validation->set_message('checkSamples', 'Penulisan Nomor sampel tidak sesuai');
-                        return FALSE;
-                    }
-                }
-            }
+            return TRUE;
         }
     }
 

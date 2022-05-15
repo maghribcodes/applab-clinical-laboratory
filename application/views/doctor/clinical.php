@@ -1,16 +1,15 @@
-<div class="container-fluid" style="height:245px; background-color: rgba(78, 115, 223, 1);">
+<div class="container-fluid">
 
 <!-- Page Heading -->
     <div>
         <br>
-        <h2 class="m-0 font-weight text-light"><b>Data Klinisi</b></h2>
-        <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
+        <h2 class="m-0 font-weight text-primary"><b>Data Order</b></h2>
+        <h6 class="m-0 font-weight text-primary">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
     </div>
 
     <br>
     <?php
     foreach($updateClinical as $uc){}
-    foreach($lastSample as $ls){}
     ?>
 
     <form method="post" action="<?php echo base_url('doctor/dashboard/inputClinical/'.$uc->orderId) ?>">
@@ -21,17 +20,14 @@
             </div>
 
             <div class="card-body">
-                <div class="alert alert-primary" role="alert">
-                    Nomor sampel terakhir: <?php echo $ls->noSample ?>
-                </div>
 
                 <form>
                     <div class="form-group row">
                         <input type="hidden" name="orderId" value="<?php echo $uc->orderId ?>">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">No. Sampel</label>
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Sampel</label>
                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                <input type="text" name="noSample" class="form-control" value="<?php echo set_value('noSample'); ?>" autocomplete="off">
-                                <?php echo form_error('noSample', '<div class="text-danger small">','</div>') ?>
+                                <input type="text" name="sampleType" class="form-control" value="<?php echo set_value('sampleType'); ?>" autocomplete="off">
+                                <?php echo form_error('sampleType', '<div class="text-danger small">','</div>') ?>
                             </div>
                     </div>
 

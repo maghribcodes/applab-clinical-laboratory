@@ -36,8 +36,8 @@ class Dashboard extends CI_Controller
 			$data['keyword'] = $this->session->userdata('keyword');
 		}
 			
-		$this->db->like('custName', $data['keyword']);
-		$this->db->from('customer');
+		//$this->db->like('custName', $data['keyword']);
+		//$this->db->from('customer');
 			
 		$config['base_url'] = 'http://localhost/talab/reporting/dashboard/index';
 		$config['total_rows'] = $this->db->count_all_results();
@@ -126,7 +126,7 @@ class Dashboard extends CI_Controller
 			{
 				if(delete_files($file_data['file_path']))
           		{
-					$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Data berhasil dikirim!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+					$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Laporan berhasil dikirim!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 					redirect('reporting/dashboard');
           		}	
 			}
@@ -136,7 +136,7 @@ class Dashboard extends CI_Controller
 				{
 					$this->session->set_flashdata('message', '<div class="alert alert-warning alert-dismissible fade show" role="alert">Ada error pada email yang dikirim!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 					redirect('reporting/dashboard');
-					//show_error($this->email->print_debugger());
+					show_error($this->email->print_debugger());
 				}
 			}
 		}

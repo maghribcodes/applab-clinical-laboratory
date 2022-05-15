@@ -52,7 +52,7 @@
 
 		function getCountLhus()
 		{
-			$this->db->like('statusId', '3');
+			$this->db->like('statusId', '4');
 			$this->db->from('order');
 			return $this->db->count_all_results();
 		}

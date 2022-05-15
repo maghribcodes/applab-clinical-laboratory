@@ -1,11 +1,11 @@
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="height:245px; background-color: rgba(54, 185, 204, 1);">
+                <div class="container-fluid">
 
                     <!-- Page Heading -->
                     <div>
                         <br>
-                        <h2 class="m-0 font-weight text-light"><b>Hasil Uji</b></h2>
-                        <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
+                        <h2 class="m-0 font-weight text-info"><b>Hasil Uji</b></h2>
+                        <h6 class="m-0 font-weight text-info">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
                     </div>
 
                     <br>
@@ -103,12 +103,43 @@
                                                                     <h6 class="m-0 font-weight-bold text-info">Parameter</h6>
                                                                 </div>
                                                                 <div class="card-body pl-2 pr-2 px-2">
-                                                                    <?php $no=1; foreach($param as $pn): ?>
-                                                                    <div>
-                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $no++; ?>. <?php echo $pn ?></small></span>
-                                                                        <br>
-                                                                    </div>
-                                                                    <?php endforeach; ?>
+                                                                    <?php $no=1; foreach($param as $pn): 
+                                                                        if($pn == "Analisa Sperma")
+                                                                        {  
+                                                                            ?>
+                                                                                <div>
+                                                                                    <span class="input-group-text m-0 text-secondary">
+                                                                                        <small>
+                                                                                            <?php echo $no++; ?>. <?php echo $pn ?>
+                                                                                            <div>Warna</div>
+                                                                                            <div>Bau</div>
+                                                                                            <div>pH</div>
+                                                                                            <div>Viskositas</div>
+                                                                                            <div>Volume</div>
+                                                                                            <div>Jumlah Total / ml</div>
+                                                                                            <div>Jumlah Motil / ml</div>
+                                                                                            <div>% Motil</div>
+                                                                                            <div>Bukan bentuk oval</div>
+                                                                                            <div>Warna</div>
+                                                                                            <div>Warna</div>
+                                                                                            <div>Warna</div>
+                                                                                            <div>Warna</div>
+                                                                                        </small>
+                                                                                    </span>
+                                                                                    <br>
+                                                                                </div>
+                                                                            <?php
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            ?> 
+                                                                                <div>
+                                                                                    <span class="input-group-text m-0 text-secondary"><small><?php echo $no++; ?>. <?php echo $pn ?></small></span>
+                                                                                    <br>
+                                                                                </div>
+                                                                            <?php
+                                                                        }
+                                                                    endforeach; ?>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -12,6 +12,7 @@
 			$this->db->select('*');
 			$this->db->from('order');
 			$this->db->join('customer', 'order.custId=customer.custId', 'left');
+			$this->db->where('statusId', 5);
 			$this->db->order_by('orderId', 'desc');
 			$this->db->limit($limit, $start);
 

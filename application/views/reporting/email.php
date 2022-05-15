@@ -19,7 +19,7 @@
                         </div>
 
                         <?php 
-                            if($vr->statusId == 5)
+                            if($vr->statusId == 6)
                             {
                             ?>  <div class="card-body">
                                     <div class="alert alert-success" role="alert">

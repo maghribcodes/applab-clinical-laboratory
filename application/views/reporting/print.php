@@ -97,7 +97,7 @@ $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP+15, PDF_MARGIN_RIGHT);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
@@ -116,11 +116,11 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 // ---------------------------------------------------------
 
 // set font
+//$pdf->SetFont('freeserif', '', 10);
 $pdf->SetFont('times', 'B', 12);
 
 // add a page
 $pdf->AddPage();
-$pdf->Ln(10);
 // set some text to print
 $txt = <<<EOD
 LAPORAN HASIL UJI
@@ -175,11 +175,11 @@ else
 
 $name = $pr->custName;
 
-$pdf->Ln(15);
+$pdf->Ln(10);
 
 $txt = <<<EOD
 <br />
-<table cellpadding="5">
+<table cellpadding="4">
     <tr>
         <td><label>Nomor LHU</label><br />
             <label>Nama</label><br />
@@ -244,9 +244,9 @@ $tbl .= <<<EOD
 <table cellspacing="0" cellpadding="1" border="1">
     <tr>
         <td width="30" align="center">{$nomor}</td>
-        <td width="180" align="center">{$pr->parameterName}</td>
+        <td width="180" align="center" style="font-family:freeserif;">{$pr->parameterName}</td>
         <td width="60" align="center">{$pr->unit}</td>
-        <td width="160" align="center">{$pr->referenceValue}</td>
+        <td width="160" align="center" style="font-family:freeserif;">{$pr->referenceValue}</td>
         <td width="60" align="center">{$pr->result}</td>
         <td width="150" align="center">{$pr->method}</td>
     </tr>

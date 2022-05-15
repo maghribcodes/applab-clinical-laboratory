@@ -1,11 +1,11 @@
                 <!-- Begin Page Content -->
-                <div class="container-fluid" style="height:245px; background-color: rgba(246, 194, 62, 1);">
+                <div class="container-fluid">
 
                     <!-- Page Heading -->
                     <div>
                         <br>
-                        <h2 class="m-0 font-weight text-light"><b>Input Sampel</b></h2>
-                        <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
+                        <h2 class="m-0 font-weight text-warning"><b>Input Sampel</b></h2>
+                        <h6 class="m-0 font-weight text-warning">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
                     </div>
                     <br>
 

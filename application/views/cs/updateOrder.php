@@ -1,10 +1,10 @@
-<div class="container-fluid" style="height:245px; background-color: rgba(255,74,59,1);">
+<div class="container-fluid">
 
 <!-- Page Heading -->
     <div>
         <br>
-        <h2 class="m-0 font-weight text-light"><b>Update Order</b></h2>
-        <h6 class="m-0 font-weight text-light">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
+        <h2 class="m-0 font-weight text-danger"><b>Update Order</b></h2>
+        <h6 class="m-0 font-weight text-danger">Pelayanan Pemeriksaan Laboratorium Klinik</h6>
     </div>
 
     <br>
