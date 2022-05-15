@@ -142,6 +142,7 @@ class Dashboard extends CI_Controller
 	function _rules()
     {
 		$this->form_validation->set_rules('result[]','Hasil','required',['required'=>'Data harus diisi']);
+		$this->form_validation->set_rules('resultA','Hasil','required',['required'=>'Data harus']);
 		$this->form_validation->set_rules('testTime','Tanggal Uji','required',['required'=>'Data harus diisi']);
     }
 }

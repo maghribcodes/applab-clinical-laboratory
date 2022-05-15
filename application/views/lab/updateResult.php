@@ -103,12 +103,45 @@
                                                                     <h6 class="m-0 font-weight-bold text-info">Parameter</h6>
                                                                 </div>
                                                                 <div class="card-body pl-2 pr-2 px-2">
-                                                                    <?php $no=1; foreach($param as $pn): ?>
-                                                                        <div>
-                                                                            <span class="input-group-text m-0 text-secondary"><small><?php echo $no++; ?>. <?php echo $pn ?></small></span>
-                                                                            <br>
-                                                                        </div>
-                                                                    <?php endforeach; ?>
+                                                                    <?php $no=1; foreach($param as $pn): 
+                                                                        if($pn == "Analisa Sperma")
+                                                                        {  
+                                                                            ?>
+                                                                                <div>
+                                                                                    <span class="input-group-text m-0 text-secondary">
+                                                                                        <small>
+                                                                                            <?php echo $no++; ?>. <?php echo $pn ?>
+                                                                                            <div align="left">
+                                                                                                <div> - Warna</div>
+                                                                                                <div> - Bau</div>
+                                                                                                <div> - pH</div>
+                                                                                                <div> - Viskositas</div>
+                                                                                                <div> - Volume</div>
+                                                                                                <div> - Jumlah Total/ml</div>
+                                                                                                <div> - Jumlah Motil/ml</div>
+                                                                                                <div> - % Motil</div>
+                                                                                                <div> - Bukan bentuk oval</div>
+                                                                                                <div> - Eritrosit/LPB</div>
+                                                                                                <div> - Leukosit</div>
+                                                                                                <div> - Sel Epitel/LPB</div>
+                                                                                                <div> - Sel Muda</div>
+                                                                                            </div>
+                                                                                        </small>
+                                                                                    </span>
+                                                                                    <br>
+                                                                                </div>
+                                                                            <?php
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            ?> 
+                                                                                <div>
+                                                                                    <span class="input-group-text m-0 text-secondary"><small><?php echo $no++; ?>. <?php echo $pn ?></small></span>
+                                                                                    <br>
+                                                                                </div>
+                                                                            <?php
+                                                                        }
+                                                                    endforeach; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -119,12 +152,56 @@
                                                                     <h6 class="m-0 font-weight-bold text-info">Satuan</h6>
                                                                 </div>
                                                                 <div class="card-body pl-2 pr-2 px-2">
-                                                                <?php foreach($combined2 as $parameterName => $unit): ?>
-                                                                    <div>
-                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $unit ?></small></span>
-                                                                        <br>
-                                                                    </div>
-                                                                <?php endforeach; ?>
+                                                                <?php foreach($combined2 as $parameterName => $unit):
+                                                                    if($parameterName == "Analisa Sperma")
+                                                                        {  
+                                                                            ?>
+                                                                                <div>
+                                                                                    <span class="input-group-text m-0 text-secondary">
+                                                                                        <small>
+                                                                                            <div>
+                                                                                                <div class="mt-4 mb-3"> - </div>
+                                                                                                <br>
+                                                                                                <div class="mb-3"> - </div>
+                                                                                                <br>
+                                                                                                <div class="mb-3"> - </div>
+                                                                                                <br>
+                                                                                                <div class="mb-3"> - </div>
+                                                                                                <br>
+                                                                                                <div class="mb-3"> - </div>
+                                                                                                <br>
+                                                                                                <div class="mb-3"> - </div>
+                                                                                                <br>
+                                                                                                <div class="mb-3"> - </div>
+                                                                                                <br>
+                                                                                                <div class="mb-3"> - </div>
+                                                                                                <br>
+                                                                                                <div class="mb-3"> - </div>
+                                                                                                <br>
+                                                                                                <div class="mb-3"> - </div>
+                                                                                                <br>
+                                                                                                <div class="mb-3"> - </div>
+                                                                                                <br>
+                                                                                                <div class="mb-3"> - </div>
+                                                                                                <br>
+                                                                                                <div class="mb-3"> - </div>
+                                                                                            </div>
+                                                                                        </small>
+                                                                                    </span>
+                                                                                    <br>
+                                                                                </div>
+                                                                            <?php
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            ?>
+                                                                                <div>
+                                                                                    <span class="input-group-text m-0 text-secondary"><small><?php echo $unit ?></small></span>
+                                                                                    <br>
+                                                                                </div>
+                                                                            <?php
+                                                                        }
+                                                                endforeach; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -135,12 +212,56 @@
                                                                     <h6 class="m-0 font-weight-bold text-info">Nilai Referensi</h6>
                                                                 </div>
                                                                 <div class="card-body pl-2 pr-2 px-2">
-                                                                <?php foreach($combined3 as $parameterName => $ref): ?>
-                                                                    <div>
-                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $ref ?></small></span>
-                                                                        <br>
-                                                                    </div>
-                                                                <?php endforeach; ?>
+                                                                <?php foreach($combined3 as $parameterName => $ref):
+                                                                    if($parameterName == "Analisa Sperma")
+                                                                    {  
+                                                                        ?>
+                                                                            <div>
+                                                                                <span class="input-group-text m-0 text-secondary">
+                                                                                    <small>
+                                                                                        <div align="left">
+                                                                                            <div class="mt-4 mb-3">Putih Keruh</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">Khas</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">7 - 8</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">Kental</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">2 - 5 mL</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">> 20 juta</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3"> - </div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">> 50%</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">< 50%</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3"> - </div>
+                                                                                            <br>
+                                                                                            <div class="mb-3"> - </div>
+                                                                                            <br>
+                                                                                            <div class="mb-3"> - </div>
+                                                                                            <br>
+                                                                                            <div class="mb-3"> - </div>
+                                                                                        </div>
+                                                                                    </small>
+                                                                                </span>
+                                                                                <br>
+                                                                            </div>
+                                                                        <?php
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?>
+                                                                            <div>
+                                                                                <span class="input-group-text m-0 text-secondary"><small><?php echo $ref ?></small></span>
+                                                                                <br>
+                                                                            </div>
+                                                                        <?php
+                                                                    }
+                                                                endforeach; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -151,12 +272,56 @@
                                                                     <h6 class="m-0 font-weight-bold text-info">Metode</h6>
                                                                 </div>
                                                                 <div class="card-body pl-2 pr-2 px-2">
-                                                                <?php foreach($combined4 as $parameterName => $method): ?>
-                                                                    <div>
-                                                                        <span class="input-group-text m-0 text-secondary"><small><?php echo $method ?></small></span>
-                                                                        <br>
-                                                                    </div>
-                                                                <?php endforeach; ?>
+                                                                <?php foreach($combined4 as $parameterName => $method):
+                                                                    if($parameterName == "Analisa Sperma")
+                                                                    {  
+                                                                        ?>
+                                                                            <div>
+                                                                                <span class="input-group-text m-0 text-secondary">
+                                                                                    <small>
+                                                                                        <div align="left">
+                                                                                            <div class="mt-4 mb-3">Makroskopis</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">tes</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3"> - </div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">Makroskopis</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3"> - </div>
+                                                                                            <br>
+                                                                                            <div class="mb-3"> - </div>
+                                                                                            <br>
+                                                                                            <div class="mb-3"> - </div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">Mikroskopis</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">Mikroskopis</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">Mikroskopis</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">Mikroskopis</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">Mikroskopis</div>
+                                                                                            <br>
+                                                                                            <div class="mb-3">Mikroskopis</div>
+                                                                                        </div>
+                                                                                    </small>
+                                                                                </span>
+                                                                                <br>
+                                                                            </div>
+                                                                        <?php
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?>
+                                                                            <div>
+                                                                                <span class="input-group-text m-0 text-secondary"><small><?php echo $method ?></small></span>
+                                                                                <br>
+                                                                            </div>
+                                                                        <?php
+                                                                    }
+                                                                endforeach; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -167,12 +332,31 @@
                                                                     <h6 class="m-0 font-weight-bold text-info">Hasil</h6>
                                                                 </div>
                                                                 <div class="card-body pl-2 pr-2 px-2">
-                                                                <?php foreach($combined5 as $parameterName => $result): ?>
-                                                                    <div class=small>  
-                                                                        <input type="text" name="result[]" value="<?php echo set_value('result[]', $result); ?>" class="form-control" autocomplete="off">
-                                                                        <br>
-                                                                    </div>
-                                                                <?php endforeach; ?>
+                                                                <?php foreach($combined5 as $parameterName => $result):
+                                                                    if($parameterName == "Analisa Sperma")
+                                                                    {
+                                                                        $r1 = explode(', ', $result);
+                                                                        ?><br><?php
+                                                                        foreach($r1 as $r2)
+                                                                        {
+                                                                            ?>
+                                                                                <div class="form-group">
+                                                                                    <input type="text" value="<?php echo set_value('resultA[]', $r2); ?>" class="form-control" autocomplete="off">
+                                                                                </div>
+                                                                            <?php
+                                                                        }
+                                                                        ?><br><?php
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        ?>
+                                                                            <div class=small>  
+                                                                                <input type="text" name="result[]" value="<?php echo set_value('result[]', $result); ?>" class="form-control" autocomplete="off">
+                                                                                <br>
+                                                                            </div>
+                                                                        <?php
+                                                                    }
+                                                                endforeach; ?>
                                                                 <?php echo form_error('result[]', '<div class="text-danger small">','</div>') ?>
                                                                 </div>
                                                             </div>

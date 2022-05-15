@@ -175,9 +175,13 @@
                                                                 ?>
                                                             </td>
                                                             <?php
-                                                                if($vo->statusId == 3 || $vo->statusId == 4)
+                                                                if($vo->statusId == 3)
                                                                 {
                                                                     ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
+                                                                }
+                                                                else if($vo->statusId == 4)
+                                                                {
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/update/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
                                                                 }
                                                                 else
                                                                 {
@@ -250,9 +254,13 @@
                                                                 ?>
                                                             </td>
                                                             <?php
-                                                                if($vo->statusId == 3 || $vo->statusId == 4)
+                                                                if($vo->statusId == 3)
                                                                 {
                                                                     ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
+                                                                }
+                                                                else if($vo->statusId == 4)
+                                                                {
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/update/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
                                                                 }
                                                                 else
                                                                 {
@@ -325,9 +333,13 @@
                                                                 ?>
                                                             </td>
                                                             <?php
-                                                                if($vo->statusId == 3 || $vo->statusId == 4)
+                                                                if($vo->statusId == 3)
                                                                 {
                                                                     ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
+                                                                }
+                                                                else if($vo->statusId == 4)
+                                                                {
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/update/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
                                                                 }
                                                                 else
                                                                 {
@@ -400,9 +412,13 @@
                                                                 ?>
                                                             </td>
                                                             <?php
-                                                                if($vo->statusId == 3 || $vo->statusId == 4)
+                                                                if($vo->statusId == 3)
                                                                 {
                                                                     ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
+                                                                }
+                                                                else if($vo->statusId == 4)
+                                                                {
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/update/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
                                                                 }
                                                                 else
                                                                 {
