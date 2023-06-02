@@ -181,7 +181,7 @@
                                                                 }
                                                                 else if($vo->statusId == 4)
                                                                 {
-                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/update/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
                                                                 }
                                                                 else
                                                                 {
@@ -260,7 +260,7 @@
                                                                 }
                                                                 else if($vo->statusId == 4)
                                                                 {
-                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/update/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
                                                                 }
                                                                 else
                                                                 {
@@ -339,7 +339,7 @@
                                                                 }
                                                                 else if($vo->statusId == 4)
                                                                 {
-                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/update/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
                                                                 }
                                                                 else
                                                                 {
@@ -418,7 +418,7 @@
                                                                 }
                                                                 else if($vo->statusId == 4)
                                                                 {
-                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/update/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
+                                                                    ?> <td width="20px"><?php echo anchor('lab/dashboard/input/'.$vo->orderId.'/'.$vo->noSample, '<div class="btn btn-sm btn-info"><i class="fa fa-edit"></i></div>') ?></td> <?php
                                                                 }
                                                                 else
                                                                 {
